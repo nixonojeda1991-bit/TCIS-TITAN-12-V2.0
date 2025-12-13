@@ -158,11 +158,27 @@
             <h3 class="text-xl font-bold text-blue-800">TCIS TITAN PRO: CADENA DE EJECUCIÓN LOGOS</h3>
             <p class="mt-2 text-gray-700">Obtén el análisis estructurado de la IA y el **L.I.S. Scorecard** por solo **$4.99 USD/mes.**</p>
             <!-- ¡CRÍTICO! MISION 2 COMPLETA: ENLACE DE PAYPAL INSERTADO -->
-            <a id="paypalLink" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=P-8TH743921H495900LNE6PWMI" target="_blank" class="block mt-4">
-                <button class="bg-yellow-400 hover:bg-yellow-500 text-blue-800 font-bold py-3 px-6 rounded-lg w-full transition duration-300 shadow-lg">
-                    ACCEDER A TITAN PRO ($4.99/MES)
-                </button>
-            </a>
+           <div id="paypal-button-container-P-33398171NB044211UNE65YKA"></div>
+<script src="https://www.paypal.com/sdk/js?client-id=Ad5D0SGYDZUBG6ucm74UN76VRUVpOeFE0KTW2QmV5nZEfXsOD39R_phO6AtFGswwRaJC5o7_gJtfBipX&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
+<script>
+  paypal.Buttons({
+      style: {
+          shape: 'rect',
+          color: 'gold',
+          layout: 'vertical',
+          label: 'subscribe'
+      },
+      createSubscription: function(data, actions) {
+        return actions.subscription.create({
+          /* Creates the subscription */
+          plan_id: 'P-33398171NB044211UNE65YKA'
+        });
+      },
+      onApprove: function(data, actions) {
+        alert(data.subscriptionID); // You can add optional success message for the subscriber here
+      }
+  }).render('#paypal-button-container-P-33398171NB044211UNE65YKA'); // Renders the PayPal button
+</script>
         </div>
     </div>
 
@@ -407,3 +423,4 @@
     </script>
 </body>
 </html>
+
