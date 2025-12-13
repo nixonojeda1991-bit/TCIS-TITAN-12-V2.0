@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCIS TITAN 12 V2.0 | Protocolo de Decisión Inevitable</title>
+    <!-- Carga de Tailwind CSS CDN para el diseño moderno -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        :root {
+            --color-primary: #1e3a8a; /* Azul oscuro TITÁN */
+            --color-secondary: #fcd34d; /* Amarillo de advertencia */
+            --color-success: #10b981; /* Verde de ejecución */
+            --color-fail: #ef4444; /* Rojo de veto */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .output-success {
+            border-left: 5px solid var(--color-success);
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        .output-fail {
+            border-left: 5px solid var(--color-fail);
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+        /* Estilos de formulario y rangos */
+        .form-group label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--color-primary);
+        }
+        .form-group input[type="text"],
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+            transition: border-color 0.2s;
+        }
+        .form-group input[type="range"] {
+            width: 85%;
+            margin-right: 1rem;
+            /* Estilos básicos para el slider */
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            background: #d1d5db;
+            border-radius: 4px;
+        }
+        .form-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            background: var(--color-primary);
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        .range-container {
+            display: flex;
+            align-items: center;
+        }
+        .range-value {
+            font-weight: 700;
+            width: 3rem;
+            text-align: right;
+            color: var(--color-primary);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="container max-w-4xl w-full bg-white shadow-xl rounded-xl p-6 md:p-10">
+        <header class="mb-8">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-center text-gray-900 leading-tight">
+                TCIS TITAN 12 V2.0
+            </h1>
+            <p class="text-xl font-bold text-center text-gray-700 leading-tight mb-2">
+                PROTOCOLO DE DECISIÓN INEVITABLE
+            </p>
+            <p class="text-sm text-center text-gray-500 italic">
+                Tasa de Conversión de Intención Soberana. Aplica la Ley Cero: Minimiza el riesgo **G**.
+            </p>
+            <div id="authStatus" class="text-xs text-center mt-3 p-2 bg-gray-100 rounded-lg">
+                Cargando estado de usuario...
+            </div>
+        </header>
+        
+        <div class="bg-blue-50 border-l-4 border-blue-800 p-5 mb-8 rounded-lg">
+            <p class="font-bold text-blue-800 mb-2">AUDITORÍA CAUSAL TITÁN:</p>
+            <ul class="list-disc pl-5 text-sm text-blue-700 space-y-1">
+                <li>**EGT (Escala de Gravedad Titán):** Cuantifica tu riesgo para eliminar el miedo.</li>
+                <li>**Garantiza la Coherencia (L.I.S.):** Valida contra tu Identidad Fija definida.</li>
+            </ul>
+        </div>
+        
+        <form id="pdcForm" class="space-y-6">
+            <div class="form-group">
+                <label for="objective">1. ECO: Intención Soberana (El objetivo a ejecutar)</label>
+                <input type="text" id="objective" required placeholder="Ej: Lanzar mi MVP de IA en 3 meses.">
+            </div>
+            
+            <div class="form-group">
+                <label for="identity">1.b. L.I.S. (Identidad Fija): Tu Propósito Central (Ej: 'Optimizar flujo de caja')</label>
+                <input type="text" id="identity" required placeholder="Ej: Ser un proveedor sostenible de soluciones de gobernanza.">
+            </div>
+
+            <div class="form-group">
+                <label for="riskAction">2. FÉNIX | RIESGO G(A): Riesgo si **INTENTA** la acción (Escala EGT 0-100)</label>
+                <div class="range-container">
+                    <input type="range" id="riskAction" min="0" max="100" value="50" oninput="updateRangeValue('riskAction', 'riskActionValue')">
+                    <span id="riskActionValue" class="range-value">50</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="riskInaction">3. FÉNIX | RIESGO G(I): Riesgo si **NO HACE NADA** (La Parálisis) (Escala EGT 0-100)</label>
+                <div class="range-container">
+                    <input type="range" id="riskInaction" min="0" max="100" value="50" oninput="updateRangeValue('riskInaction', 'riskInactionValue')">
+                    <span id="riskInactionValue" class="range-value">50</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="resources">4. L.I.S. (Recursos Cuantificados): Menciona tus 3 Recursos Críticos</label>
+                <textarea id="resources" required rows="4" placeholder="Ej: 1. 20 horas a la semana. 2. $500 de capital de marketing. 3. Conocimiento avanzado en IA."></textarea>
+            </div>
+
+            <button type="submit" class="w-full bg-blue-800 hover:bg-blue-900 text-white font-bold py-3 px-4 rounded-lg shadow-lg transition duration-300">
+                EJECUTAR AUDITORÍA TITÁN (LOGOS)
+            </button>
+        </form>
+
+        <div id="output" class="mt-8 p-4 rounded-lg text-sm transition duration-300">
+            El resultado de la Auditoría FÉNIX aparecerá aquí.
+        </div>
+        
+        <!-- Sección de Historial de Decisiones (Memoria Gráfica del Usuario - MGU) -->
+        <div class="mt-12 pt-6 border-t border-gray-200">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">5. Memoria Gráfica del Usuario (MGU)</h2>
+            <p class="text-sm text-gray-500 mb-4">Historial de Decisiones FÉNIX. Es privado para cada sesión.</p>
+            <div id="historyContainer" class="space-y-4">
+                <p id="loadingHistory" class="text-gray-500 italic">Cargando historial de decisiones...</p>
+            </div>
+        </div>
+
+        <div id="proUpgrade" class="mt-10 p-6 border-2 border-yellow-400 bg-yellow-50 rounded-xl text-center shadow-md">
+            <h3 class="text-xl font-bold text-blue-800">TCIS TITAN PRO: CADENA DE EJECUCIÓN LOGOS</h3>
+            <p class="mt-2 text-gray-700">Obtén el análisis estructurado de la IA y el **L.I.S. Scorecard** por solo **$4.99 USD/mes.**</p>
+            <!-- ¡CRÍTICO! MISION 2 COMPLETA: ENLACE DE PAYPAL INSERTADO -->
+            <a id="paypalLink" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=P-8TH743921H495900LNE6PWMI" target="_blank" class="block mt-4">
+                <button class="bg-yellow-400 hover:bg-yellow-500 text-blue-800 font-bold py-3 px-6 rounded-lg w-full transition duration-300 shadow-lg">
+                    ACCEDER A TITAN PRO ($4.99/MES)
+                </button>
+            </a>
+        </div>
+    </div>
+
+    <script type="module">
+        // Importaciones de Firebase (SDK Modular)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, addDoc, onSnapshot, collection, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // =========================================================================================
+        // --- CONFIGURACIÓN FIREBASE (PROYECTO: tcis-titan-12) ---
+        
+        const MI_FIREBASE_CONFIG = {
+            apiKey: "AIzaSyDwlyMkTfH4FFmerYDKkDGh18NUKQQ4hP0", 
+            authDomain: "tcis-titan-12.firebaseapp.com",
+            projectId: "tcis-titan-12",
+            storageBucket: "tcis-titan-12.firebasestorage.app",
+            messagingSenderId: "298942508038",
+            appId: "1:298942508038:web:a7107a1cdc65216ec96787"
+        };
+        
+        // Usamos el Project ID como App ID para las rutas de la base de datos
+        const appId = MI_FIREBASE_CONFIG.projectId;
+
+        // =========================================================================================
+        
+        let app, db, auth;
+        let userId = null;
+
+        /**
+         * Inicializa Firebase y realiza la autenticación anónima.
+         * Incluye manejo de errores para el caso de 'auth/configuration-not-found' (proveedor anónimo deshabilitado).
+         */
+        async function initializeFirebase() {
+            try {
+                app = initializeApp(MI_FIREBASE_CONFIG);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                // Autenticación: Usar siempre Anónimo para una aplicación pública
+                await signInAnonymously(auth);
+                
+                // Listener de estado de autenticación
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        // El UID del usuario anónimo se usa como su identificador privado (MGU)
+                        userId = user.uid; 
+                        document.getElementById('authStatus').innerHTML = `Estado: <span class="font-semibold text-green-700">OPERATIVO</span> | <span class="text-gray-500">ID Sesión (MGU):</span> <span class="font-mono text-xs">${userId}</span>`;
+                        // Cargar historial después de la autenticación
+                        loadDecisionHistory();
+                    } else {
+                        userId = null;
+                        document.getElementById('authStatus').innerHTML = `Estado: <span class="font-semibold text-red-700">DESCONECTADO</span> | Recargue la página.`;
+                    }
+                });
+
+            } catch (error) {
+                console.error("Error al inicializar o autenticar Firebase:", error);
+                let errorMessage = `ERROR CRÍTICO DE FIREBASE: ${error.message}`;
+                
+                // Manejo específico del error de configuración de autenticación
+                if (error.code === 'auth/configuration-not-found') {
+                    errorMessage = `
+                        <span class="font-bold text-red-700">¡ERROR DE AUTENTICACIÓN!</span>
+                        <br>
+                        Para resolver esto, debe ir a la **Consola de Firebase** (proyecto **tcis-titan-12**), entrar a la sección **Authentication** y asegurarse de que el proveedor de inicio de sesión **'Anónimo'** esté **Habilitado**.
+                    `;
+                    console.error("Acción requerida: Habilitar el inicio de sesión Anónimo en la Consola de Firebase.");
+                }
+
+                document.getElementById('authStatus').innerHTML = errorMessage;
+            }
+        }
+
+        // --- Funciones de Persistencia (MGU - Memoria Gráfica del Usuario) ---
+
+        // Construye la ruta privada: /artifacts/{appId}/users/{userId}/decisiones_fenix
+        function getCollectionPath() {
+            if (!userId) {
+                console.error("Error: userId no disponible.");
+                return null;
+            }
+            return `artifacts/${appId}/users/${userId}/decisiones_fenix`;
+        }
+
+        // Guarda la decisión en Firestore
+        async function saveDecision(data) {
+            const path = getCollectionPath();
+            if (!path) return;
+
+            try {
+                const decisionRef = collection(db, path);
+                await addDoc(decisionRef, {
+                    ...data,
+                    timestamp: serverTimestamp(),
+                });
+            } catch (error) {
+                console.error("Error al guardar la decisión en Firestore:", error);
+                document.getElementById('output').innerHTML = `<p class="output-fail p-3 rounded-lg mt-4">ERROR CRÍTICO (PERSISTENCIA): No se pudo guardar. ${error.message}</p>`;
+            }
+        }
+
+        // Carga el historial en tiempo real (onSnapshot)
+        function loadDecisionHistory() {
+            const path = getCollectionPath();
+            if (!path) return;
+
+            const historyContainer = document.getElementById('historyContainer');
+            const decisionQuery = query(collection(db, path));
+            
+            onSnapshot(decisionQuery, (snapshot) => {
+                const decisions = [];
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    decisions.push({ id: doc.id, ...data });
+                });
+
+                // Ordenar por timestamp (más reciente primero)
+                decisions.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
+                renderHistory(decisions);
+            }, (error) => {
+                console.error("Error al escuchar el historial de decisiones:", error);
+                historyContainer.innerHTML = `<p class="text-red-500">Error al cargar el historial: ${error.message}</p>`;
+            });
+        }
+
+        // Renderiza la lista de historial
+        function renderHistory(decisions) {
+            const historyContainer = document.getElementById('historyContainer');
+            if (decisions.length === 0) {
+                historyContainer.innerHTML = '<p class="text-gray-500 italic">Aún no hay decisiones registradas en su MGU.</p>';
+                return;
+            }
+
+            historyContainer.innerHTML = decisions.map(decision => {
+                const date = decision.timestamp ? new Date(decision.timestamp.seconds * 1000).toLocaleString('es-ES') : 'Fecha desconocida';
+                const successClass = decision.decision.includes('EJECUCIÓN') ? 'border-green-600 bg-green-50' : 'border-red-600 bg-red-50';
+                const decisionLabel = decision.decision.includes('EJECUCIÓN') ? 'EJECUTAR' : 'VETO';
+
+                return `
+                    <div class="p-4 border-l-4 rounded-lg shadow-sm ${successClass}">
+                        <div class="flex justify-between items-start mb-1">
+                            <span class="text-lg font-bold ${decision.decision.includes('EJECUCIÓN') ? 'text-green-800' : 'text-red-800'}">${decisionLabel}</span>
+                            <span class="text-xs text-gray-500">${date}</span>
+                        </div>
+                        <p class="text-sm font-semibold text-gray-800">${decision.objective}</p>
+                        <ul class="text-xs text-gray-600 mt-2 space-y-0.5">
+                            <li><span class="font-medium">Riesgo Acción (G(A)):</span> ${decision.riskAction}</li>
+                            <li><span class="font-medium">Riesgo Inacción (G(I)):</span> ${decision.riskInaction}</li>
+                            <li><span class="font-medium">Identidad Fija (L.I.S.):</span> ${decision.identity}</li>
+                        </ul>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // --- Lógica Principal del TITÁN ---
+
+        function updateRangeValue(inputId, valueId) {
+            document.getElementById(valueId).textContent = document.getElementById(inputId).value;
+        }
+
+        async function calculatePDC(event) {
+            event.preventDefault();
+
+            if (!userId) {
+                document.getElementById('output').innerHTML = `<p class="output-fail p-3 rounded-lg mt-4">AUTORIZACIÓN PENDIENTE: Espere a que se cargue el ID de Sesión para ejecutar la Auditoría.</p>`;
+                return;
+            }
+
+            const objective = document.getElementById('objective').value;
+            const identity = document.getElementById('identity').value;
+            const riskAction = parseInt(document.getElementById('riskAction').value);
+            const riskInaction = parseInt(document.getElementById('riskInaction').value);
+            const resources = document.getElementById('resources').value;
+            const outputDiv = document.getElementById('output');
+            const proUpgradeDiv = document.getElementById('proUpgrade');
+            
+            outputDiv.className = 'mt-8 p-4 rounded-lg text-sm transition duration-300';
+            proUpgradeDiv.style.display = 'none';
+
+            let resultText;
+            let finalDecision;
+
+            if (riskAction < riskInaction) {
+                // MANDATO DE EJECUCIÓN (ACI)
+                finalDecision = "MANDATO DE EJECUCIÓN (ACI): DECISIÓN INEVITABLE";
+                const coherenceQuestion = `
+                    <br>
+                    **AUDITORÍA L.I.S. (Ley de Coherencia):** El Titán lo autoriza a ejecutar.
+                    <br>
+                    <span class="text-blue-800 font-medium">**Auditoría Primaria:** ¿La ejecución de "${objective}" es coherente con su Identidad Fija: "${identity}"?</span>
+                `;
+                resultText = `
+                    <p class="font-bold text-lg mb-2">${finalDecision}</p>
+                    <p class="font-semibold">**LEY CERO APROBADA:** Riesgo de Acción (${riskAction}G) < Riesgo de Inacción (${riskInaction}G). Ejecute de inmediato.</p>
+                    <p class="mt-4 text-sm">${coherenceQuestion}</p>
+                `;
+                outputDiv.classList.add('output-success');
+                proUpgradeDiv.style.display = 'block';
+
+            } else {
+                // VETO TITÁN
+                finalDecision = "VETO TITÁN: PARÁLISIS OPERATIVA REQUERIDA";
+                resultText = `
+                    <p class="font-bold text-lg mb-2">${finalDecision}</p>
+                    <p class="font-semibold">**LEY CERO VIOLADA:** Riesgo de Acción (${riskAction}G) >= Riesgo de Inacción (${riskInaction}G). Reevalúe y reduzca el riesgo o aumente el riesgo de inacción.</p>
+                `;
+                outputDiv.classList.add('output-fail');
+            }
+
+            outputDiv.innerHTML = resultText;
+
+            // Guardar la auditoría
+            const decisionData = {
+                objective,
+                identity,
+                riskAction,
+                riskInaction,
+                resources,
+                decision: finalDecision,
+                userId: userId,
+                appId: appId
+            };
+
+            await saveDecision(decisionData);
+        }
+
+        // --- Event Listeners e Inicio ---
+        window.updateRangeValue = updateRangeValue; 
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateRangeValue('riskAction', 'riskActionValue');
+            updateRangeValue('riskInaction', 'riskInactionValue');
+            
+            const form = document.getElementById('pdcForm');
+            form.addEventListener('submit', calculatePDC);
+            
+            // Iniciar Firebase y Autenticación
+            initializeFirebase();
+        });
+    </script>
+</body>
+</html>
