@@ -154,19 +154,44 @@
            </div>
         
 <!-- INICIO DE SECCIÓN: Botones de Acceso a Titan PRO y Soporte -->
-</div> <script src="https://www.paypal.com/sdk/js?client-id=AQ52P9G88wT5yX23398171NB044211UNE65YKA&vault=true&intent=subscription"></script>
+<!-- INICIO DE LA SECCIÓN DE PAGO (TCIS TITAN PRO) -->
+
 <div id="proUpgrade" class="mt-10 p-6 border-2 border-yellow-400 bg-yellow-50 rounded-xl text-center shadow-md">
     <h3 class="text-xl font-bold text-blue-800">TCIS TITAN PRO: CADENA DE EJECUCIÓN LOGOS</h3>
     <p class="mt-2 text-gray-700">Obtén el análisis estructurado de la IA y el **L.I.S. Scorecard** por solo **$4.99 USD/mes.**</p>
+    
+    <!-- BLOQUE DE PAGO: IMPLEMENTACIÓN MODERNA CON PAYPAL SDK -->
     <div class="mt-4">
-        <!-- COMENTARIO DE PAYPAL ORIGINAL: El formulario de abajo abre la ventana de pago en una pestaña nueva (target="_blank") para no salir de la aplicación. -->
-        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-            <input type="hidden" name="cmd" value="_s-xclick" />
-            <input type="hidden" name="hosted_button_id" value="K63548GNDQ79U" />
-            <input type="hidden" name="currency_code" value="USD" />
-            <input type="image" src="https://www.paypalobjects.com/es_XC/i/btn/btn_subscribeCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Suscribirse ahora" class="w-full h-auto" />
-        </form>
+        <!-- Contenedor donde se renderizará el botón de PayPal -->
+        <div id="paypal-button-container-P-33398171NB044211UNE65YKA" class="block"></div>
     </div>
+
+    <!-- SCRIPTS DEL SDK DE PAYPAL -->
+    <script src="https://www.paypal.com/sdk/js?client-id=Ad5D0SGYDZUBG6ucm74UN76VRUVpOeFE0KTW2QmV5nZEfXsOD39R_phO6AtFGswwRaJC5o7_gJtfBipX&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
+    <script>
+        // Inicialización y renderizado del botón de suscripción
+        paypal.Buttons({
+            style: {
+                shape: 'rect',
+                color: 'gold', // Puedes cambiar esto a 'blue', 'silver', o 'black'
+                layout: 'vertical',
+                label: 'subscribe'
+            },
+            createSubscription: function(data, actions) {
+                // Crea la suscripción usando el plan ID funcional
+                return actions.subscription.create({
+                    plan_id: 'P-33398171NB044211UNE65YKA' 
+                });
+            },
+            onApprove: function(data, actions) {
+                // La suscripción fue exitosa
+                console.log('Suscripción aprobada. ID: ' + data.subscriptionID);
+                // NOTA: Implementa aquí la lógica para otorgar acceso PRO al usuario.
+            }
+        }).render('#paypal-button-container-P-33398171NB044211UNE65YKA');
+    </script>
+    
+    <!-- Botón de Gratificación (Conservado) -->
     <div class="mt-4">
         <a href="https://www.paypal.com/ncp/payment/4D5QYC5JFSEGE" target="_blank" class="flex items-center justify-center bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-lg w-full transition duration-300 shadow-lg space-x-2">
             <!-- Icono de tarjeta de crédito/pago para mayor claridad -->
@@ -177,6 +202,8 @@
             <span>GRATIFICACIÓN AL CREADOR (PayPal)</span>
         </a>
     </div>
+    
+    <!-- Botón de Soporte (Conservado) -->
     <div class="mt-4">
         <a href="https://wa.me/584124577822?text=Hola%2C%20necesito%20ayuda%20para%20acceder%20a%20TCIS%20TITAN%20PRO.%20Quiero%20saber%20sobre%20otros%20métodos%20de%20pago." target="_blank" class="flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg w-full transition duration-300 shadow-lg space-x-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
@@ -187,7 +214,7 @@
     </div>
 </div>
 
-<!-- FIN DE SECCIÓN: Botones de Acceso a Titan PRO y Soporte -->
+<!-- FIN DE LA SECCIÓN DE PAGO (TCIS TITAN PRO) -->
          </div>
     </div>
 
@@ -432,6 +459,7 @@
     </script>
 </body>
 </html>
+
 
 
 
