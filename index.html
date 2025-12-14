@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TCIS TITAN 12 V2.0 | Protocolo de Decisión Inevitable</title>
+    <title>TCIS TITAN 12 V2.2 | Protocolo de Decisión Inevitable</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
@@ -24,7 +24,7 @@
         .output-success { border-left: 5px solid var(--color-success); background-color: #d1fae5; color: #065f46; }
         .output-fail { border-left: 5px solid var(--color-fail); background-color: #fee2e2; color: #991b1b; }
         .form-group label { font-weight: 600; display: block; margin-bottom: 0.5rem; color: var(--color-primary); }
-        .form-group input[type="text"], .form-group textarea { width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 0.5rem; box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05); transition: border-color 0.2s; }
+        .form-group input[type="text"], .form-group textarea, .form-group input[type="email"], .form-group input[type="password"] { width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 0.5rem; box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05); transition: border-color 0.2s; }
         .form-group input[type="range"] { width: 85%; margin-right: 1rem; -webkit-appearance: none; appearance: none; height: 8px; background: #d1d5db; border-radius: 4px; }
         .form-group input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; background: var(--color-primary); cursor: pointer; border-radius: 50%; }
         .range-container { display: flex; align-items: center; }
@@ -34,7 +34,7 @@
 <body class="p-4 md:p-8">
     <div class="container max-w-4xl w-full bg-white shadow-xl rounded-xl p-6 md:p-10">
         <header class="mb-8">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-center text-gray-900 leading-tight">TCIS TITAN 12 V2.0</h1>
+            <h1 class="text-3xl md:text-4xl font-extrabold text-center text-gray-900 leading-tight">TCIS TITAN 12 V2.2</h1>
             <p class="text-xl font-bold text-center text-gray-700 leading-tight mb-2">PROTOCOLO DE DECISIÓN INEVITABLE</p>
             <p class="text-sm text-center text-gray-500 italic">Tasa de Conversión de Intención Soberana. Aplica la Ley Cero: Minimiza el riesgo **G**.</p>
             <div id="authStatus" class="text-xs text-center mt-3 p-2 bg-gray-100 rounded-lg">Cargando estado de usuario...</div>
@@ -102,7 +102,7 @@
                     <span>GRATIFICACIÓN AL CREADOR</span>
                 </a>
                 <a href="https://wa.me/584124577822?text=Hola%2C%20necesito%20ayuda%20para%20acceder%20a%20TCIS%20TITAN%20PRO." target="_blank" class="flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg w-full transition duration-300 shadow-lg space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M12 2C6.477 2 2 6.477 2 12c0 3.189 1.583 6.007 4.02 7.728l-.513 1.538 1.57-1.026A9.975 9.975 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm3.5 13.78c-.28 0-.55-.084-.78-.25l-2.02-1.35c-.2-.14-.42-.2-.65-.2-.16 0-.3.04-.45.1-.38.16-.65.48-.65.85v1.25c0 .37-.27.7-.65.85-.38.15-.79.16-1.16.03-.36-.12-.66-.37-.86-.73-1.02-1.85-1.52-4.1-1.52-6.26 0-.17.02-.34.05-.5.1-.4.4-.73.78-.86.38-.13.79-.12-1.15-.03-.36-.15-.65-.4-.85-.75l-.4-.7z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M12 2C6.477 2 2 6.477 2 12c0 3.189 1.583 6.007 4.02 7.728l-.513 1.538 1.57-1.026A9.975 9.975 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm3.5 13.78c-.28 0-.55-.084-.78-.25l-2.02-1.35c-.2-.14-.42-.2-.65-.2-.16 0-.3.04-.45.1-.38.16-.65.48-.65.85v1.25c0 .37-.27.7-.65.85-.38.15-.79.16-1.16.03-.36-.12-.66-.37-.86-.73-1.02-1.85-1.52-4.1-1.52-6.26 0-.17.02-.34.05-.5.1-.4.4-.73.78-.86.38-.13.79-.12-.15-.4z"/></svg>
                     <span>SOPORTE (WHATSAPP)</span>
                 </a>
             </div>
@@ -123,8 +123,8 @@
                 </div>
             </div>
             <a href="https://wa.me/584124577822?text=Soy%20representante%20de%20una%20Entidad/Corporación.%20Requiero%20información%20sobre%20la%20Licencia%20TITAN%20GOVERNANCE%20para%20alto%20nivel." 
-               target="_blank" 
-               class="mt-6 inline-block w-full md:w-auto bg-transparent hover:bg-white hover:text-black text-white border border-white font-bold py-2 px-6 rounded transition duration-300">
+                target="_blank" 
+                class="mt-6 inline-block w-full md:w-auto bg-transparent hover:bg-white hover:text-black text-white border border-white font-bold py-2 px-6 rounded transition duration-300">
                 SOLICITAR ACCESO ENTERPRISE
             </a>
         </div>
@@ -147,12 +147,26 @@
             </div>
             <p class="mt-6 text-xs text-gray-500">ID de Sesión: <span id="userSessionId" class="font-mono">...</span></p>
         </div>
+        
+        <div id="adminLoginModule" class="mt-8 p-6 bg-gray-900 rounded-xl text-white shadow-xl" style="display: none;">
+            <h3 class="text-xl font-bold mb-4 border-b border-gray-700 pb-2">ACCESO DE ARQUITECTO</h3>
+            <p class="text-xs text-gray-400 mb-4">Ingrese sus credenciales únicas. (Acceso: Ctrl + Alt + A)</p>
+            <div class="space-y-4">
+                <input type="email" id="adminEmail" placeholder="Email de Administrador" class="w-full p-2 rounded text-black">
+                <input type="password" id="adminPassword" placeholder="Clave de Administrador" class="w-full p-2 rounded text-black">
+                <button id="adminLoginButton" class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 rounded transition duration-300">
+                    INICIAR SESIÓN SOBERANA
+                </button>
+                <p id="adminMessage" class="text-sm text-red-400 mt-2 hidden"></p>
+            </div>
+        </div>
+
     </div>
 
     <script type="module">
-        // 1. IMPORTACIONES CENTRALIZADAS
+        // 1. IMPORTACIONES CENTRALIZADAS (Ahora incluyendo signInWithEmailAndPassword)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, addDoc, collection, query, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // 2. CONFIGURACIÓN FIREBASE
@@ -173,25 +187,110 @@
         const db = getFirestore(app);
         let userId = null;
 
-        // 4. AUTENTICACIÓN Y ARRANQUE
+        // 4. FUNCIONES DE INTERFAZ (RANGOS)
+        const updateRangeValue = (inputId, valueId) => {
+            document.getElementById(valueId).textContent = document.getElementById(inputId).value;
+        };
+        window.updateRangeValue = updateRangeValue; // Exponer globalmente
+
+        // 5. LÓGICA DE PAGO Y DESBLOQUEO
+        const desbloquearContenido = (isAdmin = false) => {
+            document.getElementById('proUpgrade').style.display = 'none';
+            document.getElementById('titanContent').style.display = 'block';
+            document.getElementById('userSessionId').innerText = userId || (isAdmin ? "ADMIN_SOBERANO" : "PRO_USER");
+            document.getElementById('titanContent').scrollIntoView({ behavior: 'smooth' });
+        };
+        window.desbloquearContenido = desbloquearContenido; // Exponer globalmente para el truco de consola
+
+        async function registrarPagoExitoso(subscriptionId) {
+            if (!userId) return;
+            try {
+                await setDoc(doc(db, "artifacts", appId, "users", userId), {
+                    isPro: true, plan: "TCIS TITAN PRO", paypalSubscriptionId: subscriptionId,
+                    fechaPago: new Date().toISOString(), status: "ACTIVO"
+                }, { merge: true });
+                console.log("Pago registrado.");
+                desbloquearContenido();
+            } catch (e) {
+                console.error("Error pago:", e);
+                desbloquearContenido(); // Fallback en caso de error de conexión de DB
+            }
+        }
+
+        // 6. LÓGICA DE AUTENTICACIÓN ADMINISTRATIVA (NUEVO)
+        async function adminLogin() {
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value;
+            const messageEl = document.getElementById('adminMessage');
+
+            messageEl.textContent = '';
+            messageEl.classList.add('hidden');
+            
+            if (!email || !password) {
+                 messageEl.textContent = `VETO: Ingrese credenciales.`;
+                 messageEl.classList.remove('hidden');
+                 return;
+            }
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                userId = userCredential.user.uid; 
+                
+                // Si la sesión es exitosa, fuerza el desbloqueo y oculta el módulo
+                desbloquearContenido(true); // Pasa 'true' para indicar que es Admin
+                document.getElementById('adminLoginModule').style.display = 'none';
+                document.getElementById('authStatus').innerHTML = `Estado: <span class="font-semibold text-yellow-600">ADMINISTRADOR</span> | ID: <span class="font-mono text-xs">${userId}</span>`;
+                loadDecisionHistory(); // Recargar historial bajo la nueva ID fija
+            
+            } catch (error) {
+                console.error("Error de Admin Login:", error);
+                messageEl.textContent = `VETO: Credenciales no reconocidas. ${error.code}`;
+                messageEl.classList.remove('hidden');
+            }
+        }
+
+
+        // 7. AUTENTICACIÓN Y ARRANQUE INICIAL
         signInAnonymously(auth).catch((error) => console.error("Error Auth:", error));
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 userId = user.uid;
-                console.log("TCIS OPERATIVO. ID:", userId);
                 const statusEl = document.getElementById('authStatus');
-                if (statusEl) statusEl.innerHTML = `Estado: <span class="font-semibold text-green-700">OPERATIVO</span> | ID: <span class="font-mono text-xs">${userId}</span>`;
-                loadDecisionHistory(); // Cargar historial al conectar
+                
+                // Chequeo de estado PRO (Si el usuario ya pagó)
+                const checkProStatus = async () => {
+                    if (user.isAnonymous) { // Solo si es anónimo, chequeamos el estado de pago
+                        const userDocRef = doc(db, "artifacts", appId, "users", userId);
+                        const userDoc = await getDoc(userDocRef);
+                        if (userDoc.exists() && userDoc.data().isPro) {
+                            desbloquearContenido();
+                            statusEl.innerHTML = `Estado: <span class="font-semibold text-green-700">PRO SOSTENIBLE</span> | ID: <span class="font-mono text-xs">${userId}</span>`;
+                        } else {
+                            statusEl.innerHTML = `Estado: <span class="font-semibold text-green-700">OPERATIVO</span> | ID: <span class="font-mono text-xs">${userId}</span>`;
+                        }
+                    } else { // Si es usuario logueado (Admin/Future Pro User)
+                        statusEl.innerHTML = `Estado: <span class="font-semibold text-yellow-600">ADMINISTRADOR</span> | ID: <span class="font-mono text-xs">${userId}</span>`;
+                        desbloquearContenido(true);
+                        document.getElementById('adminLoginModule').style.display = 'none';
+                    }
+                };
+
+                // Si no es un nuevo login, solo cargamos la data
+                if (statusEl) {
+                    if (user.isAnonymous) {
+                         statusEl.innerHTML = `Estado: <span class="font-semibold text-green-700">OPERATIVO</span> | ID: <span class="font-mono text-xs">${userId}</span>`;
+                    }
+                    loadDecisionHistory(); 
+                }
             }
         });
+        
+        // Función auxiliar para obtener doc (Necesaria para el chequeo PRO)
+        import { getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // 5. FUNCIONES DE INTERFAZ (RANGOS)
-        window.updateRangeValue = (inputId, valueId) => {
-            document.getElementById(valueId).textContent = document.getElementById(inputId).value;
-        };
 
-        // 6. LÓGICA DE AUDITORÍA (DECISIONES FÉNIX)
+        // 8. LÓGICA DE AUDITORÍA (DECISIONES FÉNIX)
         async function calculatePDC(event) {
             event.preventDefault();
             if (!userId) {
@@ -199,6 +298,8 @@
                 return;
             }
 
+            // ... (resto de la lógica de calculatePDC, no se modificó) ...
+            
             const objective = document.getElementById('objective').value;
             const identity = document.getElementById('identity').value;
             const riskAction = parseInt(document.getElementById('riskAction').value);
@@ -219,7 +320,12 @@
                               <p class="font-semibold">**LEY CERO APROBADA:** Riesgo Acción < Riesgo Inacción. Ejecute.</p>`;
                 outputDiv.classList.add('output-success');
                 outputDiv.innerHTML = resultText;
-                proUpgradeDiv.style.display = 'block'; // Mostrar botón de pago
+                
+                // Si el usuario no es PRO y la decisión es EJECUTAR, mostramos la caja de pago.
+                if (document.getElementById('titanContent').style.display === 'none') {
+                    proUpgradeDiv.style.display = 'block'; 
+                }
+                
             } else {
                 // FALLO: OCULTAR CAJA DE PAGO
                 finalDecision = "VETO TITÁN: PARÁLISIS OPERATIVA REQUERIDA";
@@ -239,7 +345,7 @@
             } catch (e) { console.error("Error guardando decisión:", e); }
         }
 
-        // 7. LÓGICA DE HISTORIAL (MGU)
+        // 9. LÓGICA DE HISTORIAL (MGU)
         function loadDecisionHistory() {
             if (!userId) return;
             const q = query(collection(db, `artifacts/${appId}/users/${userId}/decisiones_fenix`));
@@ -270,30 +376,7 @@
             });
         }
 
-        // 8. LÓGICA DE PAGO Y DESBLOQUEO
-        function desbloquearContenido() {
-            document.getElementById('proUpgrade').style.display = 'none';
-            document.getElementById('titanContent').style.display = 'block';
-            document.getElementById('userSessionId').innerText = userId || "PRO_USER";
-            document.getElementById('titanContent').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        async function registrarPagoExitoso(subscriptionId) {
-            if (!userId) return;
-            try {
-                await setDoc(doc(db, "artifacts", appId, "users", userId), {
-                    isPro: true, plan: "TCIS TITAN PRO", paypalSubscriptionId: subscriptionId,
-                    fechaPago: new Date().toISOString(), status: "ACTIVO"
-                }, { merge: true });
-                console.log("Pago registrado.");
-                desbloquearContenido();
-            } catch (e) {
-                console.error("Error pago:", e);
-                desbloquearContenido(); // Fallback
-            }
-        }
-
-        // 9. CARGAR PAYPAL Y LISTENERS
+        // 10. CARGAR PAYPAL Y LISTENERS
         document.addEventListener('DOMContentLoaded', () => {
             // Inicializar sliders
             updateRangeValue('riskAction', 'riskActionValue');
@@ -301,6 +384,23 @@
             
             // Listener del Formulario
             document.getElementById('pdcForm').addEventListener('submit', calculatePDC);
+
+            // Listener del botón de Admin Login (NUEVO)
+            const adminLoginButton = document.getElementById('adminLoginButton');
+            if (adminLoginButton) {
+                adminLoginButton.addEventListener('click', adminLogin);
+            }
+            
+            // Lógica para mostrar el módulo al teclear una clave secreta (Ctrl + Alt + A)
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'A' && e.ctrlKey && e.altKey) { 
+                    const module = document.getElementById('adminLoginModule');
+                    module.style.display = module.style.display === 'none' ? 'block' : 'none';
+                    if(module.style.display === 'block') {
+                        document.getElementById('adminEmail').focus(); // Foco en el email
+                    }
+                }
+            });
 
             // Cargar Script de PayPal dinámicamente
             const scriptPP = document.createElement('script');
