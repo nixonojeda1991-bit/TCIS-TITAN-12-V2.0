@@ -33,11 +33,13 @@
 </head>
 <body class="p-4 md:p-8">
     <div class="container max-w-4xl w-full bg-white shadow-xl rounded-xl p-6 md:p-10">
-        <header class="mb-8">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-center text-gray-900 leading-tight">TCIS TITAN 12 V2.3</h1>
+        <header class="mb-8 relative"> <h1 class="text-3xl md:text-4xl font-extrabold text-center text-gray-900 leading-tight">TCIS TITAN 12 V2.3</h1>
             <p class="text-xl font-bold text-center text-gray-700 leading-tight mb-2">PROTOCOLO DE DECISIÓN INEVITABLE</p>
             <p class="text-sm text-center text-gray-500 italic">Tasa de Conversión de Intención Soberana. Aplica la Ley Cero: Minimiza el riesgo **G**.</p>
+            
             <div id="authStatus" class="text-xs text-center mt-3 p-2 bg-gray-100 rounded-lg">Cargando estado de usuario...</div>
+            
+            <button id="showAdminButton" class="text-xs text-gray-400 hover:text-yellow-400 absolute top-2 right-2 p-1 rounded-full border border-gray-700">MODO ADMIN</button>
         </header>
         
         <div class="bg-blue-50 border-l-4 border-blue-800 p-5 mb-8 rounded-lg">
@@ -102,7 +104,7 @@
                     <span>GRATIFICACIÓN AL CREADOR</span>
                 </a>
                 <a href="https://wa.me/584124577822?text=Hola%2C%20necesito%20ayuda%20para%20acceder%20a%20TCIS%20TITAN%20PRO." target="_blank" class="flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg w-full transition duration-300 shadow-lg space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M12 2C6.477 2 2 6.477 2 12c0 3.189 1.583 6.007 4.02 7.728l-.513 1.538 1.57-1.026A9.975 9.975 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm3.5 13.78c-.28 0-.55-.084-.78-.25l-2.02-1.35c-.2-.14-.42-.2-.65-.2-.16 0-.3.04-.45.1-.38.16-.65.48-.65.85v1.25c0 .37-.27.7-.65.85-.38.15-.79.16-1.16.03-.36-.12-.66-.37-.86-.73-1.02-1.85-1.52-4.1-1.52-6.26 0-.17.02-.34.05-.5.1-.4.4-.73.78-.86.38-.13.79-.12-1.15-.03-.36-.15-.65-.4-.85-.75l-.4-.7z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M12 2C6.477 2 2 6.477 2 12c0 3.189 1.583 6.007 4.02 7.728l-.513 1.538 1.57-1.026A9.975 9.975 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm3.5 13.78c-.28 0-.55-.084-.78-.25l-2.02-1.35c-.2-.14-.42-.2-.65-.2-.16 0-.3.04-.45.1-.38.16-.65.48-.65.85v1.25c0 .37-.27.7-.65.85-.38.15-.79.16-1.16.03-.36-.12-.66-.37-.86-.73-1.02-1.85-1.52-4.1-1.52-6.26 0-.17.02-.34.05-.5.1-.4.4-.73.78-.86.38-.13.79-.12-.15-.4z"/></svg>
                     <span>SOPORTE (WHATSAPP)</span>
                 </a>
             </div>
@@ -149,7 +151,6 @@
         </div>
         
         <div id="adminLoginModule" class="mt-8 p-6 bg-gray-900 rounded-xl text-white shadow-xl relative" style="display: none;">
-            <button id="showAdminButton" class="text-xs text-gray-400 hover:text-yellow-400 absolute top-2 right-2 p-1 rounded-full border border-gray-700">MODO ADMIN</button>
             <h3 class="text-xl font-bold mb-4 border-b border-gray-700 pb-2">ACCESO DE ARQUITECTO</h3>
             <p class="text-xs text-gray-400 mb-4">Ingrese sus credenciales únicas.</p>
             <div class="space-y-4">
@@ -263,13 +264,13 @@
                     const userDoc = await getDoc(userDocRef);
                     const isPro = userDoc.exists() && userDoc.data().isPro;
 
-                    if (!user.isAnonymous) { // Si es usuario logueado (Admin)
+                    if (!user.isAnonymous) { 
                         desbloquearContenido(true);
                         statusEl.innerHTML = `Estado: <span class="font-semibold text-yellow-600">ADMINISTRADOR</span> | ID: <span class="font-mono text-xs">${userId}</span>`;
-                    } else if (isPro) { // Si es usuario anónimo pero ya pagó
+                    } else if (isPro) { 
                         desbloquearContenido();
                         statusEl.innerHTML = `Estado: <span class="font-semibold text-green-700">PRO SOSTENIBLE</span> | ID: <span class="font-mono text-xs">${userId}</span>`;
-                    } else { // Usuario anónimo (Free)
+                    } else { 
                         statusEl.innerHTML = `Estado: <span class="font-semibold text-green-700">OPERATIVO</span> | ID: <span class="font-mono text-xs">${userId}</span>`;
                     }
                 };
@@ -306,7 +307,6 @@
                 outputDiv.classList.add('output-success');
                 outputDiv.innerHTML = resultText;
                 
-                // Mostrar la caja de pago si el contenido PRO no está ya visible
                 if (!titanContentVisible) {
                     proUpgradeDiv.style.display = 'block'; 
                 } else {
