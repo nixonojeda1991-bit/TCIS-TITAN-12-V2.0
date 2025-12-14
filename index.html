@@ -155,46 +155,16 @@
         
 <!-- INICIO DE SECCIÓN: Botones de Acceso a Titan PRO y Soporte -->
 <!-- INICIO DE LA SECCIÓN DE PAGO (TCIS TITAN PRO) -->
-
 <div id="proUpgrade" class="mt-10 p-6 border-2 border-yellow-400 bg-yellow-50 rounded-xl text-center shadow-md">
     <h3 class="text-xl font-bold text-blue-800">TCIS TITAN PRO: CADENA DE EJECUCIÓN LOGOS</h3>
     <p class="mt-2 text-gray-700">Obtén el análisis estructurado de la IA y el **L.I.S. Scorecard** por solo **$4.99 USD/mes.**</p>
     
-    <!-- BLOQUE DE PAGO: IMPLEMENTACIÓN MODERNA CON PAYPAL SDK -->
     <div class="mt-4">
-        <!-- Contenedor donde se renderizará el botón de PayPal -->
         <div id="paypal-button-container-P-33398171NB044211UNE65YKA" class="block"></div>
     </div>
-
-    <!-- SCRIPTS DEL SDK DE PAYPAL -->
-    <script src="https://www.paypal.com/sdk/js?client-id=Ad5D0SGYDZUBG6ucm74UN76VRUVpOeFE0KTW2QmV5nZEfXsOD39R_phO6AtFGswwRaJC5o7_gJtfBipX&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
-    <script>
-        // Inicialización y renderizado del botón de suscripción
-        paypal.Buttons({
-            style: {
-                shape: 'rect',
-                color: 'gold', // Puedes cambiar esto a 'blue', 'silver', o 'black'
-                layout: 'vertical',
-                label: 'subscribe'
-            },
-            createSubscription: function(data, actions) {
-                // Crea la suscripción usando el plan ID funcional
-                return actions.subscription.create({
-                    plan_id: 'P-33398171NB044211UNE65YKA' 
-                });
-            },
-            onApprove: function(data, actions) {
-                // La suscripción fue exitosa
-                console.log('Suscripción aprobada. ID: ' + data.subscriptionID);
-                // NOTA: Implementa aquí la lógica para otorgar acceso PRO al usuario.
-            }
-        }).render('#paypal-button-container-P-33398171NB044211UNE65YKA');
-    </script>
     
-    <!-- Botón de Gratificación (Conservado) -->
     <div class="mt-4">
         <a href="https://www.paypal.com/ncp/payment/4D5QYC5JFSEGE" target="_blank" class="flex items-center justify-center bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-lg w-full transition duration-300 shadow-lg space-x-2">
-            <!-- Icono de tarjeta de crédito/pago para mayor claridad -->
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card w-5 h-5">
                 <rect width="20" height="14" x="2" y="5" rx="2" />
                 <line x1="2" x2="22" y1="10" y2="10" />
@@ -203,20 +173,102 @@
         </a>
     </div>
     
-    <!-- Botón de Soporte (Conservado) -->
     <div class="mt-4">
         <a href="https://wa.me/584124577822?text=Hola%2C%20necesito%20ayuda%20para%20acceder%20a%20TCIS%20TITAN%20PRO.%20Quiero%20saber%20sobre%20otros%20métodos%20de%20pago." target="_blank" class="flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg w-full transition duration-300 shadow-lg space-x-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-                <path d="M12 2C6.477 2 2 6.477 2 12c0 3.189 1.583 6.007 4.02 7.728l-.513 1.538 1.57-1.026A9.975 9.975 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm3.5 13.78c-.28 0-.55-.084-.78-.25l-2.02-1.35c-.2-.14-.42-.2-.65-.2-.16 0-.3.04-.45.1-.38.16-.65.48-.65.85v1.25c0 .37-.27.7-.65.85-.38.15-.79.16-1.16.03-.36-.12-.66-.37-.86-.73-1.02-1.85-1.52-4.1-1.52-6.26 0-.17.02-.34.05-.5.1-.4.4-.73.78-.86.38-.13.79-.12 1.15.03.36.15.65.4.85.75l.4.7c.07.12.12.26.12.4s-.04.28-.1.4l-1.02 1.35c-.14.18-.18.4-.1.6s.2.3.4.35c.18.05.37.05.55 0l.9-.3c.48-.15.82-.62.82-1.12v-1.25c0-.37.27-.7.65-.85.38-.15.79-.16 1.16-.03.36.12.66.37.86.73 1.02 1.85 1.52 4.1 1.52 6.26 0 .17-.02.34-.05.5-.1.4-.4.73-.78.86.38-.13.79-.12-1.15-.03-.36-.15-.65-.4-.85-.75l-.4-.7z"/>
+                <path d="M12 2C6.477 2 2 6.477 2 12c0 3.189 1.583 6.007 4.02 7.728l-.513 1.538 1.57-1.026A9.975 9.975 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm3.5 13.78c-.28 0-.55-.084-.78-.25l-2.02-1.35c-.2-.14-.42-.2-.65-.2-.16 0-.3.04-.45.1-.38.16-.65.48-.65.85v1.25c0 .37-.27.7-.65.85-.38.15-.79.16-1.16.03-.36-.12-.66-.37-.86-.73-1.02-1.85-1.52-4.1-1.52-6.26 0-.17.02-.34.05-.5.1-.4.4-.73.78-.86.38-.13.79-.12-1.15-.03-.36-.15-.65-.4-.85-.75l-.4-.7z"/>
             </svg>
             <span>SOPORTE Y OTROS PAGOS (WHATSAPP)</span>
         </a>
     </div>
 </div>
 
-<!-- FIN DE LA SECCIÓN DE PAGO (TCIS TITAN PRO) -->
-         </div>
-    </div>
+<script type="module">
+    // 1. Importar Librerías desde Google (CDN)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    // 2. TUS CREDENCIALES REALES DE TCIS TITAN 12
+    const firebaseConfig = {
+      apiKey: "AIzaSyDwlyMkTfH4FFmerYDKkDGh18NUKQQ4hP0",
+      authDomain: "tcis-titan-12.firebaseapp.com",
+      projectId: "tcis-titan-12",
+      storageBucket: "tcis-titan-12.firebasestorage.app",
+      messagingSenderId: "298942508038",
+      appId: "1:298942508038:web:a7107a1cdc65216ec96787",
+      measurementId: "G-F3J54D4M57"
+    };
+
+    // 3. Inicializar el Cerebro
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    let userId = null;
+
+    // Autenticación Silenciosa (Requisito: Activar 'Anonymous' en Firebase Console)
+    signInAnonymously(auth)
+        .then((userCredential) => {
+            userId = userCredential.user.uid;
+            console.log("Sistema TCIS: Usuario conectado anónimamente. ID:", userId);
+        })
+        .catch((error) => {
+            console.error("Error de conexión TCIS:", error);
+        });
+
+    // 4. Función para guardar el pago en la Memoria (Firebase)
+    async function registrarPagoExitoso(subscriptionId) {
+        if (!userId) return; 
+        
+        // Guardamos en: artifacts -> tcis-titan-12 -> users -> ID -> profile
+        const userRef = doc(db, "artifacts", "tcis-titan-12", "users", userId);
+        
+        try {
+            await setDoc(userRef, {
+                isPro: true,
+                plan: "TCIS TITAN PRO",
+                paypalSubscriptionId: subscriptionId,
+                fechaPago: new Date().toISOString(),
+                status: "ACTIVO"
+            }, { merge: true });
+            
+            console.log("¡ÉXITO! Pago registrado en Firebase.");
+            alert("¡Bienvenido al Nivel TITAN PRO! Tu acceso ha sido registrado.");
+        } catch (e) {
+            console.error("Error guardando en Firebase:", e);
+        }
+    }
+
+    // 5. Cargar PayPal y Renderizar Botón
+    const script = document.createElement('script');
+    script.src = "https://www.paypal.com/sdk/js?client-id=Ad5D0SGYDZUBG6ucm74UN76VRUVpOeFE0KTW2QmV5nZEfXsOD39R_phO6AtFGswwRaJC5o7_gJtfBipX&vault=true&intent=subscription";
+    script.setAttribute('data-sdk-integration-source', 'button-factory');
+    
+    script.onload = () => {
+        if (typeof paypal !== 'undefined') {
+            paypal.Buttons({
+                style: {
+                    shape: 'rect',
+                    color: 'gold',
+                    layout: 'vertical',
+                    label: 'subscribe'
+                },
+                createSubscription: function(data, actions) {
+                    return actions.subscription.create({
+                        plan_id: 'P-33398171NB044211UNE65YKA'
+                    });
+                },
+                onApprove: function(data, actions) {
+                    console.log('Pago Aprobado en PayPal:', data.subscriptionID);
+                    // AQUÍ OCURRE EL PUENTE NEURAL:
+                    registrarPagoExitoso(data.subscriptionID);
+                }
+            }).render('#paypal-button-container-P-33398171NB044211UNE65YKA');
+        }
+    };
+    
+    document.head.appendChild(script);
+                </script>
 
     <script type="module">
         // Importaciones de Firebase (SDK Modular)
@@ -459,6 +511,7 @@
     </script>
 </body>
 </html>
+
 
 
 
