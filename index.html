@@ -3,177 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TCIS TITAN 12 V2.3 | Protocolo de Decisión Inevitable</title>
+    <title>TCIS TITAN V2.4 | PROTOCOLO L.I.S.</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-        :root {
-            --color-primary: #1e3a8a;
-            --color-secondary: #fcd34d;
-            --color-success: #10b981;
-            --color-fail: #ef4444;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #0d1a2d; color: white; }
+        
+        /* Estilos Generales */
+        .titan-gradient { background: linear-gradient(90deg, #FFD700 0%, #FFA500 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .slider-thumb::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 25px; height: 25px; background: #FFD700; cursor: pointer; border-radius: 50%; }
+        .glass-panel { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        
+        /* ESTILOS DE TU NUEVO BOTÓN PAYPAL (NCP) */
+        .pp-JUQ6B9EU7YHZQ {
+            text-align: center;
+            border: none;
+            border-radius: 0.25rem;
+            min-width: 11.625rem;
+            padding: 0 2rem;
+            height: 2.625rem;
+            font-weight: bold;
+            background-color: #FFD140;
+            color: #000000;
+            font-family: "Helvetica Neue", Arial, sans-serif;
+            font-size: 1rem;
+            line-height: 1.25rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(255, 215, 0, 0.2);
         }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            padding: 1rem;
+        .pp-JUQ6B9EU7YHZQ:hover {
+            background-color: #ffbf00;
+            transform: scale(1.02);
+            box-shadow: 0 10px 15px rgba(255, 215, 0, 0.3);
         }
-        .output-success { border-left: 5px solid var(--color-success); background-color: #d1fae5; color: #065f46; }
-        .output-fail { border-left: 5px solid var(--color-fail); background-color: #fee2e2; color: #991b1b; }
-        .form-group label { font-weight: 600; display: block; margin-bottom: 0.5rem; color: var(--color-primary); }
-        .form-group input[type="text"], .form-group textarea, .form-group input[type="email"], .form-group input[type="password"] { width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 0.5rem; box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05); transition: border-color 0.2s; }
-        .form-group input[type="range"] { width: 85%; margin-right: 1rem; -webkit-appearance: none; appearance: none; height: 8px; background: #d1d5db; border-radius: 4px; }
-        .form-group input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; background: var(--color-primary); cursor: pointer; border-radius: 50%; }
-        .range-container { display: flex; align-items: center; }
-        .range-value { font-weight: 700; width: 3rem; text-align: right; color: var(--color-primary); }
     </style>
 </head>
-<body class="p-4 md:p-8">
-    <div class="container max-w-4xl w-full bg-white shadow-xl rounded-xl p-6 md:p-10">
-        <header class="mb-8 relative"> <h1 class="text-3xl md:text-4xl font-extrabold text-center text-gray-900 leading-tight">TCIS TITAN 12 V2.3</h1>
-            <p class="text-xl font-bold text-center text-gray-700 leading-tight mb-2">PROTOCOLO DE DECISIÓN INEVITABLE</p>
-            <p class="text-sm text-center text-gray-500 italic">Tasa de Conversión de Intención Soberana. Aplica la Ley Cero: Minimiza el riesgo **G**.</p>
-            
-            <div id="authStatus" class="text-xs text-center mt-3 p-2 bg-gray-100 rounded-lg">Cargando estado de usuario...</div>
-            
-            <button id="showAdminButton" class="text-xs text-gray-400 hover:text-yellow-400 absolute top-2 right-2 p-1 rounded-full border border-gray-700">MODO ADMIN</button>
-        </header>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-x-hidden">
+
+    <div class="absolute top-4 right-4 z-50">
+        <button onclick="toggleAdminPanel()" class="text-xs text-gray-500 hover:text-yellow-500 transition opacity-50 hover:opacity-100">MODO ADMIN</button>
+    </div>
+
+    <div id="adminPanel" class="hidden fixed inset-0 bg-black bg-opacity-95 flex items-center justify-center z-50 backdrop-blur-sm">
+        <div class="bg-gray-900 p-8 rounded-xl border border-yellow-500 max-w-sm w-full shadow-2xl">
+            <h3 class="text-xl font-bold text-yellow-400 mb-4 text-center">ACCESO ARQUITECTO</h3>
+            <input type="email" id="adminEmail" placeholder="Email Admin" class="w-full p-3 mb-3 bg-gray-800 rounded text-white border border-gray-700 focus:border-yellow-500 outline-none">
+            <input type="password" id="adminPass" placeholder="Contraseña" class="w-full p-3 mb-6 bg-gray-800 rounded text-white border border-gray-700 focus:border-yellow-500 outline-none">
+            <button onclick="loginAdmin()" class="w-full bg-yellow-500 text-black font-bold py-3 rounded hover:bg-yellow-400 transition transform active:scale-95">INICIAR SESIÓN SOBERANA</button>
+            <button onclick="toggleAdminPanel()" class="w-full mt-4 text-sm text-gray-500 hover:text-white">Cancelar</button>
+            <p id="loginError" class="text-red-500 text-xs mt-4 hidden text-center">Credenciales inválidas o falta Configuración.</p>
+        </div>
+    </div>
+
+    <div class="max-w-4xl w-full z-10 space-y-8 my-10">
         
-        <div class="bg-blue-50 border-l-4 border-blue-800 p-5 mb-8 rounded-lg">
-            <p class="font-bold text-blue-800 mb-2">AUDITORÍA CAUSAL TITÁN:</p>
-            <ul class="list-disc pl-5 text-sm text-blue-700 space-y-1">
-                <li>**EGT (Escala de Gravedad Titán):** Cuantifica tu riesgo para eliminar el miedo.</li>
-                <li>**Garantiza la Coherencia (L.I.S.):** Valida contra tu Identidad Fija definida.</li>
-            </ul>
-        </div>
-      
-        <form id="pdcForm" class="space-y-6">
-            <div class="form-group">
-                <label for="objective">1. ECO: Intención Soberana (El objetivo a ejecutar)</label>
-                <input type="text" id="objective" required placeholder="Ej: Lanzar mi MVP de IA en 3 meses.">
-            </div>
-            <div class="form-group">
-                <label for="identity">1.b. L.I.S. (Identidad Fija): Tu Propósito Central</label>
-                <input type="text" id="identity" required placeholder="Ej: Ser un proveedor sostenible de soluciones de gobernanza.">
-            </div>
-            <div class="form-group">
-                <label for="riskAction">2. FÉNIX | RIESGO G(A): Riesgo si INTENTA la acción (0-100)</label>
-                <div class="range-container">
-                    <input type="range" id="riskAction" min="0" max="100" value="50" oninput="updateRangeValue('riskAction', 'riskActionValue')">
-                    <span id="riskActionValue" class="range-value">50</span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="riskInaction">3. FÉNIX | RIESGO G(I): Riesgo si NO HACE NADA (0-100)</label>
-                <div class="range-container">
-                    <input type="range" id="riskInaction" min="0" max="100" value="50" oninput="updateRangeValue('riskInaction', 'riskInactionValue')">
-                    <span id="riskInactionValue" class="range-value">50</span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="resources">4. L.I.S. (Recursos Cuantificados): Menciona tus 3 Recursos Críticos</label>
-                <textarea id="resources" required rows="4" placeholder="Ej: 1. 20 horas a la semana. 2. $500 de capital de marketing..."></textarea>
-            </div>
-            <button type="submit" class="w-full bg-blue-800 hover:bg-blue-900 text-white font-bold py-3 px-4 rounded-lg shadow-lg transition duration-300">EJECUTAR AUDITORÍA TITÁN (LOGOS)</button>
-        </form>
-
-        <div id="output" class="mt-8 p-4 rounded-lg text-sm transition duration-300">El resultado de la Auditoría FÉNIX aparecerá aquí.</div>
-        
-        <div class="mt-12 pt-6 border-t border-gray-200">
-            <h2 class="text-2xl font-bold text-gray-800 mb-4">5. Memoria Gráfica del Usuario (MGU)</h2>
-            <p class="text-sm text-gray-500 mb-4">Historial de Decisiones FÉNIX. Es privado para cada sesión.</p>
-            <div id="historyContainer" class="space-y-4">
-                <p id="loadingHistory" class="text-gray-500 italic">Cargando historial de decisiones...</p>
-           </div>
+        <div class="text-center space-y-2">
+            <h1 class="text-5xl md:text-7xl font-black tracking-tighter titan-gradient">TCIS TITAN</h1>
+            <p class="text-blue-300 text-sm md:text-lg tracking-[0.2em] uppercase">Sistema de Auditoría de Intención Soberana</p>
+            <div class="h-1 w-24 mx-auto bg-yellow-500 rounded-full mt-4"></div>
         </div>
 
-        <div id="proUpgrade" class="mt-10 p-6 border-2 border-yellow-400 bg-yellow-50 rounded-xl text-center shadow-md">
-            <h3 class="text-xl font-bold text-blue-800">TCIS TITAN PRO: CADENA DE EJECUCIÓN LOGOS</h3>
-            <p class="mt-2 text-gray-700">Obtén el análisis estructurado de la IA y el **L.I.S. Scorecard** por solo **$4.99 USD/mes.**</p>
-            
-            <div class="mt-4">
-                <div id="paypal-button-container-P-33398171NB044211UNE65YKA" class="block"></div>
+        <div class="glass-panel p-6 md:p-10 rounded-3xl shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
+
+            <div class="mb-8 relative z-10">
+                <label class="block text-blue-400 text-xs font-bold uppercase mb-2 tracking-wider">1. ECO: INTENCIÓN SOBERANA</label>
+                <input type="text" id="intencion" class="w-full bg-black/40 border border-gray-700 rounded-xl p-4 text-white placeholder-gray-500 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none transition" placeholder="Ej: Lanzar mi proyecto de consultoría hoy...">
             </div>
-            
-            <div class="mt-4 space-y-4">
-                <a href="https://www.paypal.com/ncp/payment/4D5QYC5JFSEGE" target="_blank" class="flex items-center justify-center bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-lg w-full transition duration-300 shadow-lg space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" x2="22" y1="10" y2="10" /></svg>
-                    <span>GRATIFICACIÓN AL CREADOR</span>
-                </a>
-                <a href="https://wa.me/584124577822?text=Hola%2C%20necesito%20ayuda%20para%20acceder%20a%20TCIS%20TITAN%20PRO." target="_blank" class="flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg w-full transition duration-300 shadow-lg space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M12 2C6.477 2 2 6.477 2 12c0 3.189 1.583 6.007 4.02 7.728l-.513 1.538 1.57-1.026A9.975 9.975 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm3.5 13.78c-.28 0-.55-.084-.78-.25l-2.02-1.35c-.2-.14-.42-.2-.65-.2-.16 0-.3.04-.45.1-.38.16-.65.48-.65.85v1.25c0 .37-.27.7-.65.85-.38.15-.79.16-1.16.03-.36-.12-.66-.37-.86-.73-1.02-1.85-1.52-4.1-1.52-6.26 0-.17.02-.34.05-.5.1-.4.4-.73.78-.86.38-.13.79-.12-.15-.4z"/></svg>
-                    <span>SOPORTE (WHATSAPP)</span>
-                </a>
+
+            <div class="mb-10 relative z-10">
+                <label class="block text-yellow-500 text-xs font-bold uppercase mb-2 tracking-wider">1.b L.I.S. (LEY DE IDENTIDAD SOBERANA)</label>
+                <input type="text" id="identidad" class="w-full bg-black/40 border border-gray-700 rounded-xl p-4 text-white placeholder-gray-500 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none transition" placeholder="¿Cuál es su Identidad Fija? Ej: Soy Arquitecto de Sistemas...">
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 relative z-10">
+                <div class="bg-black/30 p-6 rounded-2xl border border-red-900/30 hover:border-red-500/50 transition">
+                    <div class="flex justify-between items-center mb-6">
+                        <label class="text-red-400 font-bold text-xs tracking-widest">FÉNIX | RIESGO G(A)</label>
+                        <span id="val-ga" class="text-3xl font-mono text-red-500 font-bold">50G</span>
+                    </div>
+                    <input type="range" id="ga" min="0" max="100" value="50" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer slider-thumb">
+                    <p class="text-[10px] text-gray-500 mt-3 uppercase">Costo de Intentar (Miedo, Error)</p>
+                </div>
+
+                <div class="bg-black/30 p-6 rounded-2xl border border-yellow-900/30 hover:border-yellow-500/50 transition">
+                    <div class="flex justify-between items-center mb-6">
+                        <label class="text-yellow-400 font-bold text-xs tracking-widest">FÉNIX | RIESGO G(I)</label>
+                        <span id="val-gi" class="text-3xl font-mono text-yellow-500 font-bold">50G</span>
+                    </div>
+                    <input type="range" id="gi" min="0" max="100" value="50" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer slider-thumb">
+                    <p class="text-[10px] text-gray-500 mt-3 uppercase">Costo de NO Hacer Nada (Obsolescencia)</p>
+                </div>
+            </div>
+
+            <button onclick="ejecutarAuditoria()" class="w-full bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-600 hover:from-yellow-500 hover:to-yellow-400 text-black font-black py-5 rounded-xl shadow-lg transform transition hover:scale-[1.01] text-lg md:text-xl tracking-[0.2em] uppercase border border-yellow-400/50">
+                EJECUTAR AUDITORÍA TITÁN
+            </button>
+        </div>
+
+        <div id="resultado" class="hidden glass-panel p-8 rounded-2xl border-l-4 border-yellow-500 animate-fade-in-up">
+            <h2 id="veredicto-titulo" class="text-3xl font-black mb-4 text-white"></h2>
+            <p id="veredicto-texto" class="text-lg text-gray-300 mb-6 leading-relaxed"></p>
+        </div>
+
+        <div id="proUpgrade" class="hidden mt-12 transform transition hover:scale-[1.005] duration-500">
+            <div class="p-[2px] rounded-2xl bg-gradient-to-r from-yellow-600 via-yellow-300 to-yellow-600 shadow-[0_0_50px_rgba(255,215,0,0.15)]">
+                <div class="bg-[#0f172a] rounded-2xl p-8 md:p-12 text-center relative overflow-hidden">
+                    
+                    <div class="absolute top-6 right-0 bg-red-600 text-white text-[10px] font-bold px-4 py-1 uppercase tracking-widest transform rotate-0 rounded-l-md shadow-lg">Oferta Lanzamiento Beta</div>
+
+                    <h3 class="text-2xl md:text-4xl font-black text-white mb-2 tracking-tight">TCIS TITAN PRO</h3>
+                    <p class="text-yellow-400 font-bold text-lg mb-6 tracking-widest">PROTOCOLO L.I.S. (LICENCIA PERSONAL)</p>
+                    
+                    <p class="text-gray-400 mb-8 max-w-2xl mx-auto text-sm leading-relaxed">
+                        Acceda al <strong class="text-white">Procedimiento Operativo Estandarizado (PDF)</strong> para eliminar la parálisis. Incluye la L.I.S. Scorecard y el acceso futuro al Agente IA.
+                    </p>
+                    
+                    <div class="flex items-end justify-center gap-2 mb-8">
+                        <span class="text-6xl font-black text-white">$5</span>
+                        <div class="text-left pb-2">
+                            <span class="block text-sm text-gray-400 line-through">$97.00</span>
+                            <span class="block text-xs text-yellow-500 font-bold uppercase">Pago Único</span>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        
+                        <div class="flex justify-center transform transition hover:scale-105 duration-300">
+                             <form action="https://www.paypal.com/ncp/payment/JUQ6B9EU7YHZQ" method="post" target="_blank" style="display:inline-grid;justify-items:center;align-content:start;gap:0.5rem;">
+                                <input class="pp-JUQ6B9EU7YHZQ" type="submit" value="DESCARGAR PROTOCOLO AHORA" />
+                                <img src="https://www.paypalobjects.com/images/Debit_Credit.svg" alt="cards" class="opacity-70 h-6" />
+                                <section style="font-size: 0.75rem; color:#6b7280;">Con la tecnología de <img src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-wordmark-color.svg" alt="paypal" style="height:0.875rem;vertical-align:middle; filter: grayscale(100%); opacity: 0.5;"/></section>
+                              </form>
+                        </div>
+
+                        <div class="flex items-center justify-center space-x-4 opacity-30">
+                            <div class="h-px w-10 bg-white"></div>
+                            <span class="text-xs uppercase">Soporte & Opciones</span>
+                            <div class="h-px w-10 bg-white"></div>
+                        </div>
+
+                        <div class="flex flex-col md:flex-row justify-center items-center gap-4">
+                            <a href="https://wa.me/584124577822?text=Hola%20Arquitecto,%20he%20realizado%20el%20pago%20del%20Protocolo%20TITAN.%20Solicito%20mi%20acceso." target="_blank" class="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-500 text-white text-xs font-bold rounded-lg transition shadow-lg border border-green-400/30">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                                <span>REPORTAR PAGO</span>
+                            </a>
+
+                            <a href="https://www.paypal.com/donate/?business=tcistitan@gmail.com&no_recurring=0&currency_code=USD" target="_blank" class="flex items-center gap-2 px-6 py-3 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs font-bold rounded-lg transition border border-gray-700">
+                                <span>☕ GRATIFICACIÓN AL CREADOR</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="mt-10 p-4 bg-red-900/20 border border-red-900/50 rounded-lg text-left">
+                        <p class="text-[10px] text-red-300 leading-relaxed font-mono">
+                            <strong class="text-red-400 uppercase">ADVERTENCIA CORPORATIVA / USO COMERCIAL:</strong><br>
+                            La Licencia TITAN PRO ($5) otorga derechos de uso estrictamente PERSONAL (Soberanía Individual). 
+                            Si usted representa una corporación (B2B) o busca implementar este protocolo para decisiones de Alto Capital (> $10k), 
+                            requiere una Licencia Comercial TITAN.
+                            <br><a href="#" class="underline hover:text-white">Contacte a Soporte para Licencias B2B.</a>
+                        </p>
+                    </div>
+
+                </div>
             </div>
         </div>
 
-        <div class="mt-8 p-6 bg-gray-900 border-2 border-gray-700 rounded-xl text-center shadow-lg">
-            <h3 class="text-lg font-bold text-white tracking-widest uppercase">Licenciamiento Corporativo & Gobierno</h3>
-            <p class="text-gray-400 text-xs mt-2 mb-4 px-4">
-                <span class="text-red-500 font-bold">ADVERTENCIA LEGAL:</span> La suscripción "Titan Pro" ($4.99) es una licencia estrictamente 
-                <strong>INDIVIDUAL y NO COMERCIAL</strong>. El uso de este algoritmo para decisiones corporativas, fusiones, 
-                políticas públicas o gestión de activos de alto valor requiere una <strong>Licencia de Gobernanza TITÁN (Enterprise)</strong>.
-            </p>
-            <div class="flex flex-col md:flex-row justify-center items-center gap-4 mt-4">
-                <div class="text-left text-gray-300 text-sm space-y-1">
-                    <p>✅ Agentes IA Dedicados (ADN Exclusivo)</p>
-                    <p>✅ Auditoría de Riesgo >$1M USD</p>
-                    <p>✅ Integración API Privada</p>
-                </div>
-            </div>
-            <a href="https://wa.me/584124577822?text=Soy%20representante%20de%20una%20Entidad/Corporación.%20Requiero%20información%20sobre%20la%20Licencia%20TITAN%20GOVERNANCE%20para%20alto%20nivel." 
-                target="_blank" 
-                class="mt-6 inline-block w-full md:w-auto bg-transparent hover:bg-white hover:text-black text-white border border-white font-bold py-2 px-6 rounded transition duration-300">
-                SOLICITAR ACCESO ENTERPRISE
-            </a>
-        </div>
-
-        <div id="titanContent" class="mt-10 p-8 border-2 border-blue-500 bg-blue-900 rounded-xl text-center shadow-2xl" style="display: none;">
-            <div class="mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-yellow-400 mx-auto animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-            </div>
-            <h2 class="text-3xl font-extrabold text-white tracking-widest">ACCESO CONCEDIDO</h2>
-            <p class="mt-4 text-xl text-blue-200">Bienvenido al Nivel Élite, Arquitecto.</p>
-            <div class="mt-8 space-y-4">
-                <div class="p-4 bg-gray-800 rounded-lg border border-gray-600">
-                    <h4 class="text-yellow-400 font-bold">1. L.I.S. SCORECARD</h4>
-                    <a href="#" class="inline-block bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-6 rounded transition mt-2">DESCARGAR PDF</a>
-                </div>
-                <div class="p-4 bg-gray-800 rounded-lg border border-gray-600">
-                    <h4 class="text-blue-400 font-bold">2. ANÁLISIS ESTRUCTURADO IA</h4>
-                    <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded transition mt-2">ACCEDER AHORA</a>
-                </div>
-            </div>
-            <p class="mt-6 text-xs text-gray-500">ID de Sesión: <span id="userSessionId" class="font-mono">...</span></p>
-        </div>
-        
-        <div id="adminLoginModule" class="mt-8 p-6 bg-gray-900 rounded-xl text-white shadow-xl relative" style="display: none;">
-            <h3 class="text-xl font-bold mb-4 border-b border-gray-700 pb-2">ACCESO DE ARQUITECTO</h3>
-            <p class="text-xs text-gray-400 mb-4">Ingrese sus credenciales únicas.</p>
-            <div class="space-y-4">
-                <input type="email" id="adminEmail" placeholder="Email de Administrador" class="w-full p-2 rounded text-black">
-                <input type="password" id="adminPassword" placeholder="Clave de Administrador" class="w-full p-2 rounded text-black">
-                <button id="adminLoginButton" class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 rounded transition duration-300">
-                    INICIAR SESIÓN SOBERANA
-                </button>
-                <p id="adminMessage" class="text-sm text-red-400 mt-2 hidden"></p>
-            </div>
+        <div class="text-center text-gray-600 text-xs mt-12 pb-4 font-mono">
+            <p>&copy; 2025 TCIS TITAN | V2.4 SECURE</p>
+            <p>Estado del Sistema: <span id="systemStatus" class="text-green-500 font-bold">EN LÍNEA</span></p>
         </div>
 
     </div>
 
     <script type="module">
-        // 1. IMPORTACIONES CENTRALIZADAS
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, addDoc, collection, query, onSnapshot, serverTimestamp, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // 2. CONFIGURACIÓN FIREBASE
+        // ------------------------------------------------------------------
+        // CONFIGURACIÓN FIREBASE (Modo Ciego)
+        // INSTRUCCIÓN: BORRA EL TEXTO ENTRE COMILLAS Y PEGA TU CLAVE NUEVA
+        // ------------------------------------------------------------------
         const firebaseConfig = {
-            apiKey: "AIzaSyDwlyMkTfH4FFmerYDKkDGh18NUKQQ4hP0",
+            apiKey: "---AIzaSyCCcS9E9nGEb2cg0vVjBGLX01G-McfjN-M  ---",
             authDomain: "tcis-titan-12.firebaseapp.com",
             projectId: "tcis-titan-12",
             storageBucket: "tcis-titan-12.firebasestorage.app",
@@ -182,227 +192,84 @@
             measurementId: "G-F3J54D4M57"
         };
         const appId = firebaseConfig.projectId;
+        // ------------------------------------------------------------------
 
-        // 3. INICIALIZACIÓN
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
         let userId = null;
 
-        // 4. FUNCIONES DE INTERFAZ (RANGOS)
-        const updateRangeValue = (inputId, valueId) => {
-            document.getElementById(valueId).textContent = document.getElementById(inputId).value;
-        };
-        window.updateRangeValue = updateRangeValue; 
-
-        // 5. LÓGICA DE PAGO Y DESBLOQUEO
-        const desbloquearContenido = (isAdmin = false) => {
-            document.getElementById('proUpgrade').style.display = 'none';
-            document.getElementById('titanContent').style.display = 'block';
-            document.getElementById('userSessionId').innerText = userId || (isAdmin ? "ADMIN_SOBERANO" : "PRO_USER");
-            document.getElementById('titanContent').scrollIntoView({ behavior: 'smooth' });
-        };
-        window.desbloquearContenido = desbloquearContenido; 
-
-        async function registrarPagoExitoso(subscriptionId) {
-            if (!userId) return;
-            try {
-                await setDoc(doc(db, "artifacts", appId, "users", userId), {
-                    isPro: true, plan: "TCIS TITAN PRO", paypalSubscriptionId: subscriptionId,
-                    fechaPago: new Date().toISOString(), status: "ACTIVO"
-                }, { merge: true });
-                console.log("Pago registrado.");
-                desbloquearContenido();
-            } catch (e) {
-                console.error("Error pago:", e);
-                desbloquearContenido();
-            }
-        }
-
-        // 6. LÓGICA DE AUTENTICACIÓN ADMINISTRATIVA
-        async function adminLogin() {
-            const email = document.getElementById('adminEmail').value;
-            const password = document.getElementById('adminPassword').value;
-            const messageEl = document.getElementById('adminMessage');
-
-            messageEl.textContent = '';
-            messageEl.classList.add('hidden');
-            
-            if (!email || !password) {
-                 messageEl.textContent = `VETO: Ingrese credenciales.`;
-                 messageEl.classList.remove('hidden');
-                 return;
-            }
-
-            try {
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                userId = userCredential.user.uid; 
-                
-                desbloquearContenido(true); 
-                document.getElementById('adminLoginModule').style.display = 'none';
-                document.getElementById('authStatus').innerHTML = `Estado: <span class="font-semibold text-yellow-600">ADMINISTRADOR</span> | ID: <span class="font-mono text-xs">${userId}</span>`;
-                loadDecisionHistory();
-            
-            } catch (error) {
-                console.error("Error de Admin Login:", error);
-                messageEl.textContent = `VETO: Credenciales no reconocidas. ${error.code}`;
-                messageEl.classList.remove('hidden');
-            }
-        }
-
-
-        // 7. AUTENTICACIÓN Y ARRANQUE INICIAL
-        signInAnonymously(auth).catch((error) => console.error("Error Auth:", error));
-
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 userId = user.uid;
-                const statusEl = document.getElementById('authStatus');
-                
-                const checkProStatus = async () => {
-                    const userDocRef = doc(db, "artifacts", appId, "users", userId);
-                    const userDoc = await getDoc(userDocRef);
-                    const isPro = userDoc.exists() && userDoc.data().isPro;
-
-                    if (!user.isAnonymous) { 
-                        desbloquearContenido(true);
-                        statusEl.innerHTML = `Estado: <span class="font-semibold text-yellow-600">ADMINISTRADOR</span> | ID: <span class="font-mono text-xs">${userId}</span>`;
-                    } else if (isPro) { 
-                        desbloquearContenido();
-                        statusEl.innerHTML = `Estado: <span class="font-semibold text-green-700">PRO SOSTENIBLE</span> | ID: <span class="font-mono text-xs">${userId}</span>`;
-                    } else { 
-                        statusEl.innerHTML = `Estado: <span class="font-semibold text-green-700">OPERATIVO</span> | ID: <span class="font-mono text-xs">${userId}</span>`;
-                    }
-                };
-
-                checkProStatus();
-                loadDecisionHistory(); 
-            }
-        });
-        
-        // 8. LÓGICA DE AUDITORÍA (DECISIONES FÉNIX)
-        async function calculatePDC(event) {
-            event.preventDefault();
-            if (!userId) {
-                alert("Esperando conexión con el sistema... intente en unos segundos.");
-                return;
-            }
-
-            const objective = document.getElementById('objective').value;
-            const identity = document.getElementById('identity').value;
-            const riskAction = parseInt(document.getElementById('riskAction').value);
-            const riskInaction = parseInt(document.getElementById('riskInaction').value);
-            const resources = document.getElementById('resources').value;
-            const outputDiv = document.getElementById('output');
-            const proUpgradeDiv = document.getElementById('proUpgrade');
-
-            outputDiv.className = 'mt-8 p-4 rounded-lg text-sm transition duration-300';
-            let finalDecision, resultText;
-            const titanContentVisible = document.getElementById('titanContent').style.display === 'block';
-
-            if (riskAction < riskInaction) {
-                finalDecision = "MANDATO DE EJECUCIÓN (ACI): DECISIÓN INEVITABLE";
-                resultText = `<p class="font-bold text-lg mb-2">${finalDecision}</p>
-                              <p class="font-semibold">**LEY CERO APROBADA:** Riesgo Acción < Riesgo Inacción. Ejecute.</p>`;
-                outputDiv.classList.add('output-success');
-                outputDiv.innerHTML = resultText;
-                
-                if (!titanContentVisible) {
-                    proUpgradeDiv.style.display = 'block'; 
-                } else {
-                    proUpgradeDiv.style.display = 'none';
-                }
-                
+                console.log("Soberanía Conectada:", userId);
+                document.getElementById('systemStatus').innerText = "OPERATIVO | ID: " + userId.substring(0,6);
             } else {
-                finalDecision = "VETO TITÁN: PARÁLISIS OPERATIVA REQUERIDA";
-                resultText = `<p class="font-bold text-lg mb-2">${finalDecision}</p>
-                              <p class="font-semibold">**LEY CERO VIOLADA:** Riesgo Acción >= Riesgo Inacción. Reevalúe.</p>`;
-                outputDiv.classList.add('output-fail');
-                outputDiv.innerHTML = resultText;
-                proUpgradeDiv.style.display = 'none';
+                signInAnonymously(auth).catch(console.error);
             }
-
-            try {
-                await addDoc(collection(db, `artifacts/${appId}/users/${userId}/decisiones_fenix`), {
-                    objective, identity, riskAction, riskInaction, resources, decision: finalDecision,
-                    timestamp: serverTimestamp()
-                });
-            } catch (e) { console.error("Error guardando decisión:", e); }
-        }
-
-        // 9. LÓGICA DE HISTORIAL (MGU)
-        function loadDecisionHistory() {
-            if (!userId) return;
-            const q = query(collection(db, `artifacts/${appId}/users/${userId}/decisiones_fenix`));
-            onSnapshot(q, (snapshot) => {
-                const decisions = [];
-                snapshot.forEach(doc => decisions.push({ id: doc.id, ...doc.data() }));
-                decisions.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
-                
-                const container = document.getElementById('historyContainer');
-                if (!container) return;
-                
-                if (decisions.length === 0) {
-                    container.innerHTML = '<p class="text-gray-500 italic">Sin registros aún.</p>';
-                    return;
-                }
-
-                container.innerHTML = decisions.map(d => {
-                    const date = d.timestamp ? new Date(d.timestamp.seconds * 1000).toLocaleString('es-ES') : 'Fecha desconocida';
-                    const isExec = d.decision && d.decision.includes('EJECUCIÓN');
-                    return `
-                        <div class="p-4 border-l-4 rounded-lg shadow-sm ${isExec ? 'border-green-600 bg-green-50' : 'border-red-600 bg-red-50'}">
-                            <div class="flex justify-between font-bold ${isExec ? 'text-green-800' : 'text-red-800'}">
-                                <span>${isExec ? 'EJECUTAR' : 'VETO'}</span><span class="text-xs text-gray-500 font-normal">${date}</span>
-                            </div>
-                            <p class="text-sm font-semibold text-gray-800 mt-1">${d.objective}</p>
-                        </div>`;
-                }).join('');
-            });
-        }
-
-        // 10. CARGAR PAYPAL Y LISTENERS
-        document.addEventListener('DOMContentLoaded', () => {
-            updateRangeValue('riskAction', 'riskActionValue');
-            updateRangeValue('riskInaction', 'riskInactionValue');
-            
-            document.getElementById('pdcForm').addEventListener('submit', calculatePDC);
-
-            const adminLoginButton = document.getElementById('adminLoginButton');
-            if (adminLoginButton) {
-                adminLoginButton.addEventListener('click', adminLogin);
-            }
-            
-            // Listener del botón de emergencia (MODO ADMIN)
-            const showAdminButton = document.getElementById('showAdminButton');
-            if (showAdminButton) {
-                showAdminButton.addEventListener('click', () => {
-                    const module = document.getElementById('adminLoginModule');
-                    module.style.display = module.style.display === 'none' ? 'block' : 'none';
-                    if(module.style.display === 'block') {
-                        document.getElementById('adminEmail').focus();
-                    }
-                });
-            }
-
-            // Cargar Script de PayPal dinámicamente
-            const scriptPP = document.createElement('script');
-            scriptPP.src = "https://www.paypal.com/sdk/js?client-id=Ad5D0SGYDZUBG6ucm74UN76VRUVpOeFE0KTW2QmV5nZEfXsOD39R_phO6AtFGswwRaJC5o7_gJtfBipX&vault=true&intent=subscription";
-            scriptPP.setAttribute('data-sdk-integration-source', 'button-factory');
-            scriptPP.onload = () => {
-                if (typeof paypal !== 'undefined' && document.getElementById('paypal-button-container-P-33398171NB044211UNE65YKA')) {
-                    paypal.Buttons({
-                        style: { shape: 'rect', color: 'gold', layout: 'vertical', label: 'subscribe' },
-                        createSubscription: (data, actions) => actions.subscription.create({ plan_id: 'P-33398171NB044211UNE65YKA' }),
-                        onApprove: (data, actions) => {
-                            console.log('Pago Aprobado:', data.subscriptionID);
-                            registrarPagoExitoso(data.subscriptionID);
-                        }
-                    }).render('#paypal-button-container-P-33398171NB044211UNE65YKA');
-                }
-            };
-            document.head.appendChild(scriptPP);
         });
+
+        window.updateSliders = () => {
+            document.getElementById('val-ga').innerText = document.getElementById('ga').value + 'G';
+            document.getElementById('val-gi').innerText = document.getElementById('gi').value + 'G';
+        }
+        document.getElementById('ga').addEventListener('input', window.updateSliders);
+        document.getElementById('gi').addEventListener('input', window.updateSliders);
+
+        window.ejecutarAuditoria = async () => {
+            const intencion = document.getElementById('intencion').value;
+            const identidad = document.getElementById('identidad').value;
+            const ga = parseInt(document.getElementById('ga').value);
+            const gi = parseInt(document.getElementById('gi').value);
+
+            if(!intencion || !identidad) { alert("ERROR: Defina Intención e Identidad."); return; }
+
+            let titulo = "", texto = "", color = "";
+            
+            if (ga < gi) {
+                titulo = "MANDATO DE EJECUCIÓN (ACI)";
+                texto = `**LEY CERO APROBADA:** El riesgo de parálisis (${gi}G) supera al costo de acción (${ga}G).<br>La inacción es matemáticamente injustificable.`;
+                color = "text-green-400";
+                
+                const offer = document.getElementById('proUpgrade');
+                offer.classList.remove('hidden');
+                offer.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                titulo = "VETO TITÁN: PARÁLISIS DE RIESGO";
+                texto = `**ALERTA CAUSAL:** El costo de actuar (${ga}G) es demasiado alto. Necesita reestructurar la Intención para bajar el Riesgo G(A).`;
+                color = "text-red-500";
+                document.getElementById('proUpgrade').classList.add('hidden');
+            }
+
+            const resDiv = document.getElementById('resultado');
+            resDiv.classList.remove('hidden');
+            document.getElementById('veredicto-titulo').innerText = titulo;
+            document.getElementById('veredicto-titulo').className = "text-2xl md:text-3xl font-black mb-4 " + color;
+            document.getElementById('veredicto-texto').innerHTML = texto;
+
+            if(userId) {
+                try {
+                    await setDoc(doc(db, "artifacts", "tcis-titan-12", "audits", userId + "_" + Date.now()), {
+                        uid: userId, ts: serverTimestamp(), intent: intencion,
+                        ga: ga, gi: gi, result: titulo
+                    });
+                } catch(e) { console.log("Log stored locally."); }
+            }
+        };
+
+        window.toggleAdminPanel = () => document.getElementById('adminPanel').classList.toggle('hidden');
+        window.loginAdmin = () => {
+            const e = document.getElementById('adminEmail').value;
+            const p = document.getElementById('adminPass').value;
+            signInWithEmailAndPassword(auth, e, p).then(() => {
+                document.getElementById('adminPanel').classList.add('hidden');
+                alert("Bienvenido, Arquitecto. Controles Soberanos Activados.");
+            }).catch(() => document.getElementById('loginError').classList.remove('hidden'));
+        };
     </script>
 </body>
 </html>
