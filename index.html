@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TCIS TITAN V7.0 | Integridad Total y SDK de Pago</title>
+    <title>TCIS TITAN V7.1 | Integridad Total y Pago Local</title>
     <style>
         /* ESTILOS GLOBALES NATIVOS */
         body {
@@ -56,7 +56,7 @@
         #paypal-button-container {
             margin-top: 15px;
             display: none; /* Controlado por JS, OCULTO por defecto */
-            background: #ffffff; /* Fondo blanco para contraste del botón */
+            background: #ffffff; 
             padding: 10px;
             border-radius: 8px;
         }
@@ -101,7 +101,6 @@
             color: white;
             box-sizing: border-box;
         }
-        .text-purple { color: #d946ef; }
         .text-yellow { color: #f59e0b; }
         .text-green { color: #10b981; }
         .text-red { color: #ef4444; }
@@ -119,9 +118,9 @@
     <div class="master-container">
 
         <header style="text-align: center; margin-bottom: 40px;">
-            <h1 style="font-size: 40px; font-weight: bold; color: #d946ef; margin-bottom: 8px;">TCIS TITAN V7.0</h1>
+            <h1 style="font-size: 40px; font-weight: bold; color: #d946ef; margin-bottom: 8px;">TCIS TITAN V7.1</h1>
             <p style="font-size: 20px; color: #d1d5db;">El Sistema Operativo del Alquiler Mental</p>
-            <p style="font-size: 12px; color: #6b7280; margin-top: 8px;">INTEGRIDAD TOTAL: Funcionalidad Garantizada.</p>
+            <p style="font-size: 12px; color: #6b7280; margin-top: 8px;">INTEGRIDAD TOTAL: Pago Local & Global.</p>
         </header>
 
         <div id="auditoria">
@@ -174,7 +173,7 @@
                     </div>
                     
                     <p id="paypal-action-prompt" style="text-align: center; font-size: 16px; color: #d946ef; font-weight: bold; margin-bottom: 10px;">
-                        ACCESO INMEDIATO:
+                        ACCESO GLOBAL (TARJETA/PAYPAL):
                     </p>
 
                     <div id="paypal-button-container">
@@ -185,8 +184,12 @@
                         <p style="font-size: 12px; color: #9ca3af; margin-top: 5px;">Aceptamos Tarjeta de Crédito/Débito. El sistema detectará su pago automáticamente.</p>
                     </div>
 
-                    <a id="whatsapp-link" href="https://wa.me/XXXXXXXXXX" target="_blank" class="master-button whatsapp-btn" style="margin-top: 25px;">
-                        <span>CONTACTO B2B (LICENCIA COMERCIAL)</span>
+                    <div style="text-align: center; margin-top: 35px; padding-top: 20px; border-top: 1px solid #374151;">
+                        <p style="font-size: 14px; color: #facc15; font-weight: bold; margin-bottom: 10px;">OPCIÓN LOCAL (VENEZUELA): Pago Móvil / Zelle</p>
+                    </div>
+
+                    <a id="whatsapp-link" href="https://wa.me/XXXXXXXXXX" target="_blank" class="master-button whatsapp-btn" style="margin-top: 10px;">
+                        <span>ACTIVAR PAGO MÓVIL / SOPORTE B2B</span>
                     </a>
 
                     <div style="margin-top: 20px; padding: 15px; background-color: rgba(185, 28, 28, 0.2); border-left: 4px solid #facc15; border-radius: 6px;">
@@ -202,7 +205,7 @@
 
 
         <footer style="text-align: center; font-size: 12px; color: #6b7280;">
-            <p>© 2025 TCIS TITAN | V7.0 INTEGRIDAD</p>
+            <p>© 2025 TCIS TITAN | V7.1 INTEGRIDAD</p>
             <p id="estado-sistema" style="margin-top: 4px;">Estado del Sistema: Desconectado</p>
         </footer>
 
@@ -211,13 +214,12 @@
     <script src="https://www.paypal.com/sdk/js?client-id=Ad5D0SGYDZUBG6ucm74UN76VRUVpOeFE0KTW2QmV5nZEfXsOD39R_phO6AtFGswwRaJC5o7_gJtfBipX&currency=USD"></script>
     
     <script type="module">
-        // Importaciones de Firebase (Versiones estables)
+        // Importaciones de Firebase 
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
         import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
 
         // === CONFIGURACIÓN CRÍTICA (PEGA TUS VALORES REALES AQUÍ) ===
-        // Usamos la estructura de objeto estático para GitHub Pages
         const firebaseConfig = {
             apiKey: "AIzaSyCCcS9E9nGEb2cg0vVjBGLX01G-McfjN-M", // 🚨 1. PEGA TU CLAVE API REAL AQUÍ
             authDomain: "tcis-titan-12.firebaseapp.com",
@@ -226,7 +228,7 @@
             messagingSenderId: "298942508038",
             appId: "1:298942508038:web:a7107a1cdc65216ec96787"
         };
-        const APP_ID_CUSTOM = "tcis-titan-12"; // ID de la aplicación para el path de Firestore
+        const APP_ID_CUSTOM = "tcis-titan-12"; 
         const WHATSAPP_NUMBER = "04124577822"; // 🚨 2. PEGA TU NÚMERO DE WHATSAPP REAL AQUÍ
         const REDIRECT_URL_SUCCESS = "https://tcistitan-redireccion.pages.dev/";
         // ====================================================================
@@ -257,7 +259,7 @@
         giSlider.addEventListener('input', updateSliderValues);
         updateSliderValues();
 
-        // Inicialización y Autenticación FÉNIX (Adaptado a GitHub Pages)
+        // Inicialización y Autenticación FÉNIX 
         const initializeFirebase = async () => {
             try {
                 if (firebaseConfig.apiKey && firebaseConfig.apiKey !== "TU_CLAVE_API_AQUI") {
@@ -265,7 +267,6 @@
                     auth = getAuth(app);
                     db = getFirestore(app);
                     
-                    // Autenticación Anónima (para registrar data sin login)
                     onAuthStateChanged(auth, async (user) => {
                         if (user) {
                             userId = user.uid;
@@ -289,10 +290,9 @@
 
         // --- Renderizado del Botón de PayPal (SDK) ---
         const renderPayPalButton = () => {
-            // Asegura que el SDK se haya cargado antes de intentar renderizar
             if (isPayPalRendered || typeof paypal === 'undefined') {
                 if (typeof paypal === 'undefined') {
-                    console.error("ERROR PAYPAL: El SDK no está definido. Revisa la carga del script.");
+                    console.error("ERROR PAYPAL: El SDK no está definido.");
                 }
                 return;
             }
@@ -319,11 +319,9 @@
                     });
                 },
                 onApprove: function(data, actions) {
-                    console.log('✅ PAYPAL APROBADO. ID Orden:', data.orderID);
                     return actions.order.capture().then(async function(details) {
                         alert(`¡Pago Exitoso, ${details.payer.name.given_name}! Su acceso TITAN PRO se está activando.`);
                         
-                        // ULTIMATE LEVEL: ACTIVACIÓN AUTOMÁTICA EN FIREBASE
                         if (isFirebaseConnected && userId && db) {
                             try {
                                 const userDocPath = `artifacts/${APP_ID_CUSTOM}/users/${userId}/profile`;
@@ -333,23 +331,19 @@
                                     email: details.payer.email_address,
                                     updatedAt: serverTimestamp()
                                 }, { merge: true });
-                                console.log("BASE DE DATOS ACTUALIZADA: Usuario es ahora PRO.");
                             } catch(e) {
                                 console.error("Error al guardar perfil PRO:", e);
                             }
                         }
-                        // Redirigir a la página de Gracias
                         window.location.href = REDIRECT_URL_SUCCESS; 
                     });
                 },
                 onError: function(err) {
-                    console.error("Error PayPal:", err);
                     alert("Hubo un problema con el pago. Por favor intente nuevamente o use el contacto B2B.");
                 }
             }).render('#paypal-button-container');
             
             isPayPalRendered = true;
-            console.log("SDK: Botón renderizado.");
         };
 
         // LÓGICA AGENTE FÉNIX
@@ -369,18 +363,16 @@
             let titulo = ''; let subtitulo = ''; let color = '';
 
             if (gi > ga) {
-                // EJECUCIÓN INEVITABLE -> MOSTRAR SDK PAYPAL
                 titulo = "✅ EJECUCIÓN INEVITABLE";
                 subtitulo = "La Ley Cero es clara: ¡Actúa ahora! El Protocolo L.I.S. (Pago) está Disponible.";
-                color = '#10b981'; // Verde
+                color = '#10b981'; 
                 
                 resultadoDiv.style.display = 'block';
-                paypalButtonContainer.style.display = 'block'; // Mostrar contenedor
+                paypalButtonContainer.style.display = 'block'; 
                 
-                renderPayPalButton(); // Asegura el renderizado
+                renderPayPalButton(); 
                 
             } else {
-                // VETO O PARÁLISIS -> OCULTAR PAGO
                 if (ga > gi) {
                     titulo = "🛑 VETO DE FÉNIX";
                     subtitulo = "Reestructuración necesaria. El costo/miedo es demasiado alto. No se recomienda la acción.";
@@ -392,7 +384,7 @@
                 }
                 
                 resultadoDiv.style.display = 'block';
-                paypalButtonContainer.style.display = 'none'; // Ocultar contenedor
+                paypalButtonContainer.style.display = 'none'; 
             }
 
             tituloResultado.textContent = titulo;
@@ -402,7 +394,7 @@
             // Registro en CRONOS (Firestore)
             if (isFirebaseConnected && db && userId) { 
                 try {
-                    const auditPath = `artifacts/${APP_ID_CUSTOM}/audits`; // Path simple para audiciones
+                    const auditPath = `artifacts/${APP_ID_CUSTOM}/audits`; 
                     await setDoc(doc(db, auditPath, crypto.randomUUID()), {
                         uid: userId, 
                         ts: serverTimestamp(), 
@@ -411,7 +403,6 @@
                         gi: gi, 
                         result: titulo
                     });
-                    console.log("CRONOS: Auditoría registrada.");
                 } catch(e) { 
                     console.error("CRONOS: Error registro.", e); 
                 }
