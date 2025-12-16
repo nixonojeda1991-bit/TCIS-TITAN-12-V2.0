@@ -3,192 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TCIS TITAN V5.3 | Estabilidad y Resiliencia Visual</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>TCIS TITAN V7.0 | Integridad Total y SDK de Pago</title>
     <style>
-        /* Estilos CSS Alquímicos (Mayor Espacio y Contraste) */
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 18px; 
-            width: 18px;
-            border-radius: 50%;
-            background: #d946ef; /* Morado/Púrpura para Contraste */
-            cursor: pointer;
-            margin-top: -7px; 
-            box-shadow: 0 0 8px rgba(217, 70, 239, 0.7);
-        }
+        /* ESTILOS GLOBALES NATIVOS */
         body {
             background-color: #000000; 
             color: #E0E0E0; 
-            padding: 4rem 1rem; /* Más Padding Global */
+            font-family: 'Inter', Arial, sans-serif;
+            padding: 40px 15px; 
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
         }
         .master-container {
+            width: 100%;
+            max-width: 600px;
             background-color: #1a1a1a;
-            border-color: #333333;
-            padding: 3rem; /* Más Padding Interno */
-        }
-        .auditoria-panel {
-            padding: 2rem; /* Más espacio dentro de los paneles */
+            border: 1px solid #333333;
+            padding: 30px; 
             border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
-        /* Estilos CSS BÁSICOS de emergencia para enlaces (Asegura visibilidad si Tailwind colapsa) */
-        .basic-button {
-            display: block;
-            text-align: center;
-            padding: 1rem;
-            border-radius: 0.75rem;
+        /* ESTILOS DE BOTONES Y FORMULARIO */
+        .master-button {
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 15px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
             font-weight: bold;
-            transition: background-color 0.3s;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s, box-shadow 0.3s;
+            text-decoration: none;
+            color: white;
+            box-sizing: border-box;
+        }
+        .master-button span { margin-left: 8px; }
+        .master-button:active { transform: scale(0.98); }
+        .auditoria-btn {
+            background-color: #d946ef; /* Púrpura */
+            box-shadow: 0 4px 10px rgba(217, 70, 239, 0.4);
+        }
+        .auditoria-btn:hover { background-color: #c026d3; }
+
+        /* CONTENEDOR DE PAYPAL SDK (OCULTAR POR DEFECTO) */
+        #paypal-button-container {
+            margin-top: 15px;
+            display: none; /* Controlado por JS, OCULTO por defecto */
+            background: #ffffff; /* Fondo blanco para contraste del botón */
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .whatsapp-btn {
+            background-color: #10b981; /* Verde WhatsApp */
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4);
+        }
+        .whatsapp-btn:hover { background-color: #059669; }
+        .resultado-panel {
+            background-color: #242424;
+            border: 1px solid #3d3d3d;
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+        /* SLIDERS */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 10px;
+            background: #4b5563; 
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            background: #d946ef;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(217, 70, 239, 0.7);
+        }
+        /* TEXTOS Y CAMPOS */
+        input[type=text], input[type=email], input[type=password] {
+            width: 100%;
+            padding: 12px;
+            background-color: #000000;
+            border: 1px solid #4b5563;
+            border-radius: 6px;
+            color: white;
+            box-sizing: border-box;
+        }
+        .text-purple { color: #d946ef; }
+        .text-yellow { color: #f59e0b; }
+        .text-green { color: #10b981; }
+        .text-red { color: #ef4444; }
+        .validation-error {
+            color: #ef4444;
+            font-size: 14px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            font-weight: bold;
         }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
+<body>
 
-    <div class="w-full max-w-2xl master-container rounded-2xl shadow-2xl border">
+    <div class="master-container">
 
-        <header class="text-center mb-12">
-            <h1 class="text-5xl font-extrabold text-[#d946ef] mb-3 tracking-wider">TCIS TITAN V5.3</h1>
-            <p class="text-2xl font-light text-white/90">El Sistema Operativo del Alquiler Mental</p>
-            <p class="text-sm text-gray-500 mt-2">Integridad Total: FÉNIX, LOGOS, CRONOS. Resiliencia Visual.</p>
+        <header style="text-align: center; margin-bottom: 40px;">
+            <h1 style="font-size: 40px; font-weight: bold; color: #d946ef; margin-bottom: 8px;">TCIS TITAN V7.0</h1>
+            <p style="font-size: 20px; color: #d1d5db;">El Sistema Operativo del Alquiler Mental</p>
+            <p style="font-size: 12px; color: #6b7280; margin-top: 8px;">INTEGRIDAD TOTAL: Funcionalidad Garantizada.</p>
         </header>
 
-        <div id="auditoria" class="space-y-10">
+        <div id="auditoria">
 
-            <div class="bg-[#242424] auditoria-panel border border-[#3d3d3d]">
-                <h3 class="text-xl font-bold text-white mb-2">1. Intención Pura (ECO)</h3>
-                <p class="text-sm text-gray-400 mb-4">Define el objetivo que la inercia está congelando (IVG).</p>
-                <input type="text" id="intencion" placeholder="Ej: Lanzar mi Red Social de Conciencia" class="w-full p-3 bg-black/40 border border-gray-600 rounded-md text-white focus:ring-[#d946ef] focus:border-[#d946ef]">
+            <div class="auditoria-panel" style="margin-bottom: 25px;">
+                <h3 style="font-size: 20px; font-weight: bold; color: white; margin-bottom: 10px;">1. Intención Pura (ECO)</h3>
+                <p style="font-size: 14px; color: #9ca3af; margin-bottom: 15px;">Define el objetivo que la inercia está congelando (IVG).</p>
+                <input type="text" id="intencion" placeholder="Ej: Lanzar mi Red Social de Conciencia">
+                <p id="intencion-error" class="validation-error" style="display: none;">ECO requiere la Intención Pura (Paso 1).</p>
             </div>
 
-            <div class="bg-[#242424] auditoria-panel border border-[#3d3d3d]">
-                <h3 class="text-xl font-bold text-white mb-4">2. Auditoría FÉNIX (Ley Cero)</h3>
-                <p class="text-sm text-gray-400 mb-6">Cuantifica las fuerzas de Arquímedes (G(A) vs G(I)).</p>
+            <div class="auditoria-panel" style="margin-bottom: 30px;">
+                <h3 style="font-size: 20px; font-weight: bold; color: white; margin-bottom: 20px;">2. Auditoría FÉNIX (Ley Cero)</h3>
 
-                <label for="ga" class="block text-sm font-medium text-gray-300 mb-2">G(A): El Miedo/Costo de Intentarlo - (0% a 100%)</label>
-                <input type="range" id="ga" min="0" max="100" value="50" class="w-full h-3 bg-gray-700 rounded-lg appearance-none cursor-pointer range-lg">
-                <p id="ga-valor" class="text-right text-red-500 font-bold mb-6">50%</p>
-
-                <label for="gi" class="block text-sm font-medium text-gray-300 mb-2">G(I): El Arrepentimiento/Obsolescencia Futura - (0% a 100%)</label>
-                <input type="range" id="gi" min="0" max="100" value="50" class="w-full h-3 bg-gray-700 rounded-lg appearance-none cursor-pointer range-lg">
-                <p id="gi-valor" class="text-right text-green-500 font-bold mb-6">50%</p>
+                <label for="ga" style="display: block; font-size: 14px; color: #9ca3af; margin-bottom: 8px;">G(A): El Miedo/Costo de Intentarlo - <span id="ga-valor" style="color: #ef4444;">50%</span></label>
+                <input type="range" id="ga" min="0" max="100" value="50">
+                
+                <label for="gi" style="display: block; font-size: 14px; color: #9ca3af; margin-bottom: 8px;">G(I): El Arrepentimiento/Obsolescencia Futura - <span id="gi-valor" style="color: #10b981;">50%</span></label>
+                <input type="range" id="gi" min="0" max="100" value="50">
+                <p style="font-size: 12px; color: #9ca3af; text-align: center; margin-top: 15px;">
+                    Para activar el protocolo L.I.S., G(I) debe ser mayor que G(A).
+                </p>
             </div>
             
-            <button onclick="ejecutarAuditoria()" class="w-full p-5 bg-[#d946ef] hover:bg-[#c026d3] text-white text-lg font-extrabold rounded-xl transition shadow-xl shadow-[#a855f7]/50 tracking-wide">
+            <button onclick="ejecutarAuditoria()" class="master-button auditoria-btn">
                 EJECUTAR AUDITORÍA TITÁN
             </button>
         </div>
         
-        <hr class="my-12 border-gray-700">
+        <hr style="border: 0; height: 1px; background: #374151; margin: 40px 0;">
 
-        <div id="resultado" class="p-0 hidden">
-            <h2 class="text-2xl font-bold text-white mb-6 border-b border-gray-700 pb-3">3. ANÁLISIS DE LA FRICCIÓN (LOGOS)</h2>
-            <div class="p-8 bg-[#242424] border border-[#3d3d3d] rounded-xl">
-                <h3 id="titulo-resultado" class="text-3xl font-extrabold text-center text-white mb-4"></h3>
-                <p id="subtitulo-resultado" class="text-md text-center text-gray-400 mb-6"></p>
+        <div id="resultado" style="display: none;">
+            <h2 style="font-size: 22px; font-weight: bold; color: white; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #374151;">3. ANÁLISIS DE LA FRICCIÓN (LOGOS)</h2>
+            <div class="resultado-panel">
+                <h3 id="titulo-resultado" style="font-size: 28px; font-weight: bold; text-align: center; margin-bottom: 15px;"></h3>
+                <p id="subtitulo-resultado" style="font-size: 16px; text-align: center; color: #9ca3af; margin-bottom: 30px;"></p>
 
-                <div class="space-y-5">
+                <div>
 
-                    <div class="flex items-center justify-between p-4 bg-black/40 border border-[#a855f7]/50 rounded-lg">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background-color: rgba(0, 0, 0, 0.4); border: 1px solid #6b21a8; border-radius: 8px; margin-bottom: 20px;">
                         <div>
-                            <h3 class="text-xl font-bold text-white">TCIS TITAN PRO</h3>
-                            <p class="text-xs text-gray-400">PROTOCOLO L.I.S. (LICENCIA PERSONAL)</p>
+                            <h3 style="font-size: 18px; font-weight: bold; color: white;">TCIS TITAN PRO</h3>
+                            <p style="font-size: 12px; color: #9ca3af;">PROTOCOLO L.I.S. (LICENCIA PERSONAL)</p>
                         </div>
-                        <div class="text-right">
-                            <span class="text-lg font-bold text-gray-500 line-through mr-2">$97.00</span>
-                            <span class="text-3xl font-extrabold text-yellow-400">$5</span>
-                            <p class="text-xs text-gray-400">Pago Único</p>
+                        <div style="text-align: right;">
+                            <span style="font-size: 14px; color: #6b7280; text-decoration: line-through; margin-right: 5px;">$97.00</span>
+                            <span style="font-size: 26px; font-weight: bold; color: #facc15;">$5</span>
+                            <p style="font-size: 12px; color: #9ca3af;">Pago Único</p>
                         </div>
                     </div>
-
-                    <a id="boton-pago" 
-                       href="https://www.paypal.com/donate/?hosted_button_id=JUQ6B9EU7YHZQ&item_name=TCIS%20TITAN%20PRO%3A%20L.I.S.%20Scorecard%20(Mandato%20Causal)&amount=5.00&currency_code=USD&business=tcistitan%40gmail.com&return=https%3A%2F%2Ftcistitan-redireccion.pages.dev" 
-                       target="_blank" 
-                       class="hidden basic-button w-full bg-red-800 hover:bg-red-700 text-white text-lg font-extrabold shadow-xl shadow-red-900/50 tracking-wide">
-                        <span>ACTIVAR PROTOCOLO L.I.S. ($5)</span>
-                    </a>
                     
-                    <p class="text-sm text-center text-gray-400 pt-2">Acceda al <a href="#" class="text-[#d946ef] hover:underline font-semibold">Procedimiento Operativo Estandarizado (PDF)</a>. Incluye la L.I.S. Scorecard.</p>
+                    <p id="paypal-action-prompt" style="text-align: center; font-size: 16px; color: #d946ef; font-weight: bold; margin-bottom: 10px;">
+                        ACCESO INMEDIATO:
+                    </p>
 
-                    <div class="text-center mt-6 border-t border-gray-700 pt-5">
-                        <p class="text-base text-white font-bold mb-2">ACEPTAMOS: Tarjeta de Crédito/Débito (Sin cuenta PayPal)</p>
-                        <img src="https://www.paypalobjects.com/images/shared/accept-mark-std.png" 
-                             alt="Tarjetas aceptadas: Visa, Mastercard, American Express" 
-                             class="mx-auto w-3/4 max-w-[280px] opacity-80" />
-                        <p class="text-xs text-gray-500 mt-3">Transacción segura con la tecnología de PayPal. (Busque la opción "Pagar con tarjeta")</p>
+                    <div id="paypal-button-container">
+                        </div>
+                    
+                    <div style="text-align: center; margin-top: 25px; padding-top: 15px; border-top: 1px solid #374151;">
+                        <p style="font-size: 14px; color: white; font-weight: bold; margin-bottom: 8px;">PROCESAMIENTO: Pago Seguro vía PayPal.</p>
+                        <p style="font-size: 12px; color: #9ca3af; margin-top: 5px;">Aceptamos Tarjeta de Crédito/Débito. El sistema detectará su pago automáticamente.</p>
                     </div>
 
-                    <a id="whatsapp-link" href="https://wa.me/XXXXXXXXXX" target="_blank" class="basic-button w-full text-white bg-green-600 hover:bg-green-700 font-bold transition mt-5 border border-green-800">
+                    <a id="whatsapp-link" href="https://wa.me/XXXXXXXXXX" target="_blank" class="master-button whatsapp-btn" style="margin-top: 25px;">
                         <span>CONTACTO B2B (LICENCIA COMERCIAL)</span>
                     </a>
 
-                    <div class="mt-6 p-4 bg-red-900/20 border-l-4 border-yellow-500 rounded-md">
-                        <strong class="text-yellow-400 text-sm">ADVERTENCIA CORPORATIVA / USO COMERCIAL:</strong>
-                        <p class="text-xs text-gray-300 mt-1">La Licencia TITAN PRO ($5) es estrictamente PERSONAL. El uso para decisiones de Alto Capital (> $10k) o Corporaciones requiere una Licencia Comercial TITAN.</p>
+                    <div style="margin-top: 20px; padding: 15px; background-color: rgba(185, 28, 28, 0.2); border-left: 4px solid #facc15; border-radius: 6px;">
+                        <strong style="color: #facc15; font-size: 14px;">ADVERTENCIA CORPORATIVA / USO COMERCIAL:</strong>
+                        <p style="font-size: 12px; color: #d1d5db; margin-top: 5px;">La Licencia TITAN PRO ($5) es estrictamente PERSONAL. El uso para decisiones de Alto Capital (> $10k) o Corporaciones requiere una Licencia Comercial TITAN.</p>
                     </div>
                     
                 </div>
             </div>
         </div>
 
-        <hr class="my-12 border-gray-700">
+        <hr style="border: 0; height: 1px; background: #374151; margin: 40px 0;">
 
 
-        <footer class="text-center text-xs text-gray-600">
-            <p>© 2025 TCIS TITAN | V5.3 RESILIENCIA</p>
-            <p id="estado-sistema" class="mt-1">Estado del Sistema: Online</p>
-            <button onclick="mostrarAdmin()" class="mt-2 text-xs text-red-700 hover:text-red-500 transition">Controles Soberanos</button>
-
-            <div id="admin-panel" class="mt-4 p-4 bg-[#242424] rounded-lg border border-[#3d3d3d] hidden">
-                <h4 class="text-lg font-bold text-white mb-3">ACCESO LOGOS (ADMIN)</h4>
-                <input type="email" id="admin-email" placeholder="Email Arquitecto" value="nixonojeda1991@gmail.com" class="w-full p-2 mb-2 bg-black/40 border border-gray-600 rounded-md text-white text-sm">
-                <input type="password" id="admin-password" placeholder="Contraseña Soberana" class="w-full p-2 mb-3 bg-black/40 border border-gray-600 rounded-md text-white text-sm">
-                <button onclick="loginAdmin()" class="w-full p-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-md">Acceder</button>
-                <p id="admin-mensaje" class="mt-2 text-red-400 text-sm hidden">Credenciales inválidas o fallo en la conexión API.</p>
-            </div>
+        <footer style="text-align: center; font-size: 12px; color: #6b7280;">
+            <p>© 2025 TCIS TITAN | V7.0 INTEGRIDAD</p>
+            <p id="estado-sistema" style="margin-top: 4px;">Estado del Sistema: Desconectado</p>
         </footer>
 
     </div>
 
+    <script src="https://www.paypal.com/sdk/js?client-id=Ad5D0SGYDZUBG6ucm74UN76VRUVpOeFE0KTW2QmV5nZEfXsOD39R_phO6AtFGswwRaJC5o7_gJtfBipX&currency=USD"></script>
+    
     <script type="module">
-        // Importaciones de Firebase 
+        // Importaciones de Firebase (Versiones estables)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
         import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
 
-        // === CONFIGURACIÓN CRÍTICA (REEMPLAZA ESTOS VALORES MANUALMENTE) ===
+        // === CONFIGURACIÓN CRÍTICA (PEGA TUS VALORES REALES AQUÍ) ===
+        // Usamos la estructura de objeto estático para GitHub Pages
         const firebaseConfig = {
-            apiKey: "TU_CLAVE_API_AQUI", // 🚨 1. PEGA TU CLAVE API REAL AQUÍ
+            apiKey: "AIzaSyCCcS9E9nGEb2cg0vVjBGLX01G-McfjN-M", // 🚨 1. PEGA TU CLAVE API REAL AQUÍ
             authDomain: "tcis-titan-12.firebaseapp.com",
             projectId: "tcis-titan-12",
             storageBucket: "tcis-titan-12.firebasestorage.app",
             messagingSenderId: "298942508038",
-            appId: "1:298942508038:web:a7107a1cdc65216ec96787",
-            measurementId: "G-F3J54D4M57"
+            appId: "1:298942508038:web:a7107a1cdc65216ec96787"
         };
-        const WHATSAPP_NUMBER = "04124577822"; // 🚨 2. PEGA TU NÚMERO DE WHATSAPP AQUÍ (ej. 584241234567)
+        const APP_ID_CUSTOM = "tcis-titan-12"; // ID de la aplicación para el path de Firestore
+        const WHATSAPP_NUMBER = "04124577822"; // 🚨 2. PEGA TU NÚMERO DE WHATSAPP REAL AQUÍ
+        const REDIRECT_URL_SUCCESS = "https://tcistitan-redireccion.pages.dev/";
         // ====================================================================
 
         let app, auth, db;
+        let userId = null;
         let isFirebaseConnected = false;
+        let isPayPalRendered = false; 
 
-        try {
-            // FÉNIX VERIFICACIÓN: Solo intentar conectar si la API Key fue reemplazada
-            if (firebaseConfig.apiKey && firebaseConfig.apiKey !== "AIzaSyCCcS9E9nGEb2cg0vVjBGLX01G-McfjN-M") {
-                app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
-                db = getFirestore(app);
-                isFirebaseConnected = true;
-            } else {
-                console.warn("FÉNIX ADVERTENCIA: La API Key no ha sido reemplazada. CRONOS deshabilitado. Lógica visual activa.");
-            }
-        } catch(e) {
-            console.error("FÉNIX ERROR CRÍTICO: Fallo al conectar Firebase.", e);
-        }
-        
-        // Actualizar el enlace de WhatsApp al iniciar
-        document.getElementById('whatsapp-link').href = `https://wa.me/${WHATSAPP_NUMBER}`;
-
-        // Referencias del DOM y lógica de sliders
+        // Referencias del DOM
         const gaSlider = document.getElementById('ga');
         const giSlider = document.getElementById('gi');
         const gaValor = document.getElementById('ga-valor');
@@ -196,95 +244,185 @@
         const resultadoDiv = document.getElementById('resultado');
         const tituloResultado = document.getElementById('titulo-resultado');
         const subtituloResultado = document.getElementById('subtitulo-resultado');
-        const adminPanel = document.getElementById('admin-panel');
-        const adminMensaje = document.getElementById('admin-mensaje');
-        const botonPago = document.getElementById('boton-pago');
-        
-        gaSlider.addEventListener('input', () => { gaValor.textContent = gaSlider.value + '%'; });
-        giSlider.addEventListener('input', () => { giValor.textContent = giSlider.value + '%'; });
+        const paypalButtonContainer = document.getElementById('paypal-button-container');
+        const intencionError = document.getElementById('intencion-error');
+        const whatsappLink = document.getElementById('whatsapp-link');
 
-        // FUNCIÓN CLAVE: LEY CERO (AGENTE FÉNIX)
+        // Lógica de Sliders
+        const updateSliderValues = () => {
+            gaValor.textContent = gaSlider.value + '%';
+            giValor.textContent = giSlider.value + '%';
+        };
+        gaSlider.addEventListener('input', updateSliderValues);
+        giSlider.addEventListener('input', updateSliderValues);
+        updateSliderValues();
+
+        // Inicialización y Autenticación FÉNIX (Adaptado a GitHub Pages)
+        const initializeFirebase = async () => {
+            try {
+                if (firebaseConfig.apiKey && firebaseConfig.apiKey !== "TU_CLAVE_API_AQUI") {
+                    app = initializeApp(firebaseConfig);
+                    auth = getAuth(app);
+                    db = getFirestore(app);
+                    
+                    // Autenticación Anónima (para registrar data sin login)
+                    onAuthStateChanged(auth, async (user) => {
+                        if (user) {
+                            userId = user.uid;
+                            document.getElementById('estado-sistema').textContent = `Estado del Sistema: Conectado (${user.isAnonymous ? 'Anónimo' : 'Usuario'})`;
+                        } else {
+                            const anonUser = await signInAnonymously(auth);
+                            userId = anonUser.user.uid;
+                            document.getElementById('estado-sistema').textContent = "Estado del Sistema: Conectado (Anónimo)";
+                        }
+                        isFirebaseConnected = true;
+                    });
+                } else {
+                    console.warn("FÉNIX: Sin API Key. CRONOS Deshabilitado. La lógica de auditoría visual es funcional.");
+                    document.getElementById('estado-sistema').textContent = "Estado del Sistema: Funcional (CRONOS Deshabilitado)";
+                }
+            } catch(e) {
+                console.error("FÉNIX: Error Init Firebase.", e);
+                document.getElementById('estado-sistema').textContent = "Estado del Sistema: Desconectado (Error Init)";
+            }
+        };
+
+        // --- Renderizado del Botón de PayPal (SDK) ---
+        const renderPayPalButton = () => {
+            // Asegura que el SDK se haya cargado antes de intentar renderizar
+            if (isPayPalRendered || typeof paypal === 'undefined') {
+                if (typeof paypal === 'undefined') {
+                    console.error("ERROR PAYPAL: El SDK no está definido. Revisa la carga del script.");
+                }
+                return;
+            }
+            
+            paypal.Buttons({
+                style: {
+                    layout: 'vertical',
+                    color: 'blue',
+                    shape: 'rect',
+                    label: 'pay',
+                },
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: { value: '5.00', currency_code: 'USD' },
+                            description: 'Licencia LIS Titan Pro - Mandato Causal'
+                        }],
+                        application_context: {
+                            shipping_preference: 'NO_SHIPPING',
+                            user_action: 'PAY_NOW',
+                            return_url: REDIRECT_URL_SUCCESS,
+                            brand_name: 'TCIS TITAN'
+                        }
+                    });
+                },
+                onApprove: function(data, actions) {
+                    console.log('✅ PAYPAL APROBADO. ID Orden:', data.orderID);
+                    return actions.order.capture().then(async function(details) {
+                        alert(`¡Pago Exitoso, ${details.payer.name.given_name}! Su acceso TITAN PRO se está activando.`);
+                        
+                        // ULTIMATE LEVEL: ACTIVACIÓN AUTOMÁTICA EN FIREBASE
+                        if (isFirebaseConnected && userId && db) {
+                            try {
+                                const userDocPath = `artifacts/${APP_ID_CUSTOM}/users/${userId}/profile`;
+                                await setDoc(doc(db, userDocPath, 'data'), {
+                                    isPro: true,
+                                    paymentId: data.orderID,
+                                    email: details.payer.email_address,
+                                    updatedAt: serverTimestamp()
+                                }, { merge: true });
+                                console.log("BASE DE DATOS ACTUALIZADA: Usuario es ahora PRO.");
+                            } catch(e) {
+                                console.error("Error al guardar perfil PRO:", e);
+                            }
+                        }
+                        // Redirigir a la página de Gracias
+                        window.location.href = REDIRECT_URL_SUCCESS; 
+                    });
+                },
+                onError: function(err) {
+                    console.error("Error PayPal:", err);
+                    alert("Hubo un problema con el pago. Por favor intente nuevamente o use el contacto B2B.");
+                }
+            }).render('#paypal-button-container');
+            
+            isPayPalRendered = true;
+            console.log("SDK: Botón renderizado.");
+        };
+
+        // LÓGICA AGENTE FÉNIX
         window.ejecutarAuditoria = async () => {
             const intencion = document.getElementById('intencion').value.trim();
             const ga = parseInt(gaSlider.value);
             const gi = parseInt(giSlider.value);
-
-            if (!intencion) { alert("ECO requiere la Intención Pura (Paso 1)."); return; }
-
-            let titulo = ''; let subtitulo = ''; let colorClass = '';
             
+            if (!intencion) { 
+                intencionError.style.display = 'block';
+                resultadoDiv.style.display = 'none'; 
+                paypalButtonContainer.style.display = 'none';
+                return; 
+            }
+            intencionError.style.display = 'none';
+
+            let titulo = ''; let subtitulo = ''; let color = '';
+
             if (gi > ga) {
+                // EJECUCIÓN INEVITABLE -> MOSTRAR SDK PAYPAL
                 titulo = "✅ EJECUCIÓN INEVITABLE";
-                subtitulo = "La Ley Cero es clara: ¡Actúa ahora! El riesgo de inacción es mayor.";
-                colorClass = 'text-green-500';
-                botonPago.classList.remove('hidden'); // CRÍTICO: Muestra el botón
-            } else if (ga > gi) {
-                titulo = "🛑 VETO DE FÉNIX";
-                subtitulo = "Reestructuración necesaria. El costo/miedo es demasiado alto para esta Intención.";
-                colorClass = 'text-red-500';
-                botonPago.classList.add('hidden'); 
-            } else { 
-                titulo = "⏳ PARÁLISIS ABSOLUTA";
-                subtitulo = "La Indecisión es el fallo de seguridad que congela la conciencia (G(A) = G(I)).";
-                colorClass = 'text-yellow-500';
-                botonPago.classList.add('hidden'); 
+                subtitulo = "La Ley Cero es clara: ¡Actúa ahora! El Protocolo L.I.S. (Pago) está Disponible.";
+                color = '#10b981'; // Verde
+                
+                resultadoDiv.style.display = 'block';
+                paypalButtonContainer.style.display = 'block'; // Mostrar contenedor
+                
+                renderPayPalButton(); // Asegura el renderizado
+                
+            } else {
+                // VETO O PARÁLISIS -> OCULTAR PAGO
+                if (ga > gi) {
+                    titulo = "🛑 VETO DE FÉNIX";
+                    subtitulo = "Reestructuración necesaria. El costo/miedo es demasiado alto. No se recomienda la acción.";
+                    color = '#ef4444';
+                } else {
+                    titulo = "⏳ PARÁLISIS ABSOLUTA";
+                    subtitulo = "La Indecisión es el fallo de seguridad (G(A) = G(I)). Reajuste los valores.";
+                    color = '#f59e0b';
+                }
+                
+                resultadoDiv.style.display = 'block';
+                paypalButtonContainer.style.display = 'none'; // Ocultar contenedor
             }
 
-            resultadoDiv.classList.remove('hidden');
             tituloResultado.textContent = titulo;
+            tituloResultado.style.color = color;
             subtituloResultado.textContent = subtitulo;
-            tituloResultado.className = `text-3xl font-extrabold text-center ${colorClass} mb-4`;
             
-            // Lógica de registro en Firestore (CRONOS) - Solo si la conexión fue exitosa
-            if (isFirebaseConnected && db) { 
-                const user = auth.currentUser;
-                const userId = user ? user.uid : 'anon-' + Date.now();
-                if (user || intencion.length > 0) {
-                    try {
-                        await setDoc(doc(db, "artifacts", "tcis-titan-12", "audits", userId + "_" + Date.now()), {
-                            uid: userId, ts: serverTimestamp(), intent: intencion,
-                            ga: ga, gi: gi, result: titulo
-                        });
-                    } catch(e) { console.error("CRONOS: Error al registrar en Firestore.", e); }
+            // Registro en CRONOS (Firestore)
+            if (isFirebaseConnected && db && userId) { 
+                try {
+                    const auditPath = `artifacts/${APP_ID_CUSTOM}/audits`; // Path simple para audiciones
+                    await setDoc(doc(db, auditPath, crypto.randomUUID()), {
+                        uid: userId, 
+                        ts: serverTimestamp(), 
+                        intent: intencion,
+                        ga: ga, 
+                        gi: gi, 
+                        result: titulo
+                    });
+                    console.log("CRONOS: Auditoría registrada.");
+                } catch(e) { 
+                    console.error("CRONOS: Error registro.", e); 
                 }
             }
         };
 
-        // Funciones de Administrador (LOGOS)
-        window.mostrarAdmin = () => { 
-            adminPanel.classList.toggle('hidden'); 
-            adminMensaje.classList.add('hidden'); 
-        };
+        // Lógica de Inicio
+        initializeFirebase();
+        whatsappLink.href = `https://wa.me/${WHATSAPP_NUMBER}`;
 
-        window.loginAdmin = async () => {
-            if (!isFirebaseConnected || !db) {
-                adminMensaje.textContent = "ERROR: No hay conexión a la base de datos (Revise API Key).";
-                adminMensaje.classList.remove('hidden', 'text-green-500');
-                adminMensaje.classList.add('text-red-400');
-                return;
-            }
-
-            const email = document.getElementById('admin-email').value;
-            const password = document.getElementById('admin-password').value;
-            adminMensaje.classList.add('hidden');
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-                adminMensaje.textContent = "Bienvenido, Arquitecto. Controles Soberanos Activados.";
-                adminMensaje.classList.remove('hidden', 'text-red-400');
-                adminMensaje.classList.add('text-green-500');
-                adminPanel.classList.add('hidden');
-                document.getElementById('estado-sistema').textContent = "Estado del Sistema: Control Soberano (Admin)";
-            } catch (error) {
-                adminMensaje.textContent = "Error: Credenciales inválidas.";
-                adminMensaje.classList.remove('hidden', 'text-green-500');
-                adminMensaje.classList.add('text-red-400');
-            }
-        };
-
-        // Exportar funciones para acceso global
         window.ejecutarAuditoria = ejecutarAuditoria;
-        window.mostrarAdmin = mostrarAdmin;
-        window.loginAdmin = loginAdmin;
     </script>
 </body>
 </html>
