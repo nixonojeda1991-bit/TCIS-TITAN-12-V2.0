@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TCIS TITAN V3.6 | Arquitectura Alquímica - Fuerza Bruta</title>
+    <title>TCIS TITAN V3.7 | Arquitectura Alquímica - Conexión Forzada</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Estilos CSS Alquímicos */
@@ -32,12 +32,13 @@
     <div class="w-full max-w-2xl master-container p-8 rounded-2xl shadow-2xl border">
 
         <header class="text-center mb-10">
-            <h1 class="text-5xl font-extrabold text-[#9d2b2b] mb-2 tracking-wider">TCIS TITAN V3.6</h1>
+            <h1 class="text-5xl font-extrabold text-[#9d2b2b] mb-2 tracking-wider">TCIS TITAN V3.7</h1>
             <p class="text-2xl font-light text-white/90">El Sistema Operativo del Alquiler Mental</p>
             <p class="text-sm text-gray-500 mt-2">Gobernanza IA: GÉNESIS, FÉNIX, LOGOS, CRONOS. Eliminando Fricción.</p>
         </header>
 
         <div id="auditoria" class="space-y-6">
+
             <div class="bg-[#242424] p-5 rounded-lg border border-[#3d3d3d]">
                 <h3 class="text-xl font-bold text-white mb-2">1. Intención Pura (ECO)</h3>
                 <p class="text-sm text-gray-400 mb-4">Define el objetivo que la inercia está congelando (IVG).</p>
@@ -110,7 +111,7 @@
             </div>
 
         <footer class="mt-10 pt-6 border-t border-[#3d3d3d] text-center text-xs text-gray-600">
-            <p>© 2025 TCIS TITAN | V3.6 FUERZA BRUTA</p>
+            <p>© 2025 TCIS TITAN | V3.7 CONEXIÓN FORZADA</p>
             <p id="estado-sistema" class="mt-1">Estado del Sistema: Online</p>
             <button onclick="mostrarAdmin()" class="mt-2 text-xs text-red-700 hover:text-red-500 transition">Controles Soberanos</button>
 
@@ -141,16 +142,24 @@
             appId: "1:298942508038:web:a7107a1cdc65216ec96787",
             measurementId: "G-F3J54D4M57"
         };
-        const WHATSAPP_NUMBER = "04124577822"; 
+        const WHATSAPP_NUMBER = "04124577822";
         // ======================================================
 
-        // Inicializar Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+        let app, auth, db;
+        try {
+            // Inicializar Firebase
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+            // console.log("Firebase inicializado correctamente.");
+        } catch(e) {
+            console.warn("ADVERTENCIA FÉNIX: Firebase falló la inicialización. Asegúrate de que la API Key sea correcta.");
+            console.error(e);
+        }
+        
 
         // Actualizar el enlace de WhatsApp al iniciar
-        document.getElementById('whatsapp-link').href = `https://wa.me/${04124577822}`;
+        document.getElementById('whatsapp-link').href = `https://wa.me/${WHATSAPP_NUMBER}`;
 
 
         // El resto del JS se mantiene igual
@@ -167,7 +176,7 @@
         gaSlider.addEventListener('input', () => { gaValor.textContent = gaSlider.value + '%'; });
         giSlider.addEventListener('input', () => { giValor.textContent = giSlider.value + '%'; });
 
-        // Función Principal: LEY CERO (AGENTE FÉNIX)
+        // FUNCIÓN CLAVE: LEY CERO (AGENTE FÉNIX)
         window.ejecutarAuditoria = async () => {
             const intencion = document.getElementById('intencion').value.trim();
             const ga = parseInt(gaSlider.value);
@@ -200,24 +209,39 @@
             subtituloResultado.textContent = subtitulo;
             tituloResultado.className = `text-3xl font-extrabold text-center ${colorClass} mb-4`;
             
-            // Lógica de registro en Firestore (CRONOS) (Se mantiene igual)
-            const user = auth.currentUser;
-            const userId = user ? user.uid : 'anon-' + Date.now();
+            // Lógica de registro en Firestore (CRONOS) (Se mantiene igual, pero protegida)
+            if (db) { // Solo intenta registrar si db fue inicializado
+                const user = auth.currentUser;
+                const userId = user ? user.uid : 'anon-' + Date.now();
 
-            if (user || intencion.length > 0) {
-                try {
-                    await setDoc(doc(db, "artifacts", "tcis-titan-12", "audits", userId + "_" + Date.now()), {
-                        uid: userId, ts: serverTimestamp(), intent: intencion,
-                        ga: ga, gi: gi, result: titulo
-                    });
-                } catch(e) { /* Error handling silencioso */ }
+                if (user || intencion.length > 0) {
+                    try {
+                        await setDoc(doc(db, "artifacts", "tcis-titan-12", "audits", userId + "_" + Date.now()), {
+                            uid: userId, ts: serverTimestamp(), intent: intencion,
+                            ga: ga, gi: gi, result: titulo
+                        });
+                    } catch(e) { console.error("CRONOS: Error al registrar en Firestore.", e); }
+                }
+            } else {
+                console.warn("CRONOS: Auditoría no registrada. Firebase no estaba conectado.");
             }
         };
 
-        // Funciones de Administrador (LOGOS) (Se mantienen igual)
-        window.mostrarAdmin = () => { adminPanel.classList.toggle('hidden'); adminMensaje.classList.add('hidden'); };
+        // Funciones de Administrador (LOGOS) (Protegidas)
+        window.mostrarAdmin = () => { 
+            // Permite ver el panel si hay conexión o si la clave API es el único fallo
+            adminPanel.classList.toggle('hidden'); 
+            adminMensaje.classList.add('hidden'); 
+        };
 
         window.loginAdmin = async () => {
+            if (!db) {
+                adminMensaje.textContent = "ERROR: No hay conexión a la base de datos (Revise API Key).";
+                adminMensaje.classList.remove('hidden', 'text-green-500');
+                adminMensaje.classList.add('text-red-400');
+                return;
+            }
+
             const email = document.getElementById('admin-email').value;
             const password = document.getElementById('admin-password').value;
             adminMensaje.classList.add('hidden');
@@ -229,11 +253,16 @@
                 adminPanel.classList.add('hidden');
                 document.getElementById('estado-sistema').textContent = "Estado del Sistema: Control Soberano (Admin)";
             } catch (error) {
-                adminMensaje.textContent = "Error: Credenciales inválidas o fallo en la conexión API.";
+                adminMensaje.textContent = "Error: Credenciales inválidas.";
                 adminMensaje.classList.remove('hidden', 'text-green-500');
                 adminMensaje.classList.add('text-red-400');
             }
         };
+
+        // Exportar funciones para acceso global
+        window.ejecutarAuditoria = ejecutarAuditoria;
+        window.mostrarAdmin = mostrarAdmin;
+        window.loginAdmin = loginAdmin;
     </script>
 </body>
 </html>
