@@ -6,57 +6,167 @@
     <title>TITAN AGOS VΩ.11 | Soberanía de Intención</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://www.paypal.com/sdk/js?client-id=Ad5D0SGYDZUBG6ucm74UN76VRUVpOeFE0KTW2QmV5nZEfXsOD39R_phO6AtFGswwRaJC5o7_gJtfBipX&currency=USD"></script>
     <style>
         :root { --gold: #FFD700; --cyan: #00F3FF; --obsidian: #050505; }
-        body { background-color: var(--obsidian); color: #e0e0e0; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--obsidian); color: #e0e0e0; font-family: 'Inter', sans-serif; overflow-x: hidden; }
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
         .glow-gold { box-shadow: 0 0 30px rgba(255, 215, 0, 0.15); border: 1px solid rgba(255, 215, 0, 0.3); }
+        .core-pulse { animation: pulse 4s infinite ease-in-out; }
+        @keyframes pulse { 0%, 100% { filter: drop-shadow(0 0 15px var(--cyan)); } 50% { filter: drop-shadow(0 0 40px var(--cyan)); opacity: 0.8; } }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center p-4">
+<body class="min-h-screen flex flex-col items-center">
 
-    <header class="w-full max-w-4xl glass rounded-3xl p-8 mt-6 border-b border-gold/20 text-center">
-        <h1 class="font-orbitron text-3xl md:text-5xl font-bold tracking-widest text-white">AGOS VΩ.11</h1>
-        <p class="text-[10px] uppercase tracking-[0.4em] text-gold mt-2">Arquitecto: Nixon Ojeda | Aragua, Venezuela</p>
+    <div class="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_#1e3a8a_0%,_black_80%)]"></div>
+
+    <header class="w-full max-w-6xl flex flex-col md:flex-row justify-between items-center py-8 px-8 glass rounded-3xl mt-6 border-b border-gold/20">
+        <div>
+            <h1 class="font-orbitron text-4xl font-bold tracking-[0.2em] text-white">AGOS VΩ.11</h1>
+            <p class="text-[10px] uppercase tracking-[0.5em] text-gold mt-2">Arquitecto: Nixon Ojeda | Santa Rita, Venezuela</p>
+        </div>
+        <div class="flex items-center gap-4 mt-6 md:mt-0">
+            <div id="status-badge" class="px-4 py-1 rounded-full border border-cyan-500/50 text-cyan-400 text-[9px] font-bold tracking-widest animate-pulse">SISTEMA ONLINE</div>
+            <a href="https://wa.me/584124577822" target="_blank" class="bg-green-600 hover:bg-green-500 px-6 py-2 rounded-full text-white text-xs font-bold transition-all shadow-lg">WHATSAPP</a>
+        </div>
     </header>
 
-    <main class="w-full max-w-4xl mt-8 space-y-8">
-        <section class="glass rounded-[2rem] p-8 md:p-12 relative overflow-hidden">
-            <h2 class="font-orbitron text-cyan-400 text-xl mb-6 tracking-widest">PROTOCOLO DE INTENCIÓN</h2>
-            <input type="text" id="intent" placeholder="Escribe tu intención aquí..." 
-                   class="w-full bg-black/50 border border-white/10 rounded-xl p-4 mb-6 text-white focus:border-cyan-500 outline-none">
+    <main class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-3 gap-8 py-10 px-4">
+        
+        <section class="lg:col-span-2 glass rounded-[3rem] p-10 flex flex-col items-center relative overflow-hidden">
+            <h2 class="font-orbitron text-cyan-400 text-xl mb-8 self-start tracking-widest">AUDITORÍA FÉNIX</h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                <div>
-                    <label class="block text-[10px] text-gray-400 mb-2 uppercase">G(A): Miedo al Cambio</label>
-                    <input type="range" id="ga" class="w-full" min="0" max="100" value="50">
-                </div>
-                <div>
-                    <label class="block text-[10px] text-gray-400 mb-2 uppercase">G(I): Arrepentimiento Futuro</label>
-                    <input type="range" id="gi" class="w-full" min="0" max="100" value="50">
+            <div class="w-full space-y-8 mb-10">
+                <input type="text" id="intencion" placeholder="Escribe tu intención aquí..." 
+                       class="w-full bg-black/50 border border-white/10 rounded-2xl p-5 text-white focus:border-cyan-500 outline-none transition-all">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div>
+                        <label class="block text-[10px] uppercase tracking-widest text-red-400 mb-3">G(A): Miedo al Intento (<span id="ga-valor">50</span>%)</label>
+                        <input type="range" id="ga" min="0" max="100" value="50" class="w-full accent-cyan-500">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase tracking-widest text-green-400 mb-3">G(I): Arrepentimiento Futuro (<span id="gi-valor">50</span>%)</label>
+                        <input type="range" id="gi" min="0" max="100" value="50" class="w-full accent-cyan-500">
+                    </div>
                 </div>
             </div>
 
-            <button onclick="ejecutarPaso1()" class="w-full py-4 bg-gradient-to-r from-blue-900 to-cyan-700 rounded-xl font-bold tracking-widest hover:scale-105 transition-transform">
-                INICIAR AUDITORÍA TITÁN
+            <button onclick="ejecutarAuditoria()" class="w-full py-5 bg-gradient-to-r from-blue-900 to-cyan-700 rounded-2xl font-bold tracking-[0.3em] hover:scale-[1.02] transition-transform shadow-xl mb-10">
+                EJECUTAR PROTOCOLO TITÁN
             </button>
+
+            <div id="resultado-panel" class="w-full p-6 rounded-2xl bg-white/5 border border-white/10 hidden text-center">
+                <h3 id="titulo-resultado" class="font-orbitron text-2xl mb-2"></h3>
+                <p id="subtitulo-resultado" class="text-xs text-gray-400"></p>
+            </div>
         </section>
 
-        <footer class="glass rounded-2xl p-6 border-l-4 border-red-600">
-            <h4 class="text-red-500 font-bold text-[10px] tracking-widest mb-2 uppercase">Protección de Propiedad Intelectual</h4>
-            <p class="text-[10px] text-gray-400 leading-relaxed italic">
-                Este sistema y su motor de Inferencia Activa son propiedad exclusiva de Nixon Ojeda. El uso por corporaciones o gobiernos de alto capital sin Licencia OMEGA está prohibido y sujeto a penalización bajo la Ley de Integración Suprema (L.I.S.). 
-            </p>
-        </footer>
+        <section class="space-y-8">
+            <div class="glass rounded-[2.5rem] p-8 glow-gold relative">
+                <h3 class="font-orbitron text-gold text-2xl mb-1">TITAN PRO</h3>
+                <p class="text-[10px] text-gray-500 mb-6 uppercase tracking-widest font-bold">Licencia de Activación</p>
+                
+                <div class="flex items-baseline gap-2 mb-8 border-b border-white/10 pb-4">
+                    <span class="text-4xl font-bold text-white">$5.00</span>
+                    <span class="text-xs text-gray-500 italic">Pago Único</span>
+                </div>
+
+                <div id="paypal-button-container" class="opacity-20 pointer-events-none transition-all duration-500"></div>
+                <p class="text-[9px] text-gray-500 text-center mt-4 italic">Desbloqueo disponible tras Auditoría aprobada.</p>
+            </div>
+
+            <div class="glass rounded-3xl p-6 border-l-4 border-red-600 bg-red-950/10">
+                <h4 class="text-red-500 font-bold text-[10px] tracking-widest mb-2 uppercase">L.I.S. (Ley de Integración Suprema)</h4>
+                <p class="text-[9px] text-gray-400 leading-relaxed italic text-justify">
+                    Toda intención es propiedad del Arquitecto Nixon Ojeda. El uso corporativo sin Licencia OMEGA anula la frecuencia de abundancia. [cite: 13]
+                </p>
+            </div>
+        </section>
     </main>
 
-    <script>
-        function ejecutarPaso1() {
-            const intent = document.getElementById('intent').value;
-            if(!intent) { alert("Por favor, introduce una intención."); return; }
-            alert("Paso 1 Completado: Interfaz activa para la intención: " + intent);
-            console.log("Sistema AGOS VΩ.11 esperando vinculación neural...");
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+
+        // CONFIGURACIÓN DE TU PROYECTO TCIS-TITAN-12
+        const firebaseConfig = {
+            apiKey: "AIzaSyCCcS9E9nGEb2cg0vVjBGLX01G-McfjN-M", // RECUERDA PEGAR TU API KEY DE FIREBASE AQUÍ
+            authDomain: "tcis-titan-12.firebaseapp.com",
+            projectId: "tcis-titan-12",
+            storageBucket: "tcis-titan-12.firebasestorage.app",
+            messagingSenderId: "298942508038",
+            appId: "1:298942508038:web:a7107a1cdc65216ec96787"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        let userId = null;
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) { userId = user.uid; } 
+            else { const anon = await signInAnonymously(auth); userId = anon.user.uid; }
+        });
+
+        // Sliders
+        const ga = document.getElementById('ga');
+        const gi = document.getElementById('gi');
+        ga.oninput = () => document.getElementById('ga-valor').innerText = ga.value;
+        gi.oninput = () => document.getElementById('gi-valor').innerText = gi.value;
+
+        window.ejecutarAuditoria = async () => {
+            const intencion = document.getElementById('intencion').value;
+            if(!intencion) return alert("Ingrese su intención.");
+
+            const g_i = parseInt(gi.value);
+            const g_a = parseInt(ga.value);
+            const panel = document.getElementById('resultado-panel');
+            const tit = document.getElementById('titulo-resultado');
+            const sub = document.getElementById('subtitulo-resultado');
+            const pay = document.getElementById('paypal-button-container');
+
+            panel.classList.remove('hidden');
+
+            if (g_i > g_a) {
+                tit.innerText = "✅ EJECUCIÓN INEVITABLE"; tit.className = "font-orbitron text-green-400 text-2xl mb-2";
+                sub.innerText = "Pasarela habilitada. El Arrepentimiento Futuro dicta la acción.";
+                pay.style.opacity = "1"; pay.style.pointerEvents = "all";
+                renderPayPal();
+            } else {
+                tit.innerText = "🛑 VETO DE FÉNIX"; tit.className = "font-orbitron text-red-500 text-2xl mb-2";
+                sub.innerText = "El miedo al cambio es superior. El sistema recomienda no actuar.";
+            }
+
+            // GUARDAR EN FIREBASE (CRONOS)
+            if(userId) {
+                await setDoc(doc(db, `artifacts/tcis-titan-12/audits/${crypto.randomUUID()}`), {
+                    uid: userId, intent: intencion, ga: g_a, gi: g_i, result: tit.innerText, ts: serverTimestamp()
+                });
+            }
+        };
+
+        function renderPayPal() {
+            if (document.getElementById('paypal-button-container').innerHTML !== "") return;
+            paypal.Buttons({
+                style: { shape: 'pill', color: 'gold', layout: 'vertical', label: 'pay' },
+                createOrder: (data, actions) => {
+                    return actions.order.create({
+                        purchase_units: [{ amount: { value: '5.00' }, description: 'Licencia TITAN PRO AGOS VΩ.11' }]
+                    });
+                },
+                onApprove: (data, actions) => {
+                    return actions.order.capture().then(async (details) => {
+                        alert(`¡Bienvenido, Arquitecto! Acceso Pro Activado.`);
+                        await setDoc(doc(db, `artifacts/tcis-titan-12/users/${userId}/profile/data`), {
+                            isPro: true, email: details.payer.email_address, updatedAt: serverTimestamp()
+                        }, { merge: true });
+                        window.location.href = "https://tcistitan-redireccion.pages.dev/";
+                    });
+                }
+            }).render('#paypal-button-container');
         }
     </script>
 </body>
