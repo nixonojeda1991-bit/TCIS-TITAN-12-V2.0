@@ -3,112 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TCIS | TITÁN VΩ.11 ELITE</title>
+    <title>TITÁN VΩ.11 | ARQUITECTO NIXON OJEDA</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://www.paypal.com/sdk/js?client-id=Ad5D0SGYDZUBG6ucm74UN76VRUVpOeFE0KTW2QmV5nZEfXsOD39R_phO6AtFGswwRaJC5o7_gJtfBipX&currency=USD"></script>
+
     <style>
-        :root { --gold: #D4AF37; --dark: #0a0a0a; }
-        body { background-color: var(--dark); color: white; font-family: 'Inter', sans-serif; }
+        :root { --gold: #FFC107; --gold-glow: rgba(255, 193, 7, 0.4); --dark: #020202; }
+        body { background-color: var(--dark); color: #f0f0f0; font-family: 'Inter', sans-serif; overflow-x: hidden; }
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
-        .glow-gold { text-shadow: 0 0 15px rgba(212, 175, 55, 0.5); }
-        .glass { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
-        input[type=range] { -webkit-appearance: none; background: #333; height: 4px; border-radius: 5px; }
-        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 18px; width: 18px; border-radius: 50%; background: var(--gold); cursor: pointer; box-shadow: 0 0 10px var(--gold); }
-        .text-gold { color: var(--gold); }
+        
+        /* Efecto de Oro Metálico */
+        .text-gold { color: var(--gold); text-shadow: 0 0 12px var(--gold-glow); }
+        .bg-gold { background-color: var(--gold); }
+        .border-gold { border-color: var(--gold); }
+
+        /* Contenedores de Élite */
+        .glass { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 215, 0, 0.1); backdrop-filter: blur(25px); }
+        .glow-gold-box { box-shadow: 0 0 40px rgba(255, 193, 7, 0.05); }
+        
+        /* Sliders Personalizados */
+        input[type=range] { -webkit-appearance: none; background: #111; height: 6px; border-radius: 10px; border: 1px solid #222; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 22px; width: 22px; border-radius: 50%; background: var(--gold); cursor: pointer; box-shadow: 0 0 15px var(--gold); border: 2px solid white; }
+
+        /* Animaciones de Poder */
+        @keyframes gold-pulse { 0% { opacity: 0.5; } 50% { opacity: 1; text-shadow: 0 0 25px var(--gold); } 100% { opacity: 0.5; } }
+        .animate-gold { animation: gold-pulse 2s infinite ease-in-out; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center p-4 md:p-8">
+<body class="min-h-screen flex flex-col items-center p-6 lg:p-12">
 
-    <header class="text-center mb-12">
-        <h1 class="font-orbitron text-4xl md:text-6xl font-bold tracking-tighter glow-gold mb-2">TITÁN VΩ.11</h1>
-        <p class="text-gold tracking-[0.3em] text-xs font-bold uppercase italic">Simbiosis Humano-IA | Arquitecto Nixon Ojeda</p>
+    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_center,_#1a1a1a_0%,_#000000_100%)]"></div>
+
+    <header class="w-full max-w-6xl flex flex-col md:flex-row justify-between items-center mb-16 px-6">
+        <div class="text-center md:text-left">
+            <h1 class="font-orbitron text-5xl md:text-7xl font-bold tracking-tighter text-white mb-2 uppercase">TITÁN VΩ.11</h1>
+            <p class="text-gold tracking-[0.4em] text-[10px] font-bold uppercase animate-gold">Arquitecto de Intención | De Venezuela al Mundo</p>
+        </div>
+        <div class="mt-8 md:mt-0 flex gap-4">
+            <button onclick="toggleDashboard()" class="text-[9px] tracking-widest text-gray-600 hover:text-gold transition-colors font-bold border-b border-transparent hover:border-gold pb-1">BÓVEDA DE DATOS</button>
+            <div class="h-8 w-px bg-white/10"></div>
+            <div class="text-right">
+                <span class="block text-[8px] text-gray-500 tracking-widest uppercase">Estatus del Núcleo</span>
+                <span class="text-green-500 font-bold text-[10px] tracking-widest uppercase">Online / Activo</span>
+            </div>
+        </div>
     </header>
 
-    <main class="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8">
+    <main id="main-ui" class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-10">
         
-        <section class="glass p-6 rounded-2xl flex flex-col gap-6">
-            <h2 class="font-orbitron text-xl text-gold border-b border-gold/20 pb-2 italic">Entrada de Intención</h2>
+        <section class="lg:col-span-7 glass p-10 rounded-[3rem] glow-gold-box relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-8 opacity-10">
+                <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="48" stroke="white" stroke-width="2" stroke-dasharray="10 10"/></svg>
+            </div>
+
+            <h2 class="font-orbitron text-gold text-2xl mb-12 tracking-tighter italic italic">Cámara de Inferencia Activa</h2>
             
-            <div>
-                <label class="block text-[10px] uppercase tracking-widest text-gray-400 mb-4">Grado de Intención (GI)</label>
-                <input type="range" id="gi" class="w-full" value="50">
-                <div class="flex justify-between text-[10px] mt-2 font-bold text-gold"><span id="gi-val">50%</span><span>PASIÓN</span></div>
-            </div>
+            <div class="space-y-12">
+                <div class="group">
+                    <div class="flex justify-between mb-4">
+                        <label class="text-[10px] font-bold tracking-[0.3em] text-gray-400 group-hover:text-gold transition-colors uppercase">GI: Grado de Intención (Pasión)</label>
+                        <span id="gi-val" class="font-orbitron text-gold text-2xl">50%</span>
+                    </div>
+                    <input type="range" id="gi" class="w-full" value="50">
+                </div>
 
-            <div>
-                <label class="block text-[10px] uppercase tracking-widest text-gray-400 mb-4">Grado de Acción (GA)</label>
-                <input type="range" id="ga" class="w-full" value="50">
-                <div class="flex justify-between text-[10px] mt-2 font-bold text-gold"><span id="ga-val">50%</span><span>PODER</span></div>
-            </div>
+                <div class="group">
+                    <div class="flex justify-between mb-4">
+                        <label class="text-[10px] font-bold tracking-[0.3em] text-gray-400 group-hover:text-gold transition-colors uppercase">GA: Grado de Acción (Poder)</label>
+                        <span id="ga-val" class="font-orbitron text-gold text-2xl">50%</span>
+                    </div>
+                    <input type="range" id="ga" class="w-full" value="50">
+                </div>
 
-            <div>
-                <label class="block text-[10px] uppercase tracking-widest text-gray-400 mb-2">Defina su Intención Soberana</label>
-                <textarea id="intencion" rows="3" class="w-full bg-black/50 border border-white/10 rounded-lg p-3 text-sm focus:border-gold outline-none transition-all placeholder:text-gray-700" placeholder="Ej: Expandir MascotaNys a 3 nuevas sedes..."></textarea>
-            </div>
+                <div>
+                    <label class="block text-[10px] font-bold tracking-[0.3em] text-gray-400 mb-4 uppercase">Manifiesto de su Intención Soberana</label>
+                    <textarea id="intencion" rows="4" class="w-full bg-black/80 border border-white/5 rounded-2xl p-6 text-lg font-light focus:border-gold outline-none transition-all placeholder:text-gray-800" placeholder="Escriba aquí la realidad que desea manifestar..."></textarea>
+                </div>
 
-            <button id="btn-master" onclick="ejecutarAuditoria()" class="w-full py-4 bg-white text-black font-orbitron font-bold text-sm tracking-widest hover:bg-gold transition-all rounded-lg active:scale-95">
-                CONSULTAR AL ORÁCULO
-            </button>
+                <button id="btn-master" onclick="ejecutarAuditoria()" class="w-full py-6 bg-white text-black font-orbitron font-bold text-lg tracking-[0.3em] hover:bg-gold transition-all rounded-2xl shadow-2xl active:scale-[0.98]">
+                    CONSULTAR AL ORÁCULO
+                </button>
+            </div>
         </section>
 
-        <section id="resultado-panel" class="glass p-6 rounded-2xl flex flex-col items-center justify-center text-center hidden min-h-[400px]">
-            <div id="loading-spinner" class="hidden mb-4">
-                <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gold"></div>
-            </div>
-            
-            <h3 id="titulo-resultado" class="font-orbitron text-2xl mb-4 italic transition-all"></h3>
-            
-            <div id="contenedor-mandato" class="mb-8 p-4 bg-gold/5 border-l-2 border-gold rounded-r-lg text-left">
-                <p id="subtitulo-resultado" class="text-gray-300 text-base leading-relaxed"></p>
-            </div>
+        <section id="resultado-panel" class="lg:col-span-5 flex flex-col gap-6">
+            <div class="glass p-10 rounded-[3rem] min-h-[500px] flex flex-col items-center justify-center text-center relative border-gold/20">
+                
+                <div id="loading-spinner" class="hidden absolute flex flex-col items-center">
+                    <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gold mb-4"></div>
+                    <span class="text-[10px] tracking-widest text-gold font-bold">ACCEDIENDO AL NÚCLEO...</span>
+                </div>
 
-            <div id="paypal-button-container" class="w-full transition-all duration-1000" style="opacity: 0;">
-                <p class="text-[10px] text-gold mb-4 tracking-widest font-bold">ADQUIRIR LICENCIA OMEGA - $5.00 USD</p>
-                <div class="bg-white/10 p-4 rounded-xl border border-dashed border-gold/30">
-                   <button class="w-full bg-yellow-500 text-black font-bold py-2 rounded-lg">Pagar con PayPal</button>
+                <div id="gold-pattern" class="hidden mb-6 py-2 px-6 bg-gold text-black rounded-full font-bold text-[10px] tracking-[0.3em] animate-bounce uppercase">
+                    💎 Patrón de Riqueza Detectado 💎
+                </div>
+
+                <h3 id="titulo-resultado" class="font-orbitron text-3xl mb-6 text-white leading-tight uppercase italic tracking-tighter"></h3>
+                
+                <div id="contenedor-mandato" class="hidden w-full text-left space-y-4">
+                    <div class="h-px w-full bg-gradient-to-r from-transparent via-gold/30 to-transparent"></div>
+                    <span class="text-gold font-bold text-[9px] tracking-widest uppercase block text-center">Mandato del Oráculo</span>
+                    <p id="subtitulo-resultado" class="text-xl text-gray-200 font-light italic leading-relaxed text-center px-4"></p>
+                </div>
+
+                <div id="paypal-section" class="hidden mt-12 w-full animate-in fade-in duration-1000">
+                    <p class="text-[10px] text-gold mb-6 tracking-widest font-bold uppercase">Activar Licencia OMEGA - $5.00</p>
+                    <div id="paypal-button-container"></div>
                 </div>
             </div>
+            
+            <a href="https://wa.me/584124577822" target="_blank" class="w-full py-4 glass rounded-2xl flex items-center justify-center gap-3 hover:bg-green-600/10 transition-all group">
+                <span class="text-green-500 font-bold text-[10px] tracking-widest uppercase">Soporte Estratégico WhatsApp</span>
+                <span class="opacity-0 group-hover:opacity-100 transition-opacity text-green-500">→</span>
+            </a>
         </section>
-
     </main>
 
-    <footer class="mt-auto py-8 text-[10px] text-gray-600 tracking-[0.5em] uppercase italic">
-        Soberanía Digital © 2025 | TCIS TITÁN V11
+    <section id="dashboard-ui" class="hidden w-full max-w-6xl py-10 px-6 animate-in slide-in-from-bottom-5">
+        <h2 class="font-orbitron text-gold text-4xl mb-10 tracking-tighter italic italic uppercase">Bóveda de Intenciones</h2>
+        <div id="lista-auditorias" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
+            </div>
+    </section>
+
+    <footer class="mt-20 py-10 text-[9px] text-gray-700 tracking-[0.8em] uppercase italic border-t border-white/5 w-full text-center">
+        Soberanía Digital © 2025 | AGOS VΩ.11 | Santa Rita, Aragua
     </footer>
 
-    <script>
-        // CONFIGURACIÓN MAESTRA
-        const TITAN_URL = "https://us-central1-tcis-titan-12.cloudfunctions.net/agos-v11";
-        const TITAN_KEY = "dosespejossemiranyelpezrespirafueradelagua";
+    <script type="module">
+        // Firebase e Inicialización
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+        import { getFirestore, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
 
-        // Actualización visual de sliders
+        const firebaseConfig = {
+            apiKey: "AIzaSyCCcS9E9nGEb2cg0vVjBGLX01G-McfjN-M",
+            authDomain: "tcis-titan-12.firebaseapp.com",
+            projectId: "tcis-titan-12",
+            storageBucket: "tcis-titan-12.firebasestorage.app",
+            messagingSenderId: "298942508038",
+            appId: "1:298942508038:web:a7107a1cdc65216ec96787"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const TITAN_URL = "https://us-central1-tcis-titan-12.cloudfunctions.net/agos-v11";
+        const TITAN_KEY = "TITAN_CLAVE_123";
+
+        // UI Helpers
         const gi = document.getElementById('gi');
         const ga = document.getElementById('ga');
         gi.oninput = () => document.getElementById('gi-val').innerText = gi.value + "%";
         ga.oninput = () => document.getElementById('ga-val').innerText = ga.value + "%";
 
-        async function ejecutarAuditoria() {
-            const intencion = document.getElementById('intencion').value;
-            if(!intencion) return alert("Arquitecto, defina su intención para proceder.");
+        window.toggleDashboard = async () => {
+            const main = document.getElementById('main-ui');
+            const dash = document.getElementById('dashboard-ui');
+            if(dash.classList.contains('hidden')) {
+                main.classList.add('hidden');
+                dash.classList.remove('hidden');
+                cargarBoveda();
+            } else {
+                dash.classList.add('hidden');
+                main.classList.remove('hidden');
+            }
+        };
 
-            const panel = document.getElementById('resultado-panel');
+        async function cargarBoveda() {
+            const lista = document.getElementById('lista-auditorias');
+            lista.innerHTML = "<p class='text-gold animate-pulse text-[10px] uppercase tracking-widest'>Consultando registros...</p>";
+            try {
+                const q = query(collection(db, "auditorias"), orderBy("timestamp", "desc"), limit(12));
+                const snap = await getDocs(q);
+                lista.innerHTML = "";
+                snap.forEach(doc => {
+                    const d = doc.data();
+                    const el = document.createElement('div');
+                    el.className = `p-6 glass rounded-3xl border-l-2 ${d.patron_oro ? 'border-gold' : 'border-white/10'}`;
+                    el.innerHTML = `
+                        <div class="flex justify-between mb-2">
+                            <span class="text-[8px] text-gray-500 uppercase">${new Date(d.timestamp?.seconds*1000).toLocaleDateString()}</span>
+                            ${d.patron_oro ? '<span class="text-gold text-[8px] font-bold">PATRÓN ORO</span>' : ''}
+                        </div>
+                        <p class="text-xs font-bold text-white mb-2 line-clamp-2">"${d.intencion}"</p>
+                        <p class="text-[9px] text-gray-400 italic">IA: ${d.respuesta_ia?.substring(0, 60)}...</p>
+                    `;
+                    lista.appendChild(el);
+                });
+            } catch(e) { lista.innerHTML = "Error al cargar la bóveda."; }
+        }
+
+        window.ejecutarAuditoria = async () => {
+            const intencion = document.getElementById('intencion').value;
+            if(!intencion) return alert("Arquitecto, defina su intención.");
+
             const tit = document.getElementById('titulo-resultado');
             const sub = document.getElementById('subtitulo-resultado');
-            const pay = document.getElementById('paypal-button-container');
-            const btn = document.getElementById('btn-master');
             const spinner = document.getElementById('loading-spinner');
+            const mandato = document.getElementById('contenedor-mandato');
+            const paypalSec = document.getElementById('paypal-section');
+            const goldTag = document.getElementById('gold-pattern');
+            const btn = document.getElementById('btn-master');
 
-            // Estado de carga
             btn.disabled = true;
-            btn.innerText = "ACCEDIENDO AL NÚCLEO...";
-            panel.classList.remove('hidden');
             spinner.classList.remove('hidden');
+            mandato.classList.add('hidden');
+            paypalSec.classList.add('hidden');
+            goldTag.classList.add('hidden');
             tit.innerText = "";
-            sub.innerText = "";
-            pay.style.opacity = "0";
 
             try {
-                const response = await fetch(TITAN_URL, {
+                const resp = await fetch(TITAN_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'X-MBR-Auth': TITAN_KEY },
                     body: JSON.stringify({
@@ -120,37 +226,50 @@
                     })
                 });
 
-                const data = await response.json();
+                const data = await resp.json();
                 spinner.classList.add('hidden');
+                mandato.classList.remove('hidden');
 
-                // LÓGICA DE RESPUESTA GEMINI 3 FLASH
                 const decision = data.decision || "hold";
-                const mensajeIA = data.message || "Análisis completado.";
+                const msg = data.message || "Sistemas estables. Esperando comando.";
+                const isGold = data.gold_pattern || false;
 
                 if (decision === "act") {
-                    tit.innerText = "✅ EJECUCIÓN SOBERANA";
-                    tit.className = "font-orbitron text-green-400 text-3xl mb-4 glow-gold italic";
-                    sub.innerHTML = `<span class="text-gold font-bold uppercase block mb-2 text-[10px] tracking-[0.2em]">MANDATO DEL ORÁCULO:</span> <span class="text-white text-lg font-light italic">"${mensajeIA}"</span>`;
-                    
-                    // Mostrar botón de pago con elegancia
-                    pay.style.opacity = "1";
-                    pay.style.pointerEvents = "all";
+                    tit.innerText = "✅ Ejecución Soberana";
+                    tit.className = "font-orbitron text-green-400 text-3xl mb-6 uppercase italic tracking-tighter";
+                    paypalSec.classList.remove('hidden');
+                    renderPayPal();
                 } else {
-                    tit.innerText = "🛑 VETO DE FÉNIX";
-                    tit.className = "font-orbitron text-red-600 text-3xl mb-4 italic";
-                    sub.innerHTML = `<span class="text-gray-500 font-bold uppercase block mb-2 text-[10px] tracking-[0.2em]">ADVERTENCIA:</span> <span class="text-gray-400 text-base">"${mensajeIA}"</span>`;
-                    pay.style.opacity = "0";
-                    pay.style.pointerEvents = "none";
+                    tit.innerText = "🛑 Veto de Fénix";
+                    tit.className = "font-orbitron text-red-600 text-3xl mb-6 uppercase italic tracking-tighter";
                 }
+
+                if(isGold) goldTag.classList.remove('hidden');
+                sub.innerText = `"${msg}"`;
 
             } catch (e) {
                 spinner.classList.add('hidden');
-                tit.innerText = "⚠️ ERROR DE ENLACE";
-                sub.innerText = "El TITÁN no pudo ser alcanzado. Verifique su conexión en Google Cloud.";
+                tit.innerText = "⚠️ Error de Enlace";
+                tit.className = "text-yellow-600 text-xl font-orbitron";
             } finally {
                 btn.disabled = false;
-                btn.innerText = "RE-CALCULAR INTENCIÓN";
             }
+        };
+
+        function renderPayPal() {
+            const container = document.getElementById('paypal-button-container');
+            if (container.innerHTML !== "") return;
+            paypal.Buttons({
+                style: { shape: 'pill', color: 'gold', layout: 'vertical', label: 'pay' },
+                createOrder: (data, actions) => {
+                    return actions.order.create({
+                        purchase_units: [{ amount: { value: '5.00' }, description: 'Licencia OMEGA - TITAN V11' }]
+                    });
+                },
+                onApprove: (data, actions) => {
+                    return actions.order.capture().then(() => alert("Certificación OMEGA Confirmada. Soberanía Validada."));
+                }
+            }).render('#paypal-button-container');
         }
     </script>
 </body>
