@@ -6,7 +6,7 @@
     <title>TITÁN VΩ.11 | Inteligencia Soberana</title>
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <script src="https://www.paypal.com/sdk/js?client-id=BAA1vZa0wSM2Mz7GjGZTtvTJGjguge3Sbfq3HzEirH-logMDlVWhxdgxSZSo73-wnDVoSBJJLiZAIsv9Ck&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=BAA1vZa0wSM2Mz7GjGZTtvTJGjguge3Sbfq3HzEirH-logMDlVWhxdgxSZSo73-wnDVoSBJJLiZAIsv9Ck&currency=USD&components=buttons&disable-funding=venmo"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;600&display=swap" rel="stylesheet">
     <style>
@@ -107,7 +107,7 @@
                         <span class="font-orbitron text-gold font-bold">$5.00 USD</span>
                     </div>
                     
-                    <div id="paypal-container-JUQ6B9EU7YHZQ"></div>
+                    <div id="paypal-button-container" class="z-10 relative"></div>
                     
                     <p class="text-[9px] text-center text-gray-500 mt-2">Plataforma Segura SSL | Acceso Inmediato</p>
                 </div>
@@ -140,7 +140,6 @@
         giSlider.oninput = () => document.getElementById('gi-val').innerText = giSlider.value + "%";
         gaSlider.oninput = () => document.getElementById('ga-val').innerText = gaSlider.value + "%";
 
-        // Variable para renderizado seguro
         let paypalRendered = false;
 
         async function consultarTitan() {
@@ -178,16 +177,32 @@
                     document.getElementById('zona-pago').classList.remove('hidden');
                     document.getElementById('zona-rechazo').classList.add('hidden');
 
-                    // RENDERIZAR BOTÓN OFICIAL DE PAYPAL (HOSTED BUTTON ID: JUQ6B9EU7YHZQ)
+                    // RENDERIZADO DE BOTONES SMART (SIN GRATIFICACIÓN)
                     if (!paypalRendered) {
-                        try {
-                            paypal.HostedButtons({
-                                hostedButtonId: "JUQ6B9EU7YHZQ",
-                            }).render("#paypal-container-JUQ6B9EU7YHZQ");
-                            paypalRendered = true;
-                        } catch(e) {
-                            console.error("Error al renderizar botón PayPal:", e);
-                        }
+                        paypal.Buttons({
+                            style: {
+                                layout: 'vertical',
+                                color:  'gold',
+                                shape:  'rect',
+                                label:  'pay'
+                            },
+                            createOrder: function(data, actions) {
+                                return actions.order.create({
+                                    purchase_units: [{
+                                        description: "Licencia OMEGA - TCIS TITAN V11",
+                                        amount: { value: '5.00' } // PRECIO FIJO AQUÍ
+                                    }]
+                                });
+                            },
+                            onApprove: function(data, actions) {
+                                return actions.order.capture().then(function(details) {
+                                    alert('¡Pago Confirmado! Redirigiendo a su Protocolo...');
+                                    // REDIRECCIÓN DIRECTA A TU WHATSAPP REAL (04124577822)
+                                    window.location.href = "https://wa.me/584124577822?text=PAGO_CONFIRMADO_TOKEN_" + details.id;
+                                });
+                            }
+                        }).render('#paypal-button-container');
+                        paypalRendered = true;
                     }
                 } else {
                     document.getElementById('titulo-status').innerHTML = `<span class="text-red-500">🛑 VETO TÉCNICO</span>`;
