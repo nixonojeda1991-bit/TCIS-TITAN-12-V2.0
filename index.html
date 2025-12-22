@@ -6,7 +6,7 @@
     <title>TITÁN VΩ.11 | Bóveda de Ejecución</title>
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD&components=buttons"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=BAA1vZa0wSM2Mz7GjGZTtvTJGjguge3Sbfq3HzEirH-logMDlVWhxdgxSZSo73-wnDVoSBJJLiZAIsv9Ck&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;600&display=swap" rel="stylesheet">
     <style>
@@ -30,11 +30,11 @@
     <header class="w-full max-w-6xl flex justify-between items-end border-b border-white/10 pb-2 mb-4">
         <div>
             <h1 class="font-orbitron text-2xl md:text-3xl font-bold text-gold">TITÁN VΩ.11</h1>
-            <p class="text-[9px] tracking-[0.3em] text-gray-500 uppercase">Arquitectura de Intención | Santa Rita</p>
+            <p class="text-[9px] tracking-[0.3em] text-gray-500 uppercase">Arquitectura de Intención | Nixon Ojeda</p>
         </div>
         <div class="hidden md:block">
-            <a href="https://wa.me/58XXXXXXXXXX?text=Ayuda%20Tecnica" class="text-[10px] text-gray-400 hover:text-white transition-colors uppercase tracking-widest border border-white/10 px-3 py-1 rounded">
-                Centro de Ayuda
+            <a href="https://wa.me/584124577822?text=Hola%20Nixon,%20necesito%20ayuda%20tecnica." class="text-[10px] text-gray-400 hover:text-white transition-colors uppercase tracking-widest border border-white/10 px-3 py-1 rounded">
+                Soporte Directo
             </a>
         </div>
     </header>
@@ -92,11 +92,14 @@
                         <span class="text-[10px] uppercase text-gray-400">LICENCIA OMEGA</span>
                         <span class="font-orbitron text-gold font-bold">$5.00 USD</span>
                     </div>
-                    <div id="paypal-button-container" class="z-10 relative"></div>
+                    
+                    <div id="paypal-container-JUQ6B9EU7YHZQ"></div>
+                    
+                    <p class="text-[9px] text-center text-gray-500 mt-2">Plataforma Segura SSL</p>
                 </div>
 
                 <div id="zona-rechazo" class="hidden mt-2">
-                    <a href="https://wa.me/58XXXXXXXXXX?text=Solicito%20Mentoria%20Emergencia" class="block text-center py-2 border border-red-500 text-red-500 text-xs font-bold rounded hover:bg-red-500/10 uppercase">
+                    <a href="https://wa.me/584124577822?text=Nixon,%20el%20sistema%20me%20rechazó,%20necesito%20mentoria." class="block text-center py-2 border border-red-500 text-red-500 text-xs font-bold rounded hover:bg-red-500/10 uppercase">
                         Solicitar Ayuda Humana
                     </a>
                 </div>
@@ -105,7 +108,7 @@
 
     </main>
 
-    <a href="https://wa.me/58XXXXXXXXXX?text=Hola%20Arquitecto,%20tengo%20una%20duda%20sobre%20el%20sistema%20TITAN." 
+    <a href="https://wa.me/584124577822?text=Hola%20Nixon,%20tengo%20una%20duda%20sobre%20el%20sistema%20TITAN." 
        target="_blank"
        class="fixed bottom-4 right-4 bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg z-50 flex items-center gap-2 transition-transform hover:scale-105 float-btn border-2 border-white/20">
         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -123,7 +126,8 @@
         giSlider.oninput = () => document.getElementById('gi-val').innerText = giSlider.value + "%";
         gaSlider.oninput = () => document.getElementById('ga-val').innerText = gaSlider.value + "%";
 
-        let botonesRenderizados = false;
+        // Variable para controlar renderizado del Hosted Button
+        let paypalRendered = false;
 
         async function consultarTitan() {
             const intencion = document.getElementById('intencion').value;
@@ -160,9 +164,16 @@
                     document.getElementById('zona-pago').classList.remove('hidden');
                     document.getElementById('zona-rechazo').classList.add('hidden');
 
-                    if (!botonesRenderizados) {
-                        renderPayPal();
-                        botonesRenderizados = true;
+                    // RENDERIZAR BOTÓN OFICIAL DE PAYPAL (HOSTED)
+                    if (!paypalRendered) {
+                        try {
+                            paypal.HostedButtons({
+                                hostedButtonId: "JUQ6B9EU7YHZQ",
+                            }).render("#paypal-container-JUQ6B9EU7YHZQ");
+                            paypalRendered = true;
+                        } catch(e) {
+                            console.error("Error al renderizar botón PayPal:", e);
+                        }
                     }
                 } else {
                     document.getElementById('titulo-status').innerHTML = `<span class="text-red-500">🛑 VETO TÉCNICO</span>`;
@@ -177,26 +188,6 @@
             } finally {
                 btn.disabled = false;
             }
-        }
-
-        function renderPayPal() {
-            paypal.Buttons({
-                style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'pay' },
-                createOrder: function(data, actions) {
-                    return actions.order.create({
-                        purchase_units: [{
-                            description: "Licencia OMEGA - Protocolo TCIS",
-                            amount: { value: '5.00' }
-                        }]
-                    });
-                },
-                onApprove: function(data, actions) {
-                    return actions.order.capture().then(function(details) {
-                        alert('¡Pago completado! Redirigiendo a soporte...');
-                        window.location.href = "https://wa.me/58XXXXXXXXXX?text=PAGO_CONFIRMADO_TOKEN_" + details.id;
-                    });
-                }
-            }).render('#paypal-button-container');
         }
     </script>
 </body>
