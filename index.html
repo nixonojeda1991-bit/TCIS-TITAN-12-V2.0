@@ -6,124 +6,238 @@
     <title>TITÁN VΩ.11 | Inteligencia Soberana</title>
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <script src="https://www.paypal.com/sdk/js?client-id=BAA1vZa0wSM2Mz7GjGZTtvTJGjguge3Sbfq3HzEirH-logMDlVWhxdgxSZSo73-wnDVoSBJJLiZAIsv9Ck&currency=USD"></script>
+    <!-- SDK de PayPal con componentes de botones hospedados -->
+    <script src="https://www.paypal.com/sdk/js?client-id=BAA1vZa0wSM2Mz7GjGZTtvTJGjguge3Sbfq3HzEirH-logMDlVWhxdgxSZSo73-wnDVoSBJJLiZAIsv9Ck&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;600&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #D4AF37; --dark: #050505; }
+        :root { 
+            --gold: #D4AF37; 
+            --gold-bright: #FFD700;
+            --dark: #050505; 
+        }
         body { background-color: var(--dark); color: #e5e5e5; font-family: 'Inter', sans-serif; }
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
         .text-gold { color: var(--gold); }
-        .glass { background: rgba(15, 15, 15, 0.95); border: 1px solid rgba(212, 175, 55, 0.2); }
+        .glass { background: rgba(15, 15, 15, 0.95); border: 1px solid rgba(212, 175, 55, 0.2); backdrop-filter: blur(10px); }
+        
+        .signature-seal {
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, rgba(0,0,0,0) 100%);
+        }
+
         input[type=range] { -webkit-appearance: none; background: #333; height: 4px; border-radius: 2px; }
-        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 18px; width: 18px; border-radius: 50%; background: var(--gold); cursor: pointer; }
-        .digital-print { letter-spacing: 0.15em; text-transform: uppercase; font-size: 0.65rem; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 18px; width: 18px; border-radius: 50%; background: var(--gold); cursor: pointer; box-shadow: 0 0 10px var(--gold); }
+        
+        .float-btn { animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+        
+        .scan-line {
+            width: 100%; height: 2px; background: var(--gold); position: absolute; top: 0; left: 0;
+            animation: scan 2s linear infinite; opacity: 0.5; box-shadow: 0 0 15px var(--gold);
+        }
+        @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
+
+        .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-2 md:p-6 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] relative">
+<body class="min-h-screen flex flex-col items-center p-4 md:p-8 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
 
-    <header class="w-full max-w-6xl border-b border-white/10 pb-4 mb-4">
-        <div class="flex flex-col md:flex-row justify-between items-end gap-2">
-            <div>
-                <h1 class="font-orbitron text-2xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#bf953f] via-[#fcf6ba] to-[#bf953f]">TITÁN VΩ.11</h1>
-                <div class="flex items-center gap-2 mt-2">
-                    <span class="h-px w-8 bg-gold/50"></span>
-                    <p class="digital-print text-gray-400 font-orbitron"><span class="text-gold">NÚCLEO DE INTELIGENCIA SOBERANA</span> | POTENCIA TECNOLÓGICA VENEZOLANA</p>
-                </div>
+    <!-- HEADER CON MARCA VENEZUELA Y FIRMA -->
+    <header class="w-full max-w-6xl flex flex-col md:flex-row justify-between items-center md:items-end border-b border-white/10 pb-4 mb-8 gap-4">
+        <div class="text-center md:text-left">
+            <h1 class="font-orbitron text-2xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#bf953f] via-[#fcf6ba] to-[#bf953f] tracking-tighter">TITÁN VΩ.11</h1>
+            <p class="text-[10px] tracking-[0.3em] text-gray-400 uppercase font-bold mt-1">
+                <span class="text-gold">Núcleo de Inteligencia Soberana</span> | Potencia Tecnológica Venezolana
+            </p>
+        </div>
+        
+        <div class="signature-seal px-4 py-2 rounded border-l-4 border-gold bg-white/5 flex items-center gap-3">
+            <div class="relative w-8 h-8 flex items-center justify-center border border-gold/30 rounded-full overflow-hidden">
+                <div class="scan-line"></div>
+                <svg class="w-5 h-5 text-gold opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A10.003 10.003 0 0012 3m0 18a10.003 10.003 0 01-8.213-4.3l.054-.09m0 0a10.003 10.003 0 0116.326-11.41l.054.09m-4.212 12.164A8.995 8.995 0 0112 18a8.995 8.995 0 01-4.212-1.355m0 0a8.995 8.995 0 01-1.414-1.414L3 12m18 0l-3.374 3.374a8.995 8.995 0 01-1.414 1.414"></path></svg>
             </div>
-            <div class="text-right"><p class="text-[9px] text-gray-600 uppercase tracking-widest">Arquitecto: Nixon Ojeda</p></div>
+            <div>
+                <p class="text-[8px] text-gray-500 uppercase font-bold leading-none mb-1">Autoría Certificada</p>
+                <p class="text-[10px] text-white font-orbitron tracking-widest leading-none">ARQUITECTO: NIXON OJEDA</p>
+            </div>
         </div>
     </header>
 
-    <main class="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
-        <section class="glass p-5 rounded-xl h-fit shadow-2xl">
-            <h2 class="font-orbitron text-xs text-gold mb-4 tracking-widest border-b border-white/10 pb-2">1. CÁMARA DE INFERENCIA</h2>
-            <div class="space-y-4 mb-4">
-                <div><div class="flex justify-between text-xs font-bold text-gray-400 mb-1"><span>INTENCIÓN (GI)</span> <span id="gi-val" class="text-gold">50%</span></div><input type="range" id="gi" class="w-full" min="0" max="100" value="50"></div>
-                <div><div class="flex justify-between text-xs font-bold text-gray-400 mb-1"><span>ACCIÓN (GA)</span> <span id="ga-val" class="text-gold">50%</span></div><input type="range" id="ga" class="w-full" min="0" max="100" value="50"></div>
+    <main class="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- SECCIÓN DE ENTRADA -->
+        <section class="glass p-6 rounded-2xl shadow-2xl h-fit border-t-2 border-t-gold/30">
+            <h2 class="font-orbitron text-xs text-gold mb-6 tracking-widest border-b border-white/10 pb-3 uppercase flex justify-between">
+                <span>01. Cámara de Inferencia</span>
+                <span class="opacity-50 text-[10px]">v.11 stable</span>
+            </h2>
+            
+            <div class="space-y-6 mb-6">
+                <div>
+                    <div class="flex justify-between text-[11px] font-bold text-gray-400 mb-2 uppercase">
+                        <span>Intención (GI)</span> <span id="gi-val" class="text-gold">50%</span>
+                    </div>
+                    <input type="range" id="gi" class="w-full cursor-pointer" min="0" max="100" value="50">
+                </div>
+                <div>
+                    <div class="flex justify-between text-[11px] font-bold text-gray-400 mb-2 uppercase">
+                        <span>Acción (GA)</span> <span id="ga-val" class="text-gold">50%</span>
+                    </div>
+                    <input type="range" id="ga" class="w-full cursor-pointer" min="0" max="100" value="50">
+                </div>
             </div>
-            <textarea id="intencion" rows="3" class="w-full bg-black/50 border border-white/20 rounded p-2 text-sm focus:border-gold outline-none text-white placeholder:text-gray-700 resize-none mb-4" placeholder="Ej: Lanzar preventa OMEGA..."></textarea>
-            <button onclick="consultarTitan()" id="btn-action" class="w-full py-3 bg-white text-black font-orbitron font-bold text-xs tracking-[0.2em] rounded hover:bg-gold transition-all shadow-lg">EJECUTAR AUDITORÍA</button>
+
+            <div class="mb-6">
+                <label class="text-[10px] uppercase text-gray-500 tracking-widest mb-2 block font-bold">Protocolo de Misión (Prompt)</label>
+                <textarea id="intencion" rows="4" class="w-full bg-black/40 border border-white/10 rounded-lg p-3 text-sm focus:border-gold/50 transition-all outline-none text-white placeholder:text-gray-700 resize-none" placeholder="Escriba su objetivo estratégico aquí..."></textarea>
+            </div>
+
+            <button onclick="consultarTitan()" id="btn-action" class="w-full py-4 bg-white text-black font-orbitron font-bold text-xs tracking-[0.3em] rounded-lg hover:bg-gold hover:scale-[1.02] active:scale-95 transition-all shadow-[0_0_20px_rgba(212,175,55,0.3)] uppercase">
+                Ejecutar Auditoría Titán
+            </button>
         </section>
 
-        <section id="panel-derecho" class="glass p-5 rounded-xl flex flex-col justify-center min-h-[350px] relative border-t-2 border-white/5 shadow-2xl">
-            <div id="estado-espera" class="text-center opacity-40"><div class="text-3xl mb-2">🛰️</div><p class="font-orbitron text-[10px] text-gray-400 tracking-widest">SISTEMA EN ESPERA</p></div>
-            <div id="loader" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-black/90 z-20 rounded-xl backdrop-blur-sm"><div class="animate-spin rounded-full h-10 w-10 border-t-2 border-gold mb-3"></div><p class="text-[10px] text-gold animate-pulse tracking-widest">GEMINI 3 PROCESANDO...</p></div>
-            
-            <div id="resultado-final" class="hidden w-full animate-fade-in">
-                <h2 class="font-orbitron text-xs text-gold mb-4 tracking-widest border-b border-white/10 pb-2">2. RESPUESTA DEL NÚCLEO</h2>
-                <div class="bg-gold/5 border-l-2 border-gold p-3 mb-4 rounded-r"><p id="titulo-status" class="font-bold text-sm mb-1"></p><p id="mensaje-ia" class="text-sm italic text-gray-300 font-light"></p></div>
-                
-                <div id="zona-pago" class="hidden">
-                    <div class="flex justify-between items-center mb-2"><span class="text-[10px] uppercase text-gray-400">LICENCIA OMEGA</span><span class="font-orbitron text-gold font-bold">$5.00 USD</span></div>
-                    
-                    <div id="paypal-button-container" class="z-10 relative"></div>
-                    
-                    <p class="text-[9px] text-center text-gray-500 mt-2">Plataforma Segura SSL</p>
+        <!-- SECCIÓN DE RESULTADOS -->
+        <section id="panel-derecho" class="glass p-6 rounded-2xl flex flex-col justify-center min-h-[400px] relative overflow-hidden border-t-2 border-t-gold/30">
+            <div id="estado-espera" class="text-center transition-opacity duration-500">
+                <div class="text-5xl mb-4 opacity-20">🛰️</div>
+                <p class="font-orbitron text-[11px] text-gray-500 tracking-[0.5em] uppercase">SISTEMA EN ESPERA</p>
+                <p class="text-[9px] text-gray-600 mt-2 italic">A la espera de parámetros del Arquitecto</p>
+            </div>
+
+            <div id="loader" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-black/95 z-20">
+                <div class="relative w-16 h-16">
+                    <div class="absolute inset-0 border-4 border-gold/20 rounded-full"></div>
+                    <div class="absolute inset-0 border-4 border-t-gold rounded-full animate-spin shadow-[0_0_15px_var(--gold)]"></div>
                 </div>
+                <p class="text-[11px] font-orbitron text-gold mt-6 animate-pulse tracking-widest uppercase">Procesando en Red Soberana...</p>
+            </div>
+
+            <div id="resultado-final" class="hidden w-full animate-fade-in space-y-4">
+                <h2 class="font-orbitron text-xs text-gold mb-2 tracking-widest border-b border-white/10 pb-3 uppercase">02. Respuesta del Núcleo</h2>
                 
-                <div id="zona-rechazo" class="hidden mt-2"><a href="https://wa.me/584124577822?text=Solicito%20Mentoria%20Emergencia" class="block text-center py-2 border border-red-500 text-red-500 text-xs font-bold rounded hover:bg-red-500/10 uppercase">Solicitar Ayuda</a></div>
+                <div id="contenedor-mensaje" class="bg-white/5 border-l-4 border-gold p-4 rounded-r-lg">
+                    <p id="titulo-status" class="font-bold text-xs mb-2 tracking-widest"></p>
+                    <p id="mensaje-ia" class="text-sm text-gray-300 leading-relaxed italic font-light"></p>
+                </div>
+
+                <!-- CONTENEDOR DE PAGO (SOLO APARECE SI ES APROBADO) -->
+                <div id="zona-pago" class="hidden pt-4 border-t border-white/10">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <span class="text-[10px] font-bold text-gray-400 tracking-widest uppercase block">Licencia Ejecutiva OMEGA</span>
+                            <span class="text-[8px] text-gold/60 uppercase">Activación de acceso completo</span>
+                        </div>
+                        <span class="font-orbitron text-gold font-bold text-xl">$1.00 USD</span>
+                    </div>
+                    
+                    <!-- BOTÓN HOSPEDADO DE PAYPAL -->
+                    <div id="paypal-container-JUQ6B9EU7YHZQ" class="min-h-[50px]"></div>
+                    
+                    <p class="text-[9px] text-center text-gray-600 mt-4 uppercase tracking-widest">Transacción Cifrada de Extremo a Extremo</p>
+                </div>
+
+                <div id="zona-rechazo" class="hidden pt-2">
+                    <a href="https://wa.me/584124577822?text=TITAN_VETO_AYUDA" target="_blank" class="block text-center py-4 border-2 border-red-500/50 text-red-500 text-[10px] font-bold rounded-lg hover:bg-red-500/10 transition-all uppercase tracking-widest">
+                        Solicitar Intervención de Emergencia
+                    </a>
+                </div>
             </div>
         </section>
     </main>
 
-    <a href="https://wa.me/584124577822?text=Soporte" target="_blank" class="fixed bottom-4 right-4 bg-green-600 hover:bg-green-500 text-white p-3 rounded-full shadow-lg z-50 float-btn flex items-center gap-2"><span class="font-bold text-xs px-2">SOPORTE</span></a>
+    <footer class="w-full max-w-6xl mt-auto py-12 flex flex-col items-center">
+        <div class="flex items-center gap-4 mb-4 opacity-50">
+            <div class="h-[px] w-12 bg-gold/30"></div>
+            <svg class="w-6 h-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A10.003 10.003 0 0012 3m0 18a10.003 10.003 0 01-8.213-4.3l.054-.09m0 0a10.003 10.003 0 0116.326-11.41l.054.09m-4.212 12.164A8.995 8.995 0 0112 18a8.995 8.995 0 01-4.212-1.355m0 0a8.995 8.995 0 01-1.414-1.414L3 12m18 0l-3.374 3.374a8.995 8.995 0 01-1.414 1.414"></path>
+            </svg>
+            <div class="h-[px] w-12 bg-gold/30"></div>
+        </div>
+        <p class="text-[9px] text-gray-600 tracking-[0.5em] uppercase text-center mb-2">Desarrollado por Nixon Ojeda | Ingeniería Zuliana</p>
+        <p class="text-[8px] text-gray-800 uppercase tracking-widest">© 2025 TITÁN AI - SOBERANÍA TECNOLÓGICA</p>
+    </footer>
+
+    <!-- BOTÓN WHATSAPP SOPORTE -->
+    <a href="https://wa.me/584124577822?text=Soporte%20Titán" target="_blank" class="fixed bottom-6 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-2xl z-50 flex items-center gap-2 transition-all hover:scale-110 float-btn">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        <span class="font-bold text-[10px] hidden md:inline tracking-tighter uppercase">Soporte Técnico</span>
+    </a>
 
     <script>
         const API_URL = "https://us-central1-tcis-titan-12.cloudfunctions.net/agos-v11"; 
         const API_KEY = "dosespejossemiranyelpezrespirafueradelagua";
-        const giSlider = document.getElementById('gi'); const gaSlider = document.getElementById('ga');
+        
+        const giSlider = document.getElementById('gi'); 
+        const gaSlider = document.getElementById('ga');
+        
         giSlider.oninput = () => document.getElementById('gi-val').innerText = giSlider.value + "%";
         gaSlider.oninput = () => document.getElementById('ga-val').innerText = gaSlider.value + "%";
-        let paypalRendered = false;
+        
+        let paypalIniciado = false;
 
         async function consultarTitan() {
-            const intencion = document.getElementById('intencion').value;
+            const intencion = document.getElementById('intencion').value.trim();
             const btn = document.getElementById('btn-action');
-            if(!intencion) return alert("Arquitecto, ingrese su intención.");
-            document.getElementById('estado-espera').classList.add('hidden'); document.getElementById('resultado-final').classList.add('hidden'); document.getElementById('loader').classList.remove('hidden'); btn.disabled = true;
+            if(!intencion) return alert("Arquitecto Nixon, por favor ingrese su intención estratégica.");
+
+            // UI State
+            document.getElementById('estado-espera').classList.add('hidden');
+            document.getElementById('resultado-final').classList.add('hidden');
+            document.getElementById('loader').classList.remove('hidden');
+            btn.disabled = true;
 
             try {
                 const response = await fetch(API_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'X-MBR-Auth': API_KEY },
-                    body: JSON.stringify({ observation: { gi_value: parseInt(giSlider.value) / 100, ga_value: parseInt(gaSlider.value) / 100, user_intent: intencion } })
+                    headers: { 
+                        'Content-Type': 'application/json', 
+                        'X-MBR-Auth': API_KEY 
+                    },
+                    body: JSON.stringify({ 
+                        observation: { 
+                            gi_value: parseInt(giSlider.value) / 100, 
+                            ga_value: parseInt(gaSlider.value) / 100, 
+                            user_intent: intencion 
+                        } 
+                    })
                 });
+
+                if (!response.ok) throw new Error("Fallo en la conexión soberana.");
+
                 const data = await response.json();
-                document.getElementById('loader').classList.add('hidden'); document.getElementById('resultado-final').classList.remove('hidden'); document.getElementById('mensaje-ia').innerText = `"${data.message}"`;
+                
+                document.getElementById('loader').classList.add('hidden');
+                document.getElementById('resultado-final').classList.remove('hidden');
+                document.getElementById('mensaje-ia').innerText = `"${data.message}"`;
 
                 if(data.decision === "act") {
-                    document.getElementById('titulo-status').innerHTML = `<span class="text-green-400">✅ APROBADO</span>`;
+                    document.getElementById('titulo-status').innerHTML = `<span class="text-green-400">✅ PROTOCOLO APROBADO</span>`;
                     document.getElementById('zona-pago').classList.remove('hidden');
                     document.getElementById('zona-rechazo').classList.add('hidden');
 
-                    if (!paypalRendered) {
-                        // CONFIGURACIÓN DE PAGO ÚNICO (SMART BUTTONS)
-                        // Aquí definimos el precio ($5.00) directo en el código
-                        paypal.Buttons({
-                            style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'pay' },
-                            createOrder: function(data, actions) {
-                                return actions.order.create({
-                                    purchase_units: [{
-                                        description: "Licencia OMEGA - TCIS",
-                                        amount: { value: '5.00' }
-                                    }]
-                                });
-                            },
-                            onApprove: function(data, actions) {
-                                return actions.order.capture().then(function(details) {
-                                    alert('¡Pago Confirmado! Redirigiendo...');
-                                    window.location.href = "https://wa.me/584124577822?text=PAGO_CONFIRMADO_" + details.id;
-                                });
-                            }
-                        }).render('#paypal-button-container');
-                        paypalRendered = true;
+                    // Renderizar el Botón Hospedado de PayPal solo una vez
+                    if (!paypalIniciado) {
+                        paypal.HostedButtons({
+                            hostedButtonId: "JUQ6B9EU7YHZQ",
+                        }).render("#paypal-container-JUQ6B9EU7YHZQ");
+                        paypalIniciado = true;
                     }
                 } else {
                     document.getElementById('titulo-status').innerHTML = `<span class="text-red-500">🛑 VETO TÉCNICO</span>`;
-                    document.getElementById('zona-pago').classList.add('hidden'); document.getElementById('zona-rechazo').classList.remove('hidden');
+                    document.getElementById('zona-pago').classList.add('hidden');
+                    document.getElementById('zona-rechazo').classList.remove('hidden');
                 }
-            } catch (error) { alert("Error de conexión."); document.getElementById('loader').classList.add('hidden'); btn.disabled = false; }
+            } catch (error) {
+                console.error(error);
+                alert("Error de comunicación con el núcleo. Verifique su conexión.");
+                document.getElementById('loader').classList.add('hidden');
+                document.getElementById('estado-espera').classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+            }
         }
     </script>
 </body>
