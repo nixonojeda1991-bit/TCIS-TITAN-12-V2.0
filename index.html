@@ -6,7 +6,7 @@
     <title>TITÁN VΩ.11 | Inteligencia Soberana</title>
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <script src="https://www.paypal.com/sdk/js?client-id=BAA1vZa0wSM2Mz7GjGZTtvTJGjguge3Sbfq3HzEirH-logMDlVWhxdgxSZSo73-wnDVoSBJJLiZAIsv9Ck&currency=USD&components=buttons&disable-funding=venmo"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=BAA1vZa0wSM2Mz7GjGZTtvTJGjguge3Sbfq3HzEirH-logMDlVWhxdgxSZSo73-wnDVoSBJJLiZAIsv9Ck&currency=USD"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;600&display=swap" rel="stylesheet">
     <style>
@@ -17,8 +17,6 @@
         .glass { background: rgba(15, 15, 15, 0.95); border: 1px solid rgba(212, 175, 55, 0.2); }
         input[type=range] { -webkit-appearance: none; background: #333; height: 4px; border-radius: 2px; }
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 18px; width: 18px; border-radius: 50%; background: var(--gold); cursor: pointer; }
-        .float-btn { animation: float 3s ease-in-out infinite; }
-        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
         .digital-print { letter-spacing: 0.15em; text-transform: uppercase; font-size: 0.65rem; }
     </style>
 </head>
@@ -27,17 +25,24 @@
     <header class="w-full max-w-6xl border-b border-white/10 pb-4 mb-4">
         <div class="flex flex-col md:flex-row justify-between items-end gap-2">
             <div>
-                <h1 class="font-orbitron text-2xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#bf953f] via-[#fcf6ba] to-[#bf953f]">TITÁN VΩ.11</h1>
+                <h1 class="font-orbitron text-2xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#bf953f] via-[#fcf6ba] to-[#bf953f]">
+                    TITÁN VΩ.11
+                </h1>
                 <div class="flex items-center gap-2 mt-2">
                     <span class="h-px w-8 bg-gold/50"></span>
-                    <p class="digital-print text-gray-400 font-orbitron"><span class="text-gold">NÚCLEO DE INTELIGENCIA SOBERANA</span> | POTENCIA TECNOLÓGICA VENEZOLANA</p>
+                    <p class="digital-print text-gray-400 font-orbitron">
+                        <span class="text-gold">NÚCLEO DE INTELIGENCIA SOBERANA</span> | POTENCIA TECNOLÓGICA VENEZOLANA
+                    </p>
                 </div>
             </div>
-            <div class="text-right"><p class="text-[9px] text-gray-600 uppercase tracking-widest">Arquitecto: Nixon Ojeda</p></div>
+            <div class="text-right">
+                <p class="text-[9px] text-gray-600 uppercase tracking-widest">Arquitecto: Nixon Ojeda</p>
+            </div>
         </div>
     </header>
 
     <main class="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
+        
         <section class="glass p-5 rounded-xl h-fit shadow-2xl">
             <h2 class="font-orbitron text-xs text-gold mb-4 tracking-widest border-b border-white/10 pb-2">1. CÁMARA DE INFERENCIA</h2>
             <div class="space-y-4 mb-4">
@@ -58,7 +63,9 @@
                 
                 <div id="zona-pago" class="hidden">
                     <div class="flex justify-between items-center mb-2"><span class="text-[10px] uppercase text-gray-400">LICENCIA DE PRUEBA</span><span class="font-orbitron text-gold font-bold">$1.00 USD</span></div>
+                    
                     <div id="paypal-button-container" class="z-10 relative"></div>
+                    
                     <p class="text-[9px] text-center text-gray-500 mt-2">Plataforma Segura SSL</p>
                 </div>
                 
@@ -67,7 +74,7 @@
         </section>
     </main>
 
-    <a href="https://wa.me/584124577822?text=Soporte" target="_blank" class="fixed bottom-4 right-4 bg-green-600 hover:bg-green-500 text-white p-3 rounded-full shadow-lg z-50 float-btn"><span class="font-bold text-xs">SOPORTE</span></a>
+    <a href="https://wa.me/584124577822?text=Soporte" target="_blank" class="fixed bottom-4 right-4 bg-green-600 hover:bg-green-500 text-white p-3 rounded-full shadow-lg z-50 float-btn flex items-center gap-2"><span class="font-bold text-xs px-2">SOPORTE</span></a>
 
     <script>
         const API_URL = "https://us-central1-tcis-titan-12.cloudfunctions.net/agos-v11"; 
@@ -75,6 +82,7 @@
         const giSlider = document.getElementById('gi'); const gaSlider = document.getElementById('ga');
         giSlider.oninput = () => document.getElementById('gi-val').innerText = giSlider.value + "%";
         gaSlider.oninput = () => document.getElementById('ga-val').innerText = gaSlider.value + "%";
+        
         let paypalRendered = false;
 
         async function consultarTitan() {
@@ -98,26 +106,26 @@
                     document.getElementById('zona-rechazo').classList.add('hidden');
 
                     if (!paypalRendered) {
-                        // AQUÍ ESTÁ EL PRECIO DE $1.00 CONFIGURADO CORRECTAMENTE
+                        // RENDERIZADO DE BOTONES SMART (PRECIO VARIABLE $1.00)
                         paypal.Buttons({
                             style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'pay' },
                             createOrder: function(data, actions) {
                                 return actions.order.create({
                                     purchase_units: [{
-                                        description: "PRUEBA TITAN - $1",
-                                        amount: { value: '1.00' } // PRECIO DE PRUEBA
+                                        description: "PRUEBA TECNICA - TITAN",
+                                        amount: { value: '1.00' } // <--- AQUÍ CAMBIAS EL PRECIO
                                     }]
                                 });
                             },
                             onApprove: function(data, actions) {
                                 return actions.order.capture().then(function(details) {
-                                    alert('¡Pago de Prueba Exitoso! Redirigiendo...');
+                                    alert('¡PAGO EXITOSO! Redirigiendo...');
                                     window.location.href = "https://wa.me/584124577822?text=PAGO_TEST_1_DOLAR_" + details.id;
                                 });
                             },
                             onError: function (err) {
-                                console.error('Error PayPal:', err);
-                                alert("No se pudo procesar el pago. Asegúrate de NO usar tu propia tarjeta vinculada a esta cuenta.");
+                                console.error(err);
+                                alert("Error: Posiblemente estás intentando pagar con tu propia tarjeta. Usa una distinta.");
                             }
                         }).render('#paypal-button-container');
                         paypalRendered = true;
