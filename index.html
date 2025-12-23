@@ -6,8 +6,8 @@
     <title>TITÁN VΩ.11 | Inteligencia Soberana</title>
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- SDK de PayPal con componentes de botones hospedados (Hosted Buttons) -->
-    <script src="https://www.paypal.com/sdk/js?client-id=BAA1vZa0wSM2Mz7GjGZTtvTJGjguge3Sbfq3HzEirH-logMDlVWhxdgxSZSo73-wnDVoSBJJLiZAIsv9Ck&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
+    <!-- PARTE 1: Script de Carrito PayPal (Merchant ID: FMUCBMTQWYY64) -->
+    <script src="https://www.paypalobjects.com/ncp/cart/cart.js" data-merchant-id="FMUCBMTQWYY64"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;600&display=swap" rel="stylesheet">
     <style>
@@ -40,12 +40,6 @@
 
         .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Asegurar que el contenedor de paypal no colapse */
-        #paypal-container-JUQ6B9EU7YHZQ {
-            min-height: 150px;
-            margin-top: 1rem;
-        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center p-4 md:p-8 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
@@ -129,20 +123,22 @@
                     <p id="mensaje-ia" class="text-sm text-gray-300 leading-relaxed italic font-light"></p>
                 </div>
 
-                <!-- CONTENEDOR DE PAGO (CORREGIDO: Hosted Button de PayPal) -->
+                <!-- ZONA DE PAGO (ACTUALIZADA CON PARTE 2 DE PAYPAL) -->
                 <div id="zona-pago" class="hidden pt-4 border-t border-white/10">
                     <div class="flex justify-between items-center mb-6">
                         <div>
                             <span class="text-[10px] font-bold text-gray-400 tracking-widest uppercase block">Licencia Ejecutiva OMEGA</span>
                             <span class="text-[8px] text-gold/60 uppercase">Activación de acceso completo</span>
                         </div>
-                        <span class="font-orbitron text-gold font-bold text-xl">$1.00 USD</span>
                     </div>
                     
-                    <!-- Este es el contenedor donde PayPal inyectará sus propios botones seguros -->
-                    <div id="paypal-container-JUQ6B9EU7YHZQ"></div>
+                    <!-- PARTE 2: Botón Ver Carrito -->
+                    <div class="flex justify-center">
+                        <paypal-cart-button data-id="pp-view-cart"></paypal-cart-button>
+                    </div>
+                    <div id="paypal-script-container"></div>
                     
-                    <p class="text-[9px] text-center text-gray-600 mt-4 uppercase tracking-widest">Transacción Segura y Cifrada por PayPal</p>
+                    <p class="text-[9px] text-center text-gray-600 mt-4 uppercase tracking-widest">Soberanía Tecnológica en Transacción</p>
                 </div>
 
                 <div id="zona-rechazo" class="hidden pt-2">
@@ -182,8 +178,6 @@
         giSlider.oninput = () => document.getElementById('gi-val').innerText = giSlider.value + "%";
         gaSlider.oninput = () => document.getElementById('ga-val').innerText = gaSlider.value + "%";
         
-        let paypalIniciado = false;
-
         async function consultarTitan() {
             const intencion = document.getElementById('intencion').value.trim();
             const btn = document.getElementById('btn-action');
@@ -224,14 +218,9 @@
                     document.getElementById('zona-pago').classList.remove('hidden');
                     document.getElementById('zona-rechazo').classList.add('hidden');
 
-                    // RECARGAR BOTONES DE PAYPAL
-                    const container = document.getElementById('paypal-container-JUQ6B9EU7YHZQ');
-                    container.innerHTML = ''; // Limpiar para evitar duplicados
-                    
-                    if (window.paypal && paypal.HostedButtons) {
-                        paypal.HostedButtons({
-                            hostedButtonId: "JUQ6B9EU7YHZQ",
-                        }).render("#paypal-container-JUQ6B9EU7YHZQ");
+                    // EJECUCIÓN PARTE 2: Inicializar Carrito
+                    if (typeof cartPaypal !== 'undefined') {
+                        cartPaypal.Cart({ id: "pp-view-cart" });
                     }
                 } else {
                     document.getElementById('titulo-status').innerHTML = `<span class="text-red-500">🛑 VETO TÉCNICO</span>`;
