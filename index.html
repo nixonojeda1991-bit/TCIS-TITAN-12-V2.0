@@ -6,7 +6,7 @@
     <title>TITÁN VΩ.11 | Inteligencia Soberana</title>
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- SDK de PayPal con componentes de botones hospedados -->
+    <!-- SDK de PayPal con componentes de botones hospedados (Hosted Buttons) -->
     <script src="https://www.paypal.com/sdk/js?client-id=BAA1vZa0wSM2Mz7GjGZTtvTJGjguge3Sbfq3HzEirH-logMDlVWhxdgxSZSo73-wnDVoSBJJLiZAIsv9Ck&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;600&display=swap" rel="stylesheet">
@@ -40,6 +40,12 @@
 
         .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Asegurar que el contenedor de paypal no colapse */
+        #paypal-container-JUQ6B9EU7YHZQ {
+            min-height: 150px;
+            margin-top: 1rem;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center p-4 md:p-8 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
@@ -123,7 +129,7 @@
                     <p id="mensaje-ia" class="text-sm text-gray-300 leading-relaxed italic font-light"></p>
                 </div>
 
-                <!-- CONTENEDOR DE PAGO (SOLO APARECE SI ES APROBADO) -->
+                <!-- CONTENEDOR DE PAGO (CORREGIDO: Hosted Button de PayPal) -->
                 <div id="zona-pago" class="hidden pt-4 border-t border-white/10">
                     <div class="flex justify-between items-center mb-6">
                         <div>
@@ -133,10 +139,10 @@
                         <span class="font-orbitron text-gold font-bold text-xl">$1.00 USD</span>
                     </div>
                     
-                    <!-- BOTÓN HOSPEDADO DE PAYPAL -->
-                    <div id="paypal-container-JUQ6B9EU7YHZQ" class="min-h-[50px]"></div>
+                    <!-- Este es el contenedor donde PayPal inyectará sus propios botones seguros -->
+                    <div id="paypal-container-JUQ6B9EU7YHZQ"></div>
                     
-                    <p class="text-[9px] text-center text-gray-600 mt-4 uppercase tracking-widest">Transacción Cifrada de Extremo a Extremo</p>
+                    <p class="text-[9px] text-center text-gray-600 mt-4 uppercase tracking-widest">Transacción Segura y Cifrada por PayPal</p>
                 </div>
 
                 <div id="zona-rechazo" class="hidden pt-2">
@@ -150,11 +156,11 @@
 
     <footer class="w-full max-w-6xl mt-auto py-12 flex flex-col items-center">
         <div class="flex items-center gap-4 mb-4 opacity-50">
-            <div class="h-[px] w-12 bg-gold/30"></div>
+            <div class="h-[1px] w-12 bg-gold/30"></div>
             <svg class="w-6 h-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A10.003 10.003 0 0012 3m0 18a10.003 10.003 0 01-8.213-4.3l.054-.09m0 0a10.003 10.003 0 0116.326-11.41l.054.09m-4.212 12.164A8.995 8.995 0 0112 18a8.995 8.995 0 01-4.212-1.355m0 0a8.995 8.995 0 01-1.414-1.414L3 12m18 0l-3.374 3.374a8.995 8.995 0 01-1.414 1.414"></path>
             </svg>
-            <div class="h-[px] w-12 bg-gold/30"></div>
+            <div class="h-[1px] w-12 bg-gold/30"></div>
         </div>
         <p class="text-[9px] text-gray-600 tracking-[0.5em] uppercase text-center mb-2">Desarrollado por Nixon Ojeda | Ingeniería Zuliana</p>
         <p class="text-[8px] text-gray-800 uppercase tracking-widest">© 2025 TITÁN AI - SOBERANÍA TECNOLÓGICA</p>
@@ -181,7 +187,7 @@
         async function consultarTitan() {
             const intencion = document.getElementById('intencion').value.trim();
             const btn = document.getElementById('btn-action');
-            if(!intencion) return alert("Arquitecto Nixon, por favor ingrese su intención estratégica.");
+            if(!intencion) return;
 
             // UI State
             document.getElementById('estado-espera').classList.add('hidden');
@@ -218,12 +224,14 @@
                     document.getElementById('zona-pago').classList.remove('hidden');
                     document.getElementById('zona-rechazo').classList.add('hidden');
 
-                    // Renderizar el Botón Hospedado de PayPal solo una vez
-                    if (!paypalIniciado) {
+                    // RECARGAR BOTONES DE PAYPAL
+                    const container = document.getElementById('paypal-container-JUQ6B9EU7YHZQ');
+                    container.innerHTML = ''; // Limpiar para evitar duplicados
+                    
+                    if (window.paypal && paypal.HostedButtons) {
                         paypal.HostedButtons({
                             hostedButtonId: "JUQ6B9EU7YHZQ",
                         }).render("#paypal-container-JUQ6B9EU7YHZQ");
-                        paypalIniciado = true;
                     }
                 } else {
                     document.getElementById('titulo-status').innerHTML = `<span class="text-red-500">🛑 VETO TÉCNICO</span>`;
@@ -232,7 +240,6 @@
                 }
             } catch (error) {
                 console.error(error);
-                alert("Error de comunicación con el núcleo. Verifique su conexión.");
                 document.getElementById('loader').classList.add('hidden');
                 document.getElementById('estado-espera').classList.remove('hidden');
             } finally {
