@@ -6,8 +6,8 @@
     <title>TITÁN VΩ.11 | Inteligencia Soberana</title>
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- PARTE 1: Script de Carrito PayPal (Merchant ID: FMUCBMTQWYY64) -->
-    <script src="https://www.paypalobjects.com/ncp/cart/cart.js" data-merchant-id="FMUCBMTQWYY64"></script>
+    <!-- PARTE 1: SDK de PayPal con Botones Hospedados -->
+    <script src="https://www.paypal.com/sdk/js?client-id=BAA1vZa0wSM2Mz7GjGZTtvTJGjguge3Sbfq3HzEirH-logMDlVWhxdgxSZSo73-wnDVoSBJJLiZAIsv9Ck&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;600&display=swap" rel="stylesheet">
     <style>
@@ -44,7 +44,7 @@
 </head>
 <body class="min-h-screen flex flex-col items-center p-4 md:p-8 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
 
-    <!-- HEADER CON MARCA VENEZUELA Y FIRMA -->
+    <!-- HEADER CON MARCA VENEZUELA Y FIRMA DE NIXON OJEDA -->
     <header class="w-full max-w-6xl flex flex-col md:flex-row justify-between items-center md:items-end border-b border-white/10 pb-4 mb-8 gap-4">
         <div class="text-center md:text-left">
             <h1 class="font-orbitron text-2xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#bf953f] via-[#fcf6ba] to-[#bf953f] tracking-tighter">TITÁN VΩ.11</h1>
@@ -123,20 +123,17 @@
                     <p id="mensaje-ia" class="text-sm text-gray-300 leading-relaxed italic font-light"></p>
                 </div>
 
-                <!-- ZONA DE PAGO (ACTUALIZADA CON PARTE 2 DE PAYPAL) -->
+                <!-- ZONA DE PAGO (ACTUALIZADA CON PARTE 2: Hosted Buttons) -->
                 <div id="zona-pago" class="hidden pt-4 border-t border-white/10">
                     <div class="flex justify-between items-center mb-6">
                         <div>
-                            <span class="text-[10px] font-bold text-gray-400 tracking-widest uppercase block">Licencia Ejecutiva OMEGA</span>
-                            <span class="text-[8px] text-gold/60 uppercase">Activación de acceso completo</span>
+                            <span class="text-[10px] font-bold text-gray-400 tracking-widest uppercase block">Módulo de Acceso Estratégico</span>
+                            <span class="text-[8px] text-gold/60 uppercase">Activación de transacción soberana</span>
                         </div>
                     </div>
                     
-                    <!-- PARTE 2: Botón Ver Carrito -->
-                    <div class="flex justify-center">
-                        <paypal-cart-button data-id="pp-view-cart"></paypal-cart-button>
-                    </div>
-                    <div id="paypal-script-container"></div>
+                    <!-- Contenedor del Botón de PayPal -->
+                    <div id="paypal-container-V7VP3T98HFVK4" class="w-full flex justify-center"></div>
                     
                     <p class="text-[9px] text-center text-gray-600 mt-4 uppercase tracking-widest">Soberanía Tecnológica en Transacción</p>
                 </div>
@@ -183,7 +180,7 @@
             const btn = document.getElementById('btn-action');
             if(!intencion) return;
 
-            // UI State
+            // Reiniciar UI
             document.getElementById('estado-espera').classList.add('hidden');
             document.getElementById('resultado-final').classList.add('hidden');
             document.getElementById('loader').classList.remove('hidden');
@@ -205,7 +202,7 @@
                     })
                 });
 
-                if (!response.ok) throw new Error("Fallo en la conexión soberana.");
+                if (!response.ok) throw new Error("Fallo en la conexión.");
 
                 const data = await response.json();
                 
@@ -218,9 +215,14 @@
                     document.getElementById('zona-pago').classList.remove('hidden');
                     document.getElementById('zona-rechazo').classList.add('hidden');
 
-                    // EJECUCIÓN PARTE 2: Inicializar Carrito
-                    if (typeof cartPaypal !== 'undefined') {
-                        cartPaypal.Cart({ id: "pp-view-cart" });
+                    // PARTE 2: Renderizado del Botón Hospedado
+                    // Limpiamos el contenedor por si ya existía una instancia previa
+                    document.getElementById("paypal-container-V7VP3T98HFVK4").innerHTML = '';
+                    
+                    if (window.paypal && window.paypal.HostedButtons) {
+                        paypal.HostedButtons({
+                            hostedButtonId: "V7VP3T98HFVK4",
+                        }).render("#paypal-container-V7VP3T98HFVK4");
                     }
                 } else {
                     document.getElementById('titulo-status').innerHTML = `<span class="text-red-500">🛑 VETO TÉCNICO</span>`;
