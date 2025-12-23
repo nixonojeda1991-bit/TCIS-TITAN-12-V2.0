@@ -3,240 +3,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TITÁN VΩ.11 | Sistema de Auditoría Estratégica</title>
+    <title>TITÁN VΩ.11 | Arquitecto Nixon Ojeda</title>
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- PARTE 1: SDK de PayPal (Botones Hospedados) -->
+    <!-- SDK PAYPAL INTEGRAL -->
     <script src="https://www.paypal.com/sdk/js?client-id=BAA1vZa0wSM2Mz7GjGZTtvTJGjguge3Sbfq3HzEirH-logMDlVWhxdgxSZSo73-wnDVoSBJJLiZAIsv9Ck&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
     <style>
         :root { 
             --gold: #D4AF37; 
             --gold-bright: #FFD700;
-            --dark: #050505; 
+            --dark-bg: #050505; 
         }
-        body { 
-            background-color: var(--dark); 
-            color: #e5e5e5; 
-            font-family: 'Inter', sans-serif;
-            background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-        }
-        .font-orbitron { font-family: 'Orbitron', sans-serif; }
-        .glass { 
-            background: rgba(10, 10, 10, 0.9); 
-            border: 1px solid rgba(212, 175, 55, 0.15); 
-            backdrop-filter: blur(12px); 
-        }
-        .text-gold { color: var(--gold); }
         
-        /* Animación de escaneo para la firma */
-        .scan-line {
-            width: 100%; height: 2px; background: var(--gold); position: absolute;
-            animation: scan 2s linear infinite; opacity: 0.4; box-shadow: 0 0 10px var(--gold);
+        body { 
+            background-color: var(--dark-bg); 
+            color: #ffffff; 
+            font-family: 'Inter', sans-serif;
+            background-image: radial-gradient(circle at center, #111 0%, #050505 100%);
         }
-        @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
 
-        input[type=range] { -webkit-appearance: none; background: #222; height: 4px; border-radius: 2px; }
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+
+        .glass-panel { 
+            background: rgba(15, 15, 15, 0.8); 
+            border: 1px solid rgba(212, 175, 55, 0.2); 
+            backdrop-filter: blur(15px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(180deg, #FFFFFF 0%, #D4AF37 50%, #8A6D3B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Animación de escaneo de firma */
+        .signature-scanner {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: var(--gold);
+            top: 0;
+            left: 0;
+            animation: scanLine 3s linear infinite;
+            box-shadow: 0 0 15px var(--gold);
+            opacity: 0.5;
+        }
+
+        @keyframes scanLine {
+            0% { top: 0%; }
+            100% { top: 100%; }
+        }
+
+        /* Personalización de Sliders */
+        input[type=range] { -webkit-appearance: none; width: 100%; background: #222; height: 6px; border-radius: 3px; outline: none; }
         input[type=range]::-webkit-slider-thumb { 
-            -webkit-appearance: none; height: 16px; width: 16px; 
-            border-radius: 50%; background: var(--gold); cursor: pointer; 
-            box-shadow: 0 0 8px var(--gold); 
+            -webkit-appearance: none; height: 18px; width: 18px; border-radius: 50%; 
+            background: var(--gold); cursor: pointer; border: 2px solid white;
+            box-shadow: 0 0 10px var(--gold);
         }
 
-        .fade-in { animation: fadeIn 0.6s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.8s ease forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center p-4 md:p-8">
+<body class="p-4 md:p-10 min-h-screen flex flex-col items-center">
 
-    <!-- CABECERA: IDENTIDAD SOBERANA -->
-    <header class="w-full max-w-5xl flex flex-col md:flex-row justify-between items-center border-b border-gold/20 pb-6 mb-10 gap-6">
-        <div class="text-center md:text-left">
-            <h1 class="font-orbitron text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-white via-gold to-gold-bright tracking-tighter">
+    <!-- HEADER DE AUTORÍA -->
+    <header class="w-full max-w-6xl flex flex-col md:flex-row justify-between items-end mb-12 border-b border-gold/20 pb-8 gap-6">
+        <div>
+            <h1 class="font-orbitron text-4xl md:text-6xl font-black tracking-tighter gold-gradient-text">
                 TITÁN VΩ.11
             </h1>
-            <p class="text-[10px] tracking-[0.4em] text-gray-500 uppercase font-bold mt-2">
-                Ingeniería de Inferencia <span class="text-gold mx-2">|</span> Arquitecto Nixon Ojeda
+            <p class="text-[10px] tracking-[0.5em] text-gold/60 uppercase mt-2 font-bold">
+                Estrategia e Inferencia Soberana
             </p>
         </div>
-        
-        <!-- Sello de Autoría Original -->
-        <div class="glass px-5 py-3 rounded-lg border-l-4 border-gold flex items-center gap-4">
-            <div class="relative w-10 h-10 border border-gold/40 rounded-full flex items-center justify-center overflow-hidden">
-                <div class="scan-line"></div>
-                <svg class="w-6 h-6 text-gold/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A3.323 3.323 0 0010.603 2.112a3.323 3.323 0 00-4.583 1.354 3.323 3.323 0 00-1.354 4.583a3.323 3.323 0 001.354 4.583 3.323 3.323 0 004.583-1.354 3.323 3.323 0 001.354-4.583z" stroke-width="1.5"></path></svg>
-            </div>
-            <div>
-                <p class="text-[8px] text-gray-500 uppercase tracking-widest leading-none mb-1">Cripto-Firma</p>
-                <p class="text-xs text-white font-orbitron tracking-tighter">NIXON OJEDA</p>
+
+        <!-- FIRMA DEL ARQUITECTO -->
+        <div class="relative glass-panel p-4 rounded-lg border-l-4 border-gold overflow-hidden min-w-[220px]">
+            <div class="signature-scanner"></div>
+            <div class="relative z-10 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full border border-gold/30 flex items-center justify-center text-gold">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-width="1.5"></path></svg>
+                </div>
+                <div>
+                    <p class="text-[8px] text-gray-500 uppercase tracking-widest">Autor del Sistema</p>
+                    <p class="font-orbitron text-xs text-white tracking-tighter uppercase">Arq. Nixon Ojeda</p>
+                </div>
             </div>
         </div>
     </header>
 
-    <main class="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <main class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-10">
         
-        <!-- PANEL DE CONTROL (ENTRADA) -->
-        <section class="glass p-8 rounded-3xl shadow-2xl border-t-2 border-t-gold/40">
-            <div class="flex items-center gap-2 mb-8">
-                <div class="w-2 h-2 bg-gold rounded-full animate-pulse"></div>
-                <h2 class="font-orbitron text-[10px] text-gold tracking-[0.3em] uppercase">01. Parámetros de Inferencia</h2>
-            </div>
+        <!-- BLOQUE DE ENTRADA -->
+        <section class="glass-panel p-8 rounded-3xl">
+            <h2 class="font-orbitron text-xs text-gold tracking-widest uppercase mb-10 border-b border-gold/10 pb-4">01. Configuración de Inferencia</h2>
             
-            <div class="space-y-8 mb-8">
-                <div>
-                    <div class="flex justify-between text-[10px] font-bold text-gray-500 mb-3 uppercase tracking-widest">
-                        <span>Grado de Intención (GI)</span> <span id="gi-val" class="text-gold font-orbitron">50%</span>
+            <div class="space-y-10">
+                <!-- GI SLIDER -->
+                <div class="relative">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Grado de Intención (GI)</span>
+                        <span id="gi-display" class="font-orbitron text-gold text-lg">50%</span>
                     </div>
-                    <input type="range" id="gi" class="w-full" min="0" max="100" value="50">
+                    <input type="range" id="gi-slider" min="0" max="100" value="50">
                 </div>
-                <div>
-                    <div class="flex justify-between text-[10px] font-bold text-gray-500 mb-3 uppercase tracking-widest">
-                        <span>Grado de Acción (GA)</span> <span id="ga-val" class="text-gold font-orbitron">50%</span>
+
+                <!-- GA SLIDER -->
+                <div class="relative">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Grado de Acción (GA)</span>
+                        <span id="ga-display" class="font-orbitron text-gold text-lg">50%</span>
                     </div>
-                    <input type="range" id="ga" class="w-full" min="0" max="100" value="50">
+                    <input type="range" id="ga-slider" min="0" max="100" value="50">
                 </div>
-            </div>
 
-            <div class="mb-8">
-                <label class="text-[9px] uppercase text-gray-500 tracking-[0.2em] mb-3 block font-bold italic">Definición de Objetivo Estratégico</label>
-                <textarea id="intencion" rows="5" class="w-full bg-black/60 border border-gold/10 rounded-xl p-4 text-sm focus:border-gold/40 transition-all outline-none text-white placeholder:text-gray-800 resize-none shadow-inner" placeholder="Escriba aquí la misión de TITÁN..."></textarea>
-            </div>
+                <!-- CAMPO DE TEXTO -->
+                <div>
+                    <label class="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-4 block italic">Definición de Objetivo Estratégico</label>
+                    <textarea id="user-intent" rows="6" class="w-full bg-black/40 border border-gold/20 rounded-2xl p-5 text-sm focus:border-gold focus:ring-1 focus:ring-gold/50 transition-all outline-none text-white placeholder:text-gray-700 shadow-inner" placeholder="Describa el objetivo o la misión para el análisis de TITÁN..."></textarea>
+                </div>
 
-            <button onclick="ejecutarAuditoria()" id="btn-action" class="w-full py-5 bg-gradient-to-r from-gold via-gold-bright to-gold text-black font-orbitron font-bold text-[11px] tracking-[0.4em] rounded-xl hover:brightness-110 active:scale-95 transition-all shadow-lg uppercase">
-                Iniciar Auditoría Titán
-            </button>
+                <button id="btn-execute" onclick="procesarAuditoria()" class="w-full py-5 bg-gradient-to-r from-gold to-gold-bright text-black font-orbitron font-extrabold text-xs tracking-[0.4em] rounded-2xl hover:scale-[1.02] active:scale-95 transition-all shadow-[0_0_30px_rgba(212,175,55,0.3)] uppercase">
+                    Ejecutar Algoritmo
+                </button>
+            </div>
         </section>
 
-        <!-- PANEL DE RESPUESTA (RESULTADO Y PAGO) -->
-        <section id="panel-derecho" class="glass p-8 rounded-3xl flex flex-col justify-center min-h-[500px] relative overflow-hidden border-b-2 border-b-gold/40">
+        <!-- BLOQUE DE RESULTADOS -->
+        <section id="result-panel" class="glass-panel p-8 rounded-3xl flex flex-col items-center justify-center relative min-h-[500px] border-r-4 border-gold/20">
             
-            <!-- Estado Inicial -->
-            <div id="estado-espera" class="text-center">
-                <div class="text-6xl mb-6 opacity-10">📡</div>
-                <p class="font-orbitron text-[10px] text-gray-600 tracking-[0.6em] uppercase">Núcleo Desconectado</p>
-                <p class="text-[9px] text-gray-700 mt-3 italic tracking-widest">Arquitecto Nixon: Esperando comandos de voz o texto...</p>
+            <!-- Loader (Oculto inicialmente) -->
+            <div id="loader" class="hidden flex flex-col items-center">
+                <div class="w-16 h-16 border-4 border-gold/10 border-t-gold rounded-full animate-spin"></div>
+                <p class="font-orbitron text-[9px] text-gold mt-6 tracking-[0.5em] animate-pulse">SINCRONIZANDO NÚCLEO...</p>
             </div>
 
-            <!-- Loader de Procesamiento -->
-            <div id="loader" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-black/90 z-20">
-                <div class="relative w-20 h-20">
-                    <div class="absolute inset-0 border-2 border-gold/10 rounded-full"></div>
-                    <div class="absolute inset-0 border-t-2 border-gold rounded-full animate-spin"></div>
+            <!-- Estado de Reposo -->
+            <div id="idle-state" class="text-center opacity-40">
+                <div class="w-24 h-24 mx-auto border-2 border-dashed border-gold/30 rounded-full flex items-center justify-center mb-6">
+                    <svg class="w-10 h-10 text-gold/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="1"></path></svg>
                 </div>
-                <p class="text-[10px] font-orbitron text-gold mt-8 animate-pulse tracking-[0.5em] uppercase text-center">Analizando Probabilidades<br><span class="text-[8px] text-gray-500">Red Neuronal Soberana</span></p>
+                <p class="font-orbitron text-[10px] tracking-[0.4em] uppercase">Sistema en Espera</p>
             </div>
 
-            <!-- Resultado de la IA -->
-            <div id="resultado-final" class="hidden w-full fade-in space-y-6">
-                <div class="flex items-center gap-2 mb-4">
-                    <div class="w-2 h-2 bg-gold rounded-full"></div>
-                    <h2 class="font-orbitron text-[10px] text-gold tracking-[0.3em] uppercase">02. Veredicto del Núcleo</h2>
-                </div>
+            <!-- Contenedor de Respuesta Final -->
+            <div id="response-content" class="hidden w-full fade-in">
+                <h3 id="decision-title" class="font-orbitron text-center text-sm tracking-[0.5em] mb-8"></h3>
                 
-                <div class="bg-white/5 border-l-2 border-gold p-6 rounded-r-2xl shadow-inner">
-                    <p id="titulo-status" class="font-orbitron text-[10px] mb-4 tracking-widest"></p>
-                    <p id="mensaje-ia" class="text-sm text-gray-300 leading-relaxed font-light italic"></p>
+                <div class="bg-black/60 p-6 rounded-2xl border border-gold/10 mb-8 shadow-inner">
+                    <p id="ia-message" class="text-gray-300 text-sm italic font-light leading-relaxed text-center"></p>
                 </div>
 
-                <!-- SECCIÓN DE PAGO (Botón Hospedado V7VP3T98HFVK4) -->
-                <div id="zona-pago" class="hidden pt-6 border-t border-gold/10">
-                    <div class="mb-6 text-center">
-                        <p class="text-[10px] font-bold text-gray-400 tracking-[0.2em] uppercase mb-1">Módulo de Transacción Protegida</p>
-                        <p class="text-[8px] text-gold/40 uppercase tracking-widest">Procesado por PayPal Secure Network</p>
+                <!-- SECCIÓN DE PAGO ACTIVA -->
+                <div id="payment-module" class="hidden fade-in border-t border-gold/20 pt-8">
+                    <div class="text-center mb-6">
+                        <p class="text-[9px] font-bold text-gold/60 uppercase tracking-widest">Acceso Autorizado - Procesar Tarifa</p>
                     </div>
                     
-                    <!-- Contenedor del Botón que pediste -->
-                    <div id="paypal-container-V7VP3T98HFVK4" class="flex justify-center"></div>
+                    <!-- Contenedor PayPal -->
+                    <div id="paypal-button-container" class="flex justify-center min-h-[150px]"></div>
                     
-                    <p class="text-[9px] text-center text-gray-600 mt-6 italic">Nota: PayPal solicitará datos de verificación para residentes en Venezuela.</p>
+                    <p class="text-[8px] text-center text-gray-500 mt-4 px-10 italic">Seguridad garantizada mediante cifrado de punto a punto de PayPal.</p>
                 </div>
 
-                <!-- Opción de Soporte en caso de Rechazo -->
-                <div id="zona-rechazo" class="hidden pt-4">
-                    <a href="https://wa.me/584124577822?text=CONSULTA_TITAN_RECHAZADA" target="_blank" class="block text-center py-4 border border-red-500/30 text-red-500 text-[9px] font-bold rounded-xl hover:bg-red-500/5 transition-all uppercase tracking-[0.3em]">
-                        Contactar Soporte Estratégico
+                <!-- SOPORTE EN CASO DE RECHAZO -->
+                <div id="denied-module" class="hidden fade-in">
+                    <a href="https://wa.me/584124577822?text=CONSULTA_TITAN_RECHAZADA" target="_blank" class="block w-full text-center py-4 border border-red-500/40 text-red-500 font-bold text-[10px] tracking-widest rounded-xl hover:bg-red-500/10 transition-all uppercase">
+                        Consultar con el Arquitecto
                     </a>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="w-full max-w-5xl mt-16 pb-10 flex flex-col items-center border-t border-white/5 pt-10">
-        <p class="text-[10px] text-gray-500 tracking-[0.5em] uppercase text-center mb-3">Diseño de Sistemas: Nixon Ojeda</p>
-        <div class="flex gap-4 text-[8px] text-gray-700 font-bold tracking-widest uppercase">
-            <span>Zulia, Venezuela</span>
-            <span class="text-gold">•</span>
-            <span>Estabilidad VΩ.11</span>
-        </div>
+    <!-- FOOTER LEGAL -->
+    <footer class="mt-20 text-center opacity-30 pb-10">
+        <p class="text-[9px] tracking-[0.8em] font-orbitron uppercase">Coded by Nixon Ojeda © 2024</p>
     </footer>
 
-    <!-- BOTÓN WHATSAPP -->
-    <a href="https://wa.me/584124577822" target="_blank" class="fixed bottom-8 right-8 bg-[#25D366] text-white p-4 rounded-full shadow-2xl z-50 transition-all hover:scale-110 active:scale-95">
-        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    <!-- BOTÓN FLOTANTE WHATSAPP -->
+    <a href="https://wa.me/584124577822" target="_blank" class="fixed bottom-6 right-6 bg-[#25D366] p-4 rounded-full shadow-2xl hover:scale-110 transition-transform z-50">
+        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
     </a>
 
     <script>
-        const API_URL = "https://us-central1-tcis-titan-12.cloudfunctions.net/agos-v11"; 
-        const API_KEY = "dosespejossemiranyelpezrespirafueradelagua";
-        
-        const giSlider = document.getElementById('gi'); 
-        const gaSlider = document.getElementById('ga');
-        
-        giSlider.oninput = () => document.getElementById('gi-val').innerText = giSlider.value + "%";
-        gaSlider.oninput = () => document.getElementById('ga-val').innerText = gaSlider.value + "%";
-        
-        async function ejecutarAuditoria() {
-            const intencion = document.getElementById('intencion').value.trim();
-            if(!intencion) return;
+        // CONFIGURACIÓN DE ENDPOINTS
+        const CONFIG = {
+            API_URL: "https://us-central1-tcis-titan-12.cloudfunctions.net/agos-v11",
+            AUTH_KEY: "dosespejossemiranyelpezrespirafueradelagua",
+            PAYPAL_BUTTON_ID: "V7VP3T98HFVK4"
+        };
 
-            document.getElementById('estado-espera').classList.add('hidden');
-            document.getElementById('resultado-final').classList.add('hidden');
+        const giSlider = document.getElementById('gi-slider');
+        const gaSlider = document.getElementById('ga-slider');
+        const giDisplay = document.getElementById('gi-display');
+        const gaDisplay = document.getElementById('ga-display');
+
+        // Actualización en tiempo real de Sliders
+        giSlider.oninput = () => giDisplay.innerText = giSlider.value + "%";
+        gaSlider.oninput = () => gaDisplay.innerText = gaSlider.value + "%";
+
+        async function procesarAuditoria() {
+            const intent = document.getElementById('user-intent').value.trim();
+            if(!intent) return;
+
+            // UI State: Cargando
+            document.getElementById('idle-state').classList.add('hidden');
+            document.getElementById('response-content').classList.add('hidden');
             document.getElementById('loader').classList.remove('hidden');
 
             try {
-                const response = await fetch(API_URL, {
+                const response = await fetch(CONFIG.API_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'X-MBR-Auth': API_KEY },
-                    body: JSON.stringify({ 
-                        observation: { 
-                            gi_value: parseInt(giSlider.value) / 100, 
-                            ga_value: parseInt(gaSlider.value) / 100, 
-                            user_intent: intencion 
-                        } 
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'X-MBR-Auth': CONFIG.AUTH_KEY 
+                    },
+                    body: JSON.stringify({
+                        observation: {
+                            gi_value: parseInt(giSlider.value) / 100,
+                            ga_value: parseInt(gaSlider.value) / 100,
+                            user_intent: intent
+                        }
                     })
                 });
 
                 const data = await response.json();
                 
+                // Mostrar resultados
                 document.getElementById('loader').classList.add('hidden');
-                document.getElementById('resultado-final').classList.remove('hidden');
-                document.getElementById('mensaje-ia').innerText = data.message;
+                document.getElementById('response-content').classList.remove('hidden');
+                document.getElementById('ia-message').innerText = data.message;
 
                 if(data.decision === "act") {
-                    document.getElementById('titulo-status').innerHTML = `<span class="text-gold">PROCESO AVALADO</span>`;
-                    document.getElementById('zona-pago').classList.remove('hidden');
-                    document.getElementById('zona-rechazo').classList.add('hidden');
-
-                    // PARTE 2: Renderizar el Botón de Pago con el HostedButtonId nuevo
-                    const containerId = "paypal-container-V7VP3T98HFVK4";
-                    document.getElementById(containerId).innerHTML = ''; // Limpiar
-                    
-                    if (window.paypal && window.paypal.HostedButtons) {
-                        paypal.HostedButtons({
-                            hostedButtonId: "V7VP3T98HFVK4",
-                        }).render("#" + containerId);
-                    }
+                    mostrarAceptacion();
                 } else {
-                    document.getElementById('titulo-status').innerHTML = `<span class="text-red-500">ACCIÓN RESTRINGIDA</span>`;
-                    document.getElementById('zona-pago').classList.add('hidden');
-                    document.getElementById('zona-rechazo').classList.remove('hidden');
+                    mostrarRechazo();
                 }
+
             } catch (error) {
-                console.error(error);
+                console.error("Error en Auditoría:", error);
                 document.getElementById('loader').classList.add('hidden');
-                document.getElementById('estado-espera').classList.remove('hidden');
+                document.getElementById('idle-state').classList.remove('hidden');
             }
+        }
+
+        function mostrarAceptacion() {
+            const title = document.getElementById('decision-title');
+            title.innerText = "ACCESO CONCEDIDO";
+            title.className = "font-orbitron text-center text-sm tracking-[0.5em] mb-8 text-gold";
+            
+            document.getElementById('payment-module').classList.remove('hidden');
+            document.getElementById('denied-module').classList.add('hidden');
+
+            // Renderizar el botón de PayPal si no está renderizado
+            const container = document.getElementById('paypal-button-container');
+            container.innerHTML = ''; // Limpiar previo
+            
+            if (window.paypal && window.paypal.HostedButtons) {
+                paypal.HostedButtons({
+                    hostedButtonId: CONFIG.PAYPAL_BUTTON_ID,
+                }).render("#paypal-button-container");
+            }
+        }
+
+        function mostrarRechazo() {
+            const title = document.getElementById('decision-title');
+            title.innerText = "ACCESO DENEGADO";
+            title.className = "font-orbitron text-center text-sm tracking-[0.5em] mb-8 text-red-500";
+            
+            document.getElementById('payment-module').classList.add('hidden');
+            document.getElementById('denied-module').classList.remove('hidden');
         }
     </script>
 </body>
