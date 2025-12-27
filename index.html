@@ -26,6 +26,10 @@
         ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: #000; } ::-webkit-scrollbar-thumb { background: var(--gold); }
         .fade-in-up { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; transform: translateY(20px); }
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        
+        /* Estilo para el input de teléfono */
+        .phone-input { border-left: 2px solid var(--gold); transition: all 0.3s; }
+        .phone-input:focus { background: rgba(212, 175, 55, 0.1); }
     </style>
 </head>
 <body>
@@ -58,16 +62,24 @@
                         <div class="flex justify-between text-[10px] text-gray-400 mb-3 uppercase tracking-widest"><span>Acción (GA)</span><span id="ga-val" class="text-gold font-bold font-orbitron">50%</span></div>
                         <input type="range" id="ga-slider" class="w-full h-1 bg-white/10 appearance-none accent-gold cursor-pointer" oninput="updateUI('ga', this.value)">
                     </div>
+                    
                     <div class="space-y-2 pt-4">
                         <label class="text-[10px] text-gold/80 uppercase tracking-widest font-bold">Definición de Objetivo</label>
-                        <textarea id="user-intent" class="w-full h-32 bg-black/60 border border-white/10 rounded-none p-4 text-sm text-gray-200 focus:border-gold outline-none resize-none font-mono leading-relaxed" placeholder="Ingrese coordenadas estratégicas o ambición de mercado..."></textarea>
+                        <textarea id="user-intent" class="w-full h-24 bg-black/60 border border-white/10 rounded-none p-4 text-sm text-gray-200 focus:border-gold outline-none resize-none font-mono leading-relaxed" placeholder="Ingrese coordenadas estratégicas o ambición de mercado..."></textarea>
                     </div>
+
+                    <div class="space-y-2">
+                        <label class="text-[10px] text-gold/80 uppercase tracking-widest font-bold">Identificación de Contacto</label>
+                        <input type="tel" id="user-phone" class="phone-input w-full bg-black/60 border border-white/10 p-3 text-sm text-gold font-mono outline-none" placeholder="+58 412 000 0000">
+                    </div>
+
                     <button id="main-sync-btn" onclick="executeSync()" class="sync-trigger w-full py-5 text-sm font-orbitron tracking-[0.2em] relative overflow-hidden group">
                         <span class="relative z-10">EJECUTAR PROTOCOLO</span>
                         <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                     </button>
                 </div>
             </div>
+
             <div class="glass-panel rounded-lg p-5 flex-1 flex flex-col min-h-[100px] border border-white/5">
                 <div class="flex items-center gap-3 mb-4"><span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span><span class="text-[10px] text-green-500 font-bold tracking-widest font-orbitron">ENLACE NEURAL: ACTIVO</span></div>
                 <div id="ai-monitor-text" class="text-[10px] text-gray-500 font-mono">> Esperando input del Comandante...<br>> Motor Gemini-3-Flash: READY<br>> Memoria Firestore: READY</div>
@@ -84,15 +96,18 @@
                 <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5 pointer-events-none"></div>
                 <div class="bg-black/40 border-b border-white/5 px-6 py-3 flex justify-between items-center"><span class="text-[10px] text-gold/50 font-mono">TERMINAL DE SALIDA // SECURE CONNECTION</span></div>
                 <div id="display-content" class="flex-1 overflow-y-auto p-8 md:p-12 flex flex-col justify-center items-center">
+                    
                     <div id="state-idle" class="text-center opacity-40">
                         <div class="w-32 h-32 border border-dashed border-gold/30 rounded-full flex items-center justify-center mx-auto mb-6 animate-[spin_10s_linear_infinite]"><div class="w-20 h-20 border border-gold/50 rounded-full"></div></div>
                         <p class="text-xs tracking-[0.5em] text-gold uppercase font-orbitron">Sistemas Nominales</p>
                     </div>
+                    
                     <div id="state-processing" class="hidden w-full max-w-lg">
                         <div id="log-window" class="text-xs text-gold font-mono mb-8 space-y-2 h-40 overflow-hidden border-l border-gold/20 pl-4"></div>
                         <div class="w-full h-1 bg-gray-800 relative overflow-hidden rounded-full"><div id="sync-progress" class="absolute inset-y-0 left-0 bg-gold w-0 transition-all duration-300"></div></div>
                         <p class="text-center text-[10px] text-gray-500 mt-4 animate-pulse uppercase tracking-widest">Consultando Oráculo Digital...</p>
                     </div>
+                    
                     <div id="state-success" class="hidden w-full max-w-3xl text-center">
                         <h2 id="result-title" class="gold-text text-5xl md:text-6xl font-black italic mb-8 drop-shadow-2xl"></h2>
                         <div class="bg-black/60 border-l-4 border-gold p-8 rounded-r-xl mb-10 shadow-2xl relative group">
@@ -164,7 +179,15 @@
 
         async function executeSync() {
             const intent = document.getElementById('user-intent').value.trim();
+            const phone = document.getElementById('user-phone').value.trim();
+            
+            // 🚨 VALIDACIÓN OBLIGATORIA
             if(!intent) { alert("ERROR: Ingrese una misión."); return; }
+            if(!phone || phone.length < 7) { alert("SEGURIDAD: Identificación (WhatsApp) requerida para procesar."); return; }
+
+            // EMPAQUETADO DE DATOS (EL TRUCO PARA GUARDAR EL TELÉFONO)
+            // Enviamos el teléfono dentro de la intención para que el backend lo guarde sin modificar el servidor
+            const fullIntent = `[CONTACTO: ${phone}] - INTENCIÓN: ${intent}`;
 
             document.getElementById('state-idle').classList.add('hidden');
             document.getElementById('state-success').classList.add('hidden');
@@ -173,7 +196,7 @@
             btn.disabled = true;
 
             const logWin = document.getElementById('log-window');
-            const logs = ["ESTABLECIENDO ENLACE...", "SOLICITANDO VECTOR...", "ESCRIBIENDO MEMORIA...", "DESENCRIPTANDO..."];
+            const logs = ["ESTABLECIENDO ENLACE...", "REGISTRANDO CREDENCIALES...", "ANALIZANDO VECTORES...", "GENERANDO ESTRATEGIA..."];
             logWin.innerHTML = "";
             for(let i=0; i<logs.length; i++) {
                 logWin.innerHTML += `<div>> ${logs[i]}</div>`;
@@ -185,7 +208,13 @@
                 const response = await fetch(TITAN_ENDPOINT, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'X-MBR-Auth': TITAN_AUTH },
-                    body: JSON.stringify({ user_intent: intent, observation: { gi_value: document.getElementById('gi-slider').value / 100, ga_value: document.getElementById('ga-slider').value / 100 } })
+                    body: JSON.stringify({ 
+                        user_intent: fullIntent, // AQUÍ VA EL TELÉFONO INCRUSTADO
+                        observation: { 
+                            gi_value: document.getElementById('gi-slider').value / 100, 
+                            ga_value: document.getElementById('ga-slider').value / 100 
+                        } 
+                    })
                 });
 
                 const data = await response.json();
@@ -219,28 +248,22 @@
             paypal.Buttons({
                 style: { shape: 'rect', color: 'gold', layout: 'vertical', label: 'pay' },
                 
-                // 1. CREAR LA ORDEN POR $7.00
                 createOrder: function(data, actions) {
                     return actions.order.create({
                         purchase_units: [{
                             description: "Acceso TITÁN VΩ.11 - Consultoría Elite",
-                            amount: { value: '7.00' } // PRECIO ACTUALIZADO
+                            amount: { value: '7.00' }
                         }]
                     });
                 },
 
-                // 2. ÉXITO Y REDIRECCIÓN A WHATSAPP
                 onApprove: function(data, actions) {
                     return actions.order.capture().then(function(details) {
                         const transactionId = details.id;
-                        
                         speakSystem("Pago confirmado. Iniciando protocolo de consultoría.");
-                        
                         setTimeout(() => {
-                            const phone = "584124577822"; // TU NÚMERO
-                            // MENSAJE PARA TI:
-                            const text = `Comandante Nixon, he desbloqueado el acceso a TITÁN ($7.00). ID Transacción: ${transactionId}. Estoy listo para iniciar la consultoría de alto nivel.`;
-                            
+                            const phone = "584124577822"; 
+                            const text = `Comandante Nixon, he desbloqueado el acceso a TITÁN ($7.00). ID Transacción: ${transactionId}. Mi número registrado es el mismo de este chat.`;
                             const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
                             window.location.href = url;
                         }, 2000);
