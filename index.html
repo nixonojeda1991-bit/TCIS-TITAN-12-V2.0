@@ -2,253 +2,204 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TITÁN VΩ.11 | OMNICORE</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@300;500&display=swap" rel="stylesheet">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TITÁN VΩ.11 | OMNICORE MOBILE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=BAA1vZa0wSM2Mz7GjGZTtvTJGjguge3Sbfq3HzEirH-logMDlVWhxdgxSZSo73-wnDVoSBJJLiZAIsv9Ck&currency=USD"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #D4AF37; --bg-black: #020202; }
-        body { margin: 0; background-color: var(--bg-black); color: white; font-family: 'JetBrains Mono', monospace; overflow-x: hidden; }
-        
-        /* PANTALLA DE CARGA (Aparece inmediatamente) */
-        #loader-screen {
-            position: fixed; inset: 0; background: #000; z-index: 10000;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        :root { --gold: #D4AF37; --bg: #050505; --wa: #25D366; }
+        body { 
+            background: var(--bg); color: #fff; font-family: 'Rajdhani', sans-serif;
+            background-image: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #050505 100%);
+            min-height: 100vh; margin: 0; -webkit-tap-highlight-color: transparent;
         }
-        .loader-ring {
-            width: 60px; height: 60px; border: 4px solid rgba(212, 175, 55, 0.2);
-            border-top: 4px solid var(--gold); border-radius: 50%;
-            animation: spin 1s linear infinite; mb-4;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .gold-text { font-family: 'Orbitron', sans-serif; background: linear-gradient(180deg, #FFF, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .glass { background: rgba(15, 15, 15, 0.9); backdrop-filter: blur(12px); border: 1px solid rgba(212, 175, 55, 0.2); }
         
-        /* Ocultar contenido hasta que cargue Tailwind */
-        .cloak { opacity: 0; transition: opacity 1s; }
-        .visible { opacity: 1; }
+        /* Efecto de Pulso para el WhatsApp (Siempre Visible) */
+        .wa-float {
+            position: fixed; bottom: 25px; right: 25px; z-index: 9999;
+            background: var(--wa); color: white; width: 65px; height: 65px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.5); transition: all 0.3s ease;
+        }
+        .wa-float::after {
+            content: ''; position: absolute; width: 100%; height: 100%;
+            border-radius: 50%; background: var(--wa);
+            animation: pulse-wa 2s infinite; z-index: -1;
+        }
+        @keyframes pulse-wa {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.8); opacity: 0; }
+        }
+        .wa-float:active { transform: scale(0.9); }
+
+        /* Estilo de los Sliders */
+        input[type=range] { -webkit-appearance: none; height: 6px; background: #222; border-radius: 5px; width: 100%; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 26px; height: 26px; background: var(--gold); border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 10px var(--gold); }
+        
+        .sync-btn {
+            background: linear-gradient(45deg, var(--gold), #9a8027); color: #000;
+            font-family: 'Orbitron', sans-serif; font-weight: 900;
+            clip-path: polygon(0 0, 92% 0, 100% 25%, 100% 100%, 8% 100%, 0 75%);
+        }
     </style>
 </head>
-<body>
+<body class="p-4 md:p-10 flex flex-col items-center">
 
-    <div id="loader-screen">
-        <div class="loader-ring"></div>
-        <h2 style="color: #D4AF37; font-family: 'Orbitron', sans-serif; letter-spacing: 4px; margin-top: 20px;">TITÁN VΩ.11</h2>
-        <p style="color: #666; font-size: 10px; text-transform: uppercase;">Estableciendo enlace satelital...</p>
-    </div>
+    <a href="https://wa.me/584124577822?text=Comandante,%20necesito%20soporte%20con%20TITÁN." target="_blank" class="wa-float">
+        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 .018 5.393 0 12.03c0 2.12.554 4.189 1.602 6.033L0 24l6.149-1.613a11.77 11.77 0 005.912 1.594h.005c6.632 0 12.028-5.391 12.03-12.028a11.85 11.85 0 00-3.417-8.467z"/>
+        </svg>
+    </a>
 
-    <div id="main-app" class="cloak">
-        <div id="canvas-container" style="position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.6;"></div>
-
-        <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 h-screen p-4 md:p-8 gap-6 overflow-hidden">
-            
-            <div class="lg:col-span-4 flex flex-col gap-6 overflow-y-auto">
-                <div class="bg-black/80 backdrop-blur-md border border-yellow-600/30 p-8 rounded-lg relative overflow-hidden shadow-2xl">
-                    <div style="position: absolute; top:0; left:0; width:100%; height:2px; background:#D4AF37; box-shadow:0 0 10px #D4AF37;"></div>
-                    <h2 class="text-yellow-500 font-orbitron text-sm mb-8 tracking-widest uppercase">❖ Parámetros de Misión</h2>
-                    
-                    <div class="space-y-6">
-                        <div>
-                            <div class="flex justify-between text-[10px] text-gray-400 mb-2 tracking-widest"><span>VOLUNTAD (GI)</span><span id="gi-val" class="text-yellow-500 font-bold">50%</span></div>
-                            <input type="range" id="gi-slider" class="w-full h-1 bg-gray-800 appearance-none accent-yellow-500 cursor-pointer" oninput="updateUI('gi', this.value)">
-                        </div>
-                        <div>
-                            <div class="flex justify-between text-[10px] text-gray-400 mb-2 tracking-widest"><span>ACCIÓN (GA)</span><span id="ga-val" class="text-yellow-500 font-bold">50%</span></div>
-                            <input type="range" id="ga-slider" class="w-full h-1 bg-gray-800 appearance-none accent-yellow-500 cursor-pointer" oninput="updateUI('ga', this.value)">
-                        </div>
-                        
-                        <div class="space-y-2 pt-4">
-                            <label class="text-[10px] text-yellow-600 font-bold uppercase tracking-widest">OBJETIVO</label>
-                            <textarea id="user-intent" class="w-full h-24 bg-black/50 border border-white/10 p-3 text-sm text-gray-200 focus:border-yellow-500 outline-none font-mono" placeholder="Escriba su objetivo..."></textarea>
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-[10px] text-yellow-600 font-bold uppercase tracking-widest">WHATSAPP (Requerido)</label>
-                            <input type="tel" id="user-phone" class="w-full bg-black/50 border-l-2 border-yellow-500 p-3 text-sm text-yellow-500 font-mono outline-none" placeholder="+58 412...">
-                        </div>
-
-                        <button id="main-sync-btn" onclick="executeSync()" class="w-full py-4 bg-gradient-to-r from-yellow-700 to-yellow-500 text-black font-black text-sm tracking-[0.2em] hover:brightness-110 transition-all shadow-lg shadow-yellow-500/20">
-                            EJECUTAR PROTOCOLO
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="lg:col-span-8 flex flex-col gap-6 overflow-hidden">
-                <header class="bg-black/80 backdrop-blur-md border-b border-white/10 h-20 rounded-lg flex items-center px-8 justify-between">
-                    <div>
-                        <span class="block text-3xl font-black italic tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-yellow-400 to-yellow-800 font-orbitron">TITÁN VΩ.11</span>
-                        <span class="text-[9px] text-gray-500 tracking-[0.6em] uppercase">Soberanía Digital</span>
-                    </div>
-                </header>
-
-                <div class="flex-1 bg-black/60 backdrop-blur-md border border-white/5 rounded-lg p-8 flex flex-col justify-center items-center relative overflow-hidden">
-                    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#D4AF37 1px, transparent 1px); background-size: 20px 20px;"></div>
-
-                    <div id="state-idle" class="text-center opacity-50">
-                        <div class="w-24 h-24 border border-dashed border-yellow-500/50 rounded-full flex items-center justify-center mx-auto mb-6 animate-spin-slow">
-                            <div class="w-16 h-16 bg-yellow-500/10 rounded-full"></div>
-                        </div>
-                        <p class="text-xs tracking-[0.5em] text-yellow-500 uppercase font-orbitron">Esperando Comandos</p>
-                    </div>
-
-                    <div id="state-processing" class="hidden w-full max-w-lg text-center">
-                        <div id="log-window" class="text-xs text-yellow-400 font-mono mb-6 h-32 overflow-hidden text-left border-l-2 border-yellow-500/30 pl-4"></div>
-                        <div class="w-full h-1 bg-gray-800 rounded-full overflow-hidden">
-                            <div id="sync-progress" class="h-full bg-yellow-500 w-0 transition-all duration-300"></div>
-                        </div>
-                    </div>
-
-                    <div id="state-success" class="hidden w-full max-w-2xl text-center z-10">
-                        <h2 id="result-title" class="text-5xl font-black italic mb-6 text-yellow-500 font-orbitron drop-shadow-lg">AUTORIZADO</h2>
-                        <div class="bg-black/80 border-l-4 border-yellow-500 p-6 rounded-r-xl mb-8 shadow-2xl">
-                            <p id="ia-final-message" class="text-gray-200 text-xl font-serif italic"></p>
-                        </div>
-                        <div id="payment-zone" class="flex flex-col items-center gap-4 animate-bounce-in">
-                            <p class="text-[10px] text-yellow-500 uppercase tracking-widest">Acceso a Consultoría: $7.00 USD</p>
-                            <div id="paypal-button-container" class="w-full max-w-xs"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <header class="w-full max-w-4xl flex justify-between items-center mb-8">
+        <div class="flex flex-col">
+            <h1 class="gold-text text-3xl font-black italic tracking-tighter">TITÁN VΩ.11</h1>
+            <span class="text-[9px] text-gold/60 tracking-[0.5em] uppercase">Comando Omnicore</span>
         </div>
-    </div>
+        <div class="text-right">
+            <span class="text-[8px] text-gray-500 uppercase">Arquitecto</span>
+            <div class="text-[10px] text-white font-bold font-orbitron uppercase">Nixon Ojeda</div>
+        </div>
+    </header>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://www.paypal.com/sdk/js?client-id=BAA1vZa0wSM2Mz7GjGZTtvTJGjguge3Sbfq3HzEirH-logMDlVWhxdgxSZSo73-wnDVoSBJJLiZAIsv9Ck&currency=USD"></script>
+    <main class="w-full max-w-4xl grid grid-cols-1 lg:grid-cols-2 gap-6 pb-24">
+        
+        <section class="glass p-6 rounded-3xl space-y-6">
+            <h2 class="text-gold text-xs font-bold tracking-widest uppercase">❖ Centro de Misión</h2>
+            
+            <div class="space-y-6">
+                <div>
+                    <div class="flex justify-between text-[10px] text-gray-400 mb-2 uppercase"><span>Voluntad (GI)</span><span id="gi-val" class="text-gold font-bold font-orbitron">50%</span></div>
+                    <input type="range" id="gi-slider" min="0" max="100" value="50" oninput="updateUI('gi', this.value)">
+                </div>
+                <div>
+                    <div class="flex justify-between text-[10px] text-gray-400 mb-2 uppercase"><span>Ejecución (GA)</span><span id="ga-val" class="text-gold font-bold font-orbitron">50%</span></div>
+                    <input type="range" id="ga-slider" min="0" max="100" value="50" oninput="updateUI('ga', this.value)">
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <div class="flex justify-between items-center">
+                    <label class="text-[10px] text-gold/70 font-bold uppercase">Objetivo Estratégico</label>
+                    <button onclick="aiRefine()" class="text-[9px] bg-gold/10 text-gold px-2 py-1 rounded border border-gold/30">✨ IA OPTIMIZE</button>
+                </div>
+                <textarea id="user-intent" class="w-full h-24 bg-black/40 border border-white/10 rounded-2xl p-4 text-sm text-gray-200 focus:border-gold outline-none resize-none" placeholder="¿Cuál es tu misión?"></textarea>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-[10px] text-gold/70 font-bold uppercase">WhatsApp de Enlace</label>
+                <input type="tel" id="user-phone" class="w-full bg-black/40 border border-white/10 p-4 rounded-2xl text-sm text-gold font-mono outline-none focus:border-gold" placeholder="+58 412 000 0000">
+            </div>
+
+            <button id="main-sync-btn" onclick="executeSync()" class="sync-btn w-full py-5 text-xs tracking-widest shadow-2xl transition-all">
+                INICIAR PROTOCOLO
+            </button>
+        </section>
+
+        <section id="display-content" class="glass rounded-3xl p-6 flex flex-col justify-center min-h-[400px]">
+            <div id="state-idle" class="text-center opacity-30">
+                <div class="w-20 h-20 border-2 border-dashed border-gold/30 rounded-full animate-spin mx-auto mb-4"></div>
+                <p class="text-[10px] tracking-[0.4em] text-gold uppercase font-orbitron">Standby Mode</p>
+            </div>
+
+            <div id="state-processing" class="hidden text-center space-y-6">
+                <div id="log-window" class="text-[11px] text-gold font-mono text-left space-y-2 px-4"></div>
+                <div class="w-full h-1 bg-white/5 rounded-full overflow-hidden">
+                    <div id="sync-progress" class="h-full bg-gold w-0 transition-all duration-300"></div>
+                </div>
+            </div>
+
+            <div id="state-result" class="hidden text-center">
+                <h2 id="result-title" class="gold-text text-4xl font-black mb-6"></h2>
+                <div class="bg-white/5 border-l-4 border-gold p-5 mb-8 rounded-r-2xl">
+                    <p id="ia-final-message" class="text-gray-200 text-sm italic font-medium leading-relaxed"></p>
+                </div>
+                <div id="payment-zone" class="hidden flex flex-col items-center gap-6">
+                    <div id="paypal-button-container" class="w-full"></div>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <script>
-        // --- CONFIGURACIÓN ---
-        const TITAN_ENDPOINT = "https://us-central1-tcis-titan-12.cloudfunctions.net/agos-v11";
-        const TITAN_AUTH = "dosespejossemiranyelpezrespirafueradelagua"; 
-        
-        // --- INICIALIZADOR SEGURO ---
-        window.addEventListener('load', () => {
-            // Cuando todo ha cargado, ocultamos loader y mostramos app
-            setTimeout(() => {
-                document.getElementById('loader-screen').style.display = 'none';
-                document.getElementById('main-app').classList.add('visible');
-                initSpace(); // Iniciamos Three.js solo cuando ya se ve la pagina
-            }, 1000);
-        });
+        const ENDPOINT = "https://us-central1-tcis-titan-12.cloudfunctions.net/agos-v11";
+        const AUTH = "dosespejossemiranyelpezrespirafueradelagua";
 
-        // --- VISUALES ---
-        function initSpace() {
-            if(typeof THREE === 'undefined') return; // Seguridad si falla el CDN
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            document.getElementById('canvas-container').appendChild(renderer.domElement);
-            
-            const geometry = new THREE.BufferGeometry();
-            const vertices = [];
-            for(let i=0; i<1500; i++) vertices.push((Math.random()-0.5)*1000, (Math.random()-0.5)*1000, (Math.random()-0.5)*1000);
-            geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-            const material = new THREE.PointsMaterial({ color: 0xD4AF37, size: 0.8, transparent: true, opacity: 0.5 });
-            const stars = new THREE.Points(geometry, material);
-            scene.add(stars);
-            camera.position.z = 300;
-            function animate() { requestAnimationFrame(animate); stars.rotation.y += 0.0005; renderer.render(scene, camera); }
-            animate();
-        }
-
-        // --- LÓGICA DE NEGOCIO ---
         function updateUI(type, val) { document.getElementById(`${type}-val`).innerText = val + "%"; }
 
+        async function aiRefine() {
+            const intent = document.getElementById('user-intent');
+            if(!intent.value) return;
+            const original = intent.value;
+            intent.value = "IA ANALIZANDO...";
+            try {
+                const r = await fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-MBR-Auth': AUTH }, body: JSON.stringify({ action: "refine", text: original })});
+                const d = await r.json();
+                intent.value = d.refined_text || original;
+            } catch (e) { intent.value = original; }
+        }
+
         async function executeSync() {
-            const intent = document.getElementById('user-intent').value.trim();
-            const phone = document.getElementById('user-phone').value.trim();
-            
-            if(!intent) { alert("ERROR: Ingrese una misión."); return; }
-            if(!phone || phone.length < 7) { alert("SEGURIDAD: Identificación requerida."); return; }
+            const intent = document.getElementById('user-intent').value;
+            const phone = document.getElementById('user-phone').value;
+            if(!intent || !phone) { alert("ERROR: Faltan datos críticos."); return; }
 
-            const fullIntent = `[CONTACTO: ${phone}] - INTENCIÓN: ${intent}`;
-
-            // UI
             document.getElementById('state-idle').classList.add('hidden');
-            document.getElementById('state-success').classList.add('hidden');
+            document.getElementById('state-result').classList.add('hidden');
             document.getElementById('state-processing').classList.remove('hidden');
-            const btn = document.getElementById('main-sync-btn');
-            btn.disabled = true;
-
-            // Logs falsos para UX
+            
+            const logs = ["SINCRO SATELITAL...", "MATEMÁTICA FRISTON...", "REGISTRO EN NÚCLEO..."];
             const logWin = document.getElementById('log-window');
-            const logs = ["CONECTANDO...", "ENVIANDO DATOS...", "PROCESANDO...", "COMPLETADO"];
             logWin.innerHTML = "";
-            for(let i=0; i<logs.length; i++) {
+            for(let i=0; i<logs.length; i++){
                 logWin.innerHTML += `<div>> ${logs[i]}</div>`;
-                document.getElementById('sync-progress').style.width = ((i+1)*25) + "%";
-                await new Promise(r => setTimeout(r, 500));
+                document.getElementById('sync-progress').style.width = ((i+1)*33) + "%";
+                await new Promise(r => setTimeout(r, 600));
             }
 
             try {
-                // LLAMADA AL BACKEND
-                // AUMENTAMOS EL TIEMPO DE ESPERA VISUAL SI EL BACKEND ES LENTO
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 25000); // 25s timeout
-
-                const response = await fetch(TITAN_ENDPOINT, {
+                const response = await fetch(ENDPOINT, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'X-MBR-Auth': TITAN_AUTH },
-                    body: JSON.stringify({ 
-                        user_intent: fullIntent, 
-                        observation: { 
-                            gi_value: document.getElementById('gi-slider').value / 100, 
-                            ga_value: document.getElementById('ga-slider').value / 100 
-                        } 
-                    }),
-                    signal: controller.signal
+                    headers: { 'Content-Type': 'application/json', 'X-MBR-Auth': AUTH },
+                    body: JSON.stringify({
+                        user_intent: `[WA: ${phone}] - ${intent}`,
+                        observation: {
+                            gi_value: document.getElementById('gi-slider').value / 100,
+                            ga_value: document.getElementById('ga-slider').value / 100
+                        }
+                    })
                 });
-                clearTimeout(timeoutId);
-
                 const data = await response.json();
-                document.getElementById('state-processing').classList.add('hidden');
-                document.getElementById('state-success').classList.remove('hidden');
-                document.getElementById('ia-final-message').innerText = data.message;
-                
-                if(data.decision === 'act') {
-                    document.getElementById('result-title').innerText = "AUTORIZADO";
-                    document.getElementById('result-title').classList.add('text-yellow-500');
-                    document.getElementById('payment-zone').classList.remove('hidden');
-                    renderPayPal();
-                } else {
-                    document.getElementById('result-title').innerText = "DENEGADO";
-                    document.getElementById('result-title').classList.remove('text-yellow-500');
-                    document.getElementById('result-title').classList.add('text-red-600');
-                    document.getElementById('payment-zone').classList.add('hidden');
-                }
+                showResult(data);
+            } catch (e) { showResult({ decision: 'hold', message: "ERROR DE ENLACE." }); }
+        }
 
-            } catch (error) {
-                console.error(error);
-                alert("ERROR DE CONEXIÓN: El servidor tardó demasiado. Intente de nuevo.");
-                document.getElementById('state-processing').classList.add('hidden');
-                document.getElementById('state-idle').classList.remove('hidden');
-            } finally {
-                btn.disabled = false;
+        function showResult(data) {
+            document.getElementById('state-processing').classList.add('hidden');
+            document.getElementById('state-result').classList.remove('hidden');
+            const title = document.getElementById('result-title');
+            title.innerText = data.decision === 'act' ? "AUTORIZADO" : "DENEGADO";
+            title.style.color = data.decision === 'act' ? "var(--gold)" : "#ff3e3e";
+            document.getElementById('ia-final-message').innerText = data.message;
+            if(data.decision === 'act') {
+                document.getElementById('payment-zone').classList.remove('hidden');
+                renderPayPal();
             }
         }
 
         function renderPayPal() {
             const container = document.getElementById('paypal-button-container');
             container.innerHTML = '';
-            if(window.paypal) {
-                paypal.Buttons({
-                    style: { shape: 'rect', color: 'gold', layout: 'vertical', label: 'pay' },
-                    createOrder: function(data, actions) {
-                        return actions.order.create({ purchase_units: [{ description: "Acceso TITÁN VΩ.11", amount: { value: '7.00' } }] });
-                    },
-                    onApprove: function(data, actions) {
-                        return actions.order.capture().then(function(details) {
-                            const transactionId = details.id;
-                            setTimeout(() => {
-                                const phone = "584124577822"; 
-                                const text = `Comandante, pago realizado ($7.00). ID: ${transactionId}. Mi número registrado es este.`;
-                                window.location.href = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
-                            }, 1500);
-                        });
-                    }
-                }).render('#paypal-button-container');
-            }
+            paypal.Buttons({
+                style: { shape: 'rect', color: 'gold', layout: 'vertical', label: 'pay' },
+                createOrder: (d, a) => a.order.create({ purchase_units: [{ amount: { value: '7.00' }, description: "TITÁN VIP - CONSULTORÍA" }] }),
+                onApprove: (d, a) => a.order.capture().then(det => {
+                    window.location.href = `https://wa.me/584124577822?text=${encodeURIComponent("PAGO $7 CONFIRMADO. ID: " + det.id)}`;
+                })
+            }).render('#paypal-button-container');
         }
     </script>
 </body>
