@@ -3,122 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TITÁN VΩ.11 | OMNICORE INTERFACE</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    
-    <script src="https://www.paypal.com/sdk/js?client-id=BAA1vZa0wSM2Mz7GjGZTtvTJGjguge3Sbfq3HzEirH-logMDlVWhxdgxSZSo73-wnDVoSBJJLiZAIsv9Ck&currency=USD"></script>
+    <title>TITÁN VΩ.11 | OMNICORE</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@300;500&display=swap" rel="stylesheet">
     
     <style>
-        :root { --gold: #D4AF37; --deep-gold: #8B6B00; --bg-black: #020202; }
-        body, html { margin: 0; overflow: hidden; background: var(--bg-black); font-family: 'JetBrains Mono', monospace; color: #fff; }
-        #canvas-container { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.6; }
-        .glass-panel { background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(212, 175, 55, 0.15); box-shadow: 0 0 50px rgba(0,0,0,0.9); }
-        .gold-text { background: linear-gradient(180deg, #FFF 20%, var(--gold) 60%, var(--deep-gold) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-family: 'Orbitron', sans-serif; }
-        .scanner-line { position: absolute; width: 100%; height: 2px; background: var(--gold); box-shadow: 0 0 15px var(--gold); top: 0; animation: scan 4s linear infinite; opacity: 0.3; }
-        @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
-        .sync-trigger { background: linear-gradient(45deg, var(--gold), #9a8027); color: #000; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; clip-path: polygon(0 0, 95% 0, 100% 25%, 100% 100%, 5% 100%, 0 75%); transition: all 0.3s; box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); }
-        .sync-trigger:hover:not(:disabled) { filter: brightness(1.2); transform: scale(1.02); box-shadow: 0 0 40px rgba(212, 175, 55, 0.6); }
-        .sync-trigger:disabled { opacity: 0.5; cursor: not-allowed; filter: grayscale(1); }
-        ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: #000; } ::-webkit-scrollbar-thumb { background: var(--gold); }
-        .fade-in-up { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; transform: translateY(20px); }
-        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        :root { --gold: #D4AF37; --bg-black: #020202; }
+        body { margin: 0; background-color: var(--bg-black); color: white; font-family: 'JetBrains Mono', monospace; overflow-x: hidden; }
         
-        /* Estilo para el input de teléfono */
-        .phone-input { border-left: 2px solid var(--gold); transition: all 0.3s; }
-        .phone-input:focus { background: rgba(212, 175, 55, 0.1); }
+        /* PANTALLA DE CARGA (Aparece inmediatamente) */
+        #loader-screen {
+            position: fixed; inset: 0; background: #000; z-index: 10000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .loader-ring {
+            width: 60px; height: 60px; border: 4px solid rgba(212, 175, 55, 0.2);
+            border-top: 4px solid var(--gold); border-radius: 50%;
+            animation: spin 1s linear infinite; mb-4;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        /* Ocultar contenido hasta que cargue Tailwind */
+        .cloak { opacity: 0; transition: opacity 1s; }
+        .visible { opacity: 1; }
     </style>
 </head>
 <body>
 
-    <div id="intro-overlay" class="fixed inset-0 bg-black z-[9999] flex flex-col justify-center items-center transition-opacity duration-1000">
-        <div class="relative w-24 h-24 mb-8">
-            <div class="absolute inset-0 border-t-2 border-gold rounded-full animate-spin"></div>
-            <div class="absolute inset-2 border-r-2 border-white/20 rounded-full animate-spin" style="animation-direction: reverse;"></div>
-        </div>
-        <h1 class="gold-text text-4xl font-bold tracking-[0.5em]">TITÁN VΩ.11</h1>
-        <p class="text-[10px] text-gray-500 mt-4 uppercase tracking-widest font-mono">Estableciendo enlace satelital...</p>
-        <button onclick="bootSystem()" class="mt-12 px-10 py-4 border border-gold/30 text-gold text-xs tracking-widest hover:bg-gold hover:text-black transition-all font-orbitron">
-            INICIAR SISTEMA
-        </button>
+    <div id="loader-screen">
+        <div class="loader-ring"></div>
+        <h2 style="color: #D4AF37; font-family: 'Orbitron', sans-serif; letter-spacing: 4px; margin-top: 20px;">TITÁN VΩ.11</h2>
+        <p style="color: #666; font-size: 10px; text-transform: uppercase;">Estableciendo enlace satelital...</p>
     </div>
 
-    <div id="canvas-container"></div>
+    <div id="main-app" class="cloak">
+        <div id="canvas-container" style="position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.6;"></div>
 
-    <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 h-screen p-4 md:p-8 gap-6 overflow-hidden">
-        <div class="lg:col-span-4 flex flex-col gap-6 overflow-y-auto fade-in-up" style="animation-delay: 0.2s;">
-            <div class="glass-panel rounded-lg p-8 flex-none border-l-2 border-gold relative overflow-hidden">
-                <div class="scanner-line"></div>
-                <h2 class="gold-text text-sm mb-8 tracking-widest uppercase flex items-center gap-2"><span class="text-xl">❖</span> Parámetros de Misión</h2>
-                <div class="space-y-8">
-                    <div>
-                        <div class="flex justify-between text-[10px] text-gray-400 mb-3 uppercase tracking-widest"><span>Voluntad (GI)</span><span id="gi-val" class="text-gold font-bold font-orbitron">50%</span></div>
-                        <input type="range" id="gi-slider" class="w-full h-1 bg-white/10 appearance-none accent-gold cursor-pointer" oninput="updateUI('gi', this.value)">
-                    </div>
-                    <div>
-                        <div class="flex justify-between text-[10px] text-gray-400 mb-3 uppercase tracking-widest"><span>Acción (GA)</span><span id="ga-val" class="text-gold font-bold font-orbitron">50%</span></div>
-                        <input type="range" id="ga-slider" class="w-full h-1 bg-white/10 appearance-none accent-gold cursor-pointer" oninput="updateUI('ga', this.value)">
-                    </div>
+        <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 h-screen p-4 md:p-8 gap-6 overflow-hidden">
+            
+            <div class="lg:col-span-4 flex flex-col gap-6 overflow-y-auto">
+                <div class="bg-black/80 backdrop-blur-md border border-yellow-600/30 p-8 rounded-lg relative overflow-hidden shadow-2xl">
+                    <div style="position: absolute; top:0; left:0; width:100%; height:2px; background:#D4AF37; box-shadow:0 0 10px #D4AF37;"></div>
+                    <h2 class="text-yellow-500 font-orbitron text-sm mb-8 tracking-widest uppercase">❖ Parámetros de Misión</h2>
                     
-                    <div class="space-y-2 pt-4">
-                        <label class="text-[10px] text-gold/80 uppercase tracking-widest font-bold">Definición de Objetivo</label>
-                        <textarea id="user-intent" class="w-full h-24 bg-black/60 border border-white/10 rounded-none p-4 text-sm text-gray-200 focus:border-gold outline-none resize-none font-mono leading-relaxed" placeholder="Ingrese coordenadas estratégicas o ambición de mercado..."></textarea>
-                    </div>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between text-[10px] text-gray-400 mb-2 tracking-widest"><span>VOLUNTAD (GI)</span><span id="gi-val" class="text-yellow-500 font-bold">50%</span></div>
+                            <input type="range" id="gi-slider" class="w-full h-1 bg-gray-800 appearance-none accent-yellow-500 cursor-pointer" oninput="updateUI('gi', this.value)">
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-[10px] text-gray-400 mb-2 tracking-widest"><span>ACCIÓN (GA)</span><span id="ga-val" class="text-yellow-500 font-bold">50%</span></div>
+                            <input type="range" id="ga-slider" class="w-full h-1 bg-gray-800 appearance-none accent-yellow-500 cursor-pointer" oninput="updateUI('ga', this.value)">
+                        </div>
+                        
+                        <div class="space-y-2 pt-4">
+                            <label class="text-[10px] text-yellow-600 font-bold uppercase tracking-widest">OBJETIVO</label>
+                            <textarea id="user-intent" class="w-full h-24 bg-black/50 border border-white/10 p-3 text-sm text-gray-200 focus:border-yellow-500 outline-none font-mono" placeholder="Escriba su objetivo..."></textarea>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] text-yellow-600 font-bold uppercase tracking-widest">WHATSAPP (Requerido)</label>
+                            <input type="tel" id="user-phone" class="w-full bg-black/50 border-l-2 border-yellow-500 p-3 text-sm text-yellow-500 font-mono outline-none" placeholder="+58 412...">
+                        </div>
 
-                    <div class="space-y-2">
-                        <label class="text-[10px] text-gold/80 uppercase tracking-widest font-bold">Identificación de Contacto</label>
-                        <input type="tel" id="user-phone" class="phone-input w-full bg-black/60 border border-white/10 p-3 text-sm text-gold font-mono outline-none" placeholder="+58 412 000 0000">
+                        <button id="main-sync-btn" onclick="executeSync()" class="w-full py-4 bg-gradient-to-r from-yellow-700 to-yellow-500 text-black font-black text-sm tracking-[0.2em] hover:brightness-110 transition-all shadow-lg shadow-yellow-500/20">
+                            EJECUTAR PROTOCOLO
+                        </button>
                     </div>
-
-                    <button id="main-sync-btn" onclick="executeSync()" class="sync-trigger w-full py-5 text-sm font-orbitron tracking-[0.2em] relative overflow-hidden group">
-                        <span class="relative z-10">EJECUTAR PROTOCOLO</span>
-                        <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                    </button>
                 </div>
             </div>
 
-            <div class="glass-panel rounded-lg p-5 flex-1 flex flex-col min-h-[100px] border border-white/5">
-                <div class="flex items-center gap-3 mb-4"><span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span><span class="text-[10px] text-green-500 font-bold tracking-widest font-orbitron">ENLACE NEURAL: ACTIVO</span></div>
-                <div id="ai-monitor-text" class="text-[10px] text-gray-500 font-mono">> Esperando input del Comandante...<br>> Motor Gemini-3-Flash: READY<br>> Memoria Firestore: READY</div>
-            </div>
-        </div>
+            <div class="lg:col-span-8 flex flex-col gap-6 overflow-hidden">
+                <header class="bg-black/80 backdrop-blur-md border-b border-white/10 h-20 rounded-lg flex items-center px-8 justify-between">
+                    <div>
+                        <span class="block text-3xl font-black italic tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-yellow-400 to-yellow-800 font-orbitron">TITÁN VΩ.11</span>
+                        <span class="text-[9px] text-gray-500 tracking-[0.6em] uppercase">Soberanía Digital</span>
+                    </div>
+                </header>
 
-        <div class="lg:col-span-8 flex flex-col gap-6 overflow-hidden fade-in-up" style="animation-delay: 0.4s;">
-            <header class="glass-panel h-24 rounded-lg flex items-center px-8 justify-between relative">
-                <div class="absolute top-0 left-0 w-20 h-1 bg-gold"></div>
-                <div class="flex flex-col"><span class="gold-text text-4xl font-black italic tracking-tighter">TITÁN VΩ.11</span><span class="text-[9px] text-gray-600 tracking-[0.8em] uppercase mt-1">Soberanía Digital</span></div>
-                <div class="hidden sm:block text-right"><div class="text-[9px] text-gray-500 uppercase tracking-widest">Arquitecto</div><div class="text-xs text-white font-bold tracking-widest font-orbitron">NIXON OJEDA</div></div>
-            </header>
-            <div class="flex-1 glass-panel rounded-lg overflow-hidden flex flex-col relative">
-                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5 pointer-events-none"></div>
-                <div class="bg-black/40 border-b border-white/5 px-6 py-3 flex justify-between items-center"><span class="text-[10px] text-gold/50 font-mono">TERMINAL DE SALIDA // SECURE CONNECTION</span></div>
-                <div id="display-content" class="flex-1 overflow-y-auto p-8 md:p-12 flex flex-col justify-center items-center">
-                    
-                    <div id="state-idle" class="text-center opacity-40">
-                        <div class="w-32 h-32 border border-dashed border-gold/30 rounded-full flex items-center justify-center mx-auto mb-6 animate-[spin_10s_linear_infinite]"><div class="w-20 h-20 border border-gold/50 rounded-full"></div></div>
-                        <p class="text-xs tracking-[0.5em] text-gold uppercase font-orbitron">Sistemas Nominales</p>
-                    </div>
-                    
-                    <div id="state-processing" class="hidden w-full max-w-lg">
-                        <div id="log-window" class="text-xs text-gold font-mono mb-8 space-y-2 h-40 overflow-hidden border-l border-gold/20 pl-4"></div>
-                        <div class="w-full h-1 bg-gray-800 relative overflow-hidden rounded-full"><div id="sync-progress" class="absolute inset-y-0 left-0 bg-gold w-0 transition-all duration-300"></div></div>
-                        <p class="text-center text-[10px] text-gray-500 mt-4 animate-pulse uppercase tracking-widest">Consultando Oráculo Digital...</p>
-                    </div>
-                    
-                    <div id="state-success" class="hidden w-full max-w-3xl text-center">
-                        <h2 id="result-title" class="gold-text text-5xl md:text-6xl font-black italic mb-8 drop-shadow-2xl"></h2>
-                        <div class="bg-black/60 border-l-4 border-gold p-8 rounded-r-xl mb-10 shadow-2xl relative group">
-                            <div class="absolute -top-3 -left-3 text-6xl text-gold/10 font-serif">"</div>
-                            <p id="ia-final-message" class="text-gray-200 text-xl md:text-2xl font-light leading-relaxed italic font-serif"></p>
+                <div class="flex-1 bg-black/60 backdrop-blur-md border border-white/5 rounded-lg p-8 flex flex-col justify-center items-center relative overflow-hidden">
+                    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#D4AF37 1px, transparent 1px); background-size: 20px 20px;"></div>
+
+                    <div id="state-idle" class="text-center opacity-50">
+                        <div class="w-24 h-24 border border-dashed border-yellow-500/50 rounded-full flex items-center justify-center mx-auto mb-6 animate-spin-slow">
+                            <div class="w-16 h-16 bg-yellow-500/10 rounded-full"></div>
                         </div>
-                        <div id="payment-zone" class="flex flex-col items-center gap-6 animate-in slide-in-from-bottom-8 duration-1000">
-                            <div class="h-px w-24 bg-gold/30"></div>
-                            <p class="text-[10px] text-gold uppercase tracking-[0.3em]">Acceso a Consultoría: $7.00 USD</p>
-                            <div id="paypal-button-container" class="w-full max-w-xs relative z-50"></div>
-                            <p class="text-[9px] text-gray-600 mt-2">Al pagar, será redirigido al WhatsApp del Comando.</p>
+                        <p class="text-xs tracking-[0.5em] text-yellow-500 uppercase font-orbitron">Esperando Comandos</p>
+                    </div>
+
+                    <div id="state-processing" class="hidden w-full max-w-lg text-center">
+                        <div id="log-window" class="text-xs text-yellow-400 font-mono mb-6 h-32 overflow-hidden text-left border-l-2 border-yellow-500/30 pl-4"></div>
+                        <div class="w-full h-1 bg-gray-800 rounded-full overflow-hidden">
+                            <div id="sync-progress" class="h-full bg-yellow-500 w-0 transition-all duration-300"></div>
+                        </div>
+                    </div>
+
+                    <div id="state-success" class="hidden w-full max-w-2xl text-center z-10">
+                        <h2 id="result-title" class="text-5xl font-black italic mb-6 text-yellow-500 font-orbitron drop-shadow-lg">AUTORIZADO</h2>
+                        <div class="bg-black/80 border-l-4 border-yellow-500 p-6 rounded-r-xl mb-8 shadow-2xl">
+                            <p id="ia-final-message" class="text-gray-200 text-xl font-serif italic"></p>
+                        </div>
+                        <div id="payment-zone" class="flex flex-col items-center gap-4 animate-bounce-in">
+                            <p class="text-[10px] text-yellow-500 uppercase tracking-widest">Acceso a Consultoría: $7.00 USD</p>
+                            <div id="paypal-button-container" class="w-full max-w-xs"></div>
                         </div>
                     </div>
                 </div>
@@ -126,96 +112,94 @@
         </div>
     </div>
 
-    <a href="https://wa.me/584124577822" target="_blank" class="fixed bottom-8 right-8 z-50 group">
-        <div class="absolute inset-0 bg-green-500 blur-lg opacity-20 group-hover:opacity-40 transition-opacity rounded-full"></div>
-        <div class="bg-black border border-green-500/50 p-4 rounded-full relative hover:scale-110 transition-transform duration-300 flex items-center justify-center">
-            <svg class="w-6 h-6 text-green-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.181-2.587-5.766-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.63.076-1.52-.275-.89-.351-1.464-1.253-1.509-1.312-.045-.059-.369-.491-.369-.945 0-.454.239-.677.324-.772.085-.094.189-.118.252-.118h.18c.058 0 .135-.022.211.162.077.185.261.635.284.68.022.045.036.099.009.153-.027.054-.058.086-.117.153-.058.068-.126.151-.18.203-.063.058-.126.121-.054.243.072.121.319.527.685.85.472.42 0 .614.085.71.121.135.257.072.333-.036.076-.108.333-.387.422-.518.089-.13.178-.108.301-.063.123.045.78.368.915.436.135.068.225.099.257.153.033.054.033.315-.111.72z"/></svg>
-        </div>
-    </a>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=BAA1vZa0wSM2Mz7GjGZTtvTJGjguge3Sbfq3HzEirH-logMDlVWhxdgxSZSo73-wnDVoSBJJLiZAIsv9Ck&currency=USD"></script>
 
     <script>
+        // --- CONFIGURACIÓN ---
         const TITAN_ENDPOINT = "https://us-central1-tcis-titan-12.cloudfunctions.net/agos-v11";
         const TITAN_AUTH = "dosespejossemiranyelpezrespirafueradelagua"; 
-
-        // --- SISTEMA VISUAL ---
-        let scene, camera, renderer, stars;
-
-        function bootSystem() {
-            const overlay = document.getElementById('intro-overlay');
-            overlay.style.opacity = '0';
+        
+        // --- INICIALIZADOR SEGURO ---
+        window.addEventListener('load', () => {
+            // Cuando todo ha cargado, ocultamos loader y mostramos app
             setTimeout(() => {
-                overlay.classList.add('hidden');
-                initSpace();
-                speakSystem("Bienvenido Comandante. Sistemas Titán operativos.");
-            }, 800);
-        }
+                document.getElementById('loader-screen').style.display = 'none';
+                document.getElementById('main-app').classList.add('visible');
+                initSpace(); // Iniciamos Three.js solo cuando ya se ve la pagina
+            }, 1000);
+        });
 
+        // --- VISUALES ---
         function initSpace() {
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            if(typeof THREE === 'undefined') return; // Seguridad si falla el CDN
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
             document.getElementById('canvas-container').appendChild(renderer.domElement);
             
             const geometry = new THREE.BufferGeometry();
             const vertices = [];
-            for(let i=0; i<3000; i++) vertices.push((Math.random()-0.5)*1000, (Math.random()-0.5)*1000, (Math.random()-0.5)*1000);
+            for(let i=0; i<1500; i++) vertices.push((Math.random()-0.5)*1000, (Math.random()-0.5)*1000, (Math.random()-0.5)*1000);
             geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-            const material = new THREE.PointsMaterial({ color: 0xD4AF37, size: 0.7, transparent: true, opacity: 0.6 });
-            stars = new THREE.Points(geometry, material);
+            const material = new THREE.PointsMaterial({ color: 0xD4AF37, size: 0.8, transparent: true, opacity: 0.5 });
+            const stars = new THREE.Points(geometry, material);
             scene.add(stars);
             camera.position.z = 300;
-
-            function animate() {
-                requestAnimationFrame(animate);
-                stars.rotation.y += 0.0003;
-                renderer.render(scene, camera);
-            }
+            function animate() { requestAnimationFrame(animate); stars.rotation.y += 0.0005; renderer.render(scene, camera); }
             animate();
         }
 
-        // --- LOGICA PRINCIPAL ---
+        // --- LÓGICA DE NEGOCIO ---
         function updateUI(type, val) { document.getElementById(`${type}-val`).innerText = val + "%"; }
 
         async function executeSync() {
             const intent = document.getElementById('user-intent').value.trim();
             const phone = document.getElementById('user-phone').value.trim();
             
-            // 🚨 VALIDACIÓN OBLIGATORIA
             if(!intent) { alert("ERROR: Ingrese una misión."); return; }
-            if(!phone || phone.length < 7) { alert("SEGURIDAD: Identificación (WhatsApp) requerida para procesar."); return; }
+            if(!phone || phone.length < 7) { alert("SEGURIDAD: Identificación requerida."); return; }
 
-            // EMPAQUETADO DE DATOS (EL TRUCO PARA GUARDAR EL TELÉFONO)
-            // Enviamos el teléfono dentro de la intención para que el backend lo guarde sin modificar el servidor
             const fullIntent = `[CONTACTO: ${phone}] - INTENCIÓN: ${intent}`;
 
+            // UI
             document.getElementById('state-idle').classList.add('hidden');
             document.getElementById('state-success').classList.add('hidden');
             document.getElementById('state-processing').classList.remove('hidden');
             const btn = document.getElementById('main-sync-btn');
             btn.disabled = true;
 
+            // Logs falsos para UX
             const logWin = document.getElementById('log-window');
-            const logs = ["ESTABLECIENDO ENLACE...", "REGISTRANDO CREDENCIALES...", "ANALIZANDO VECTORES...", "GENERANDO ESTRATEGIA..."];
+            const logs = ["CONECTANDO...", "ENVIANDO DATOS...", "PROCESANDO...", "COMPLETADO"];
             logWin.innerHTML = "";
             for(let i=0; i<logs.length; i++) {
                 logWin.innerHTML += `<div>> ${logs[i]}</div>`;
                 document.getElementById('sync-progress').style.width = ((i+1)*25) + "%";
-                await new Promise(r => setTimeout(r, 600));
+                await new Promise(r => setTimeout(r, 500));
             }
 
             try {
+                // LLAMADA AL BACKEND
+                // AUMENTAMOS EL TIEMPO DE ESPERA VISUAL SI EL BACKEND ES LENTO
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 25000); // 25s timeout
+
                 const response = await fetch(TITAN_ENDPOINT, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'X-MBR-Auth': TITAN_AUTH },
                     body: JSON.stringify({ 
-                        user_intent: fullIntent, // AQUÍ VA EL TELÉFONO INCRUSTADO
+                        user_intent: fullIntent, 
                         observation: { 
                             gi_value: document.getElementById('gi-slider').value / 100, 
                             ga_value: document.getElementById('ga-slider').value / 100 
                         } 
-                    })
+                    }),
+                    signal: controller.signal
                 });
+                clearTimeout(timeoutId);
 
                 const data = await response.json();
                 document.getElementById('state-processing').classList.add('hidden');
@@ -224,68 +208,48 @@
                 
                 if(data.decision === 'act') {
                     document.getElementById('result-title').innerText = "AUTORIZADO";
+                    document.getElementById('result-title').classList.add('text-yellow-500');
                     document.getElementById('payment-zone').classList.remove('hidden');
-                    speakSystem(data.message);
                     renderPayPal();
                 } else {
                     document.getElementById('result-title').innerText = "DENEGADO";
-                    document.getElementById('result-title').className = "text-red-500 text-5xl md:text-6xl font-black italic mb-8";
+                    document.getElementById('result-title').classList.remove('text-yellow-500');
+                    document.getElementById('result-title').classList.add('text-red-600');
                     document.getElementById('payment-zone').classList.add('hidden');
-                    speakSystem("Acción denegada.");
                 }
+
             } catch (error) {
                 console.error(error);
+                alert("ERROR DE CONEXIÓN: El servidor tardó demasiado. Intente de nuevo.");
                 document.getElementById('state-processing').classList.add('hidden');
                 document.getElementById('state-idle').classList.remove('hidden');
-            } finally { btn.disabled = false; }
+            } finally {
+                btn.disabled = false;
+            }
         }
 
-        // --- SISTEMA DE PAGO ($7) Y REDIRECCIÓN ---
         function renderPayPal() {
             const container = document.getElementById('paypal-button-container');
             container.innerHTML = '';
-            
-            paypal.Buttons({
-                style: { shape: 'rect', color: 'gold', layout: 'vertical', label: 'pay' },
-                
-                createOrder: function(data, actions) {
-                    return actions.order.create({
-                        purchase_units: [{
-                            description: "Acceso TITÁN VΩ.11 - Consultoría Elite",
-                            amount: { value: '7.00' }
-                        }]
-                    });
-                },
-
-                onApprove: function(data, actions) {
-                    return actions.order.capture().then(function(details) {
-                        const transactionId = details.id;
-                        speakSystem("Pago confirmado. Iniciando protocolo de consultoría.");
-                        setTimeout(() => {
-                            const phone = "584124577822"; 
-                            const text = `Comandante Nixon, he desbloqueado el acceso a TITÁN ($7.00). ID Transacción: ${transactionId}. Mi número registrado es el mismo de este chat.`;
-                            const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
-                            window.location.href = url;
-                        }, 2000);
-                    });
-                },
-                
-                onError: function(err) {
-                    console.error(err);
-                    alert("Error en el pago. Intente nuevamente.");
-                }
-
-            }).render('#paypal-button-container');
-        }
-
-        function speakSystem(text) {
-            if ('speechSynthesis' in window) {
-                const u = new SpeechSynthesisUtterance(text);
-                u.lang = 'es-ES'; u.rate = 0.9; u.pitch = 0.8;
-                window.speechSynthesis.speak(u);
+            if(window.paypal) {
+                paypal.Buttons({
+                    style: { shape: 'rect', color: 'gold', layout: 'vertical', label: 'pay' },
+                    createOrder: function(data, actions) {
+                        return actions.order.create({ purchase_units: [{ description: "Acceso TITÁN VΩ.11", amount: { value: '7.00' } }] });
+                    },
+                    onApprove: function(data, actions) {
+                        return actions.order.capture().then(function(details) {
+                            const transactionId = details.id;
+                            setTimeout(() => {
+                                const phone = "584124577822"; 
+                                const text = `Comandante, pago realizado ($7.00). ID: ${transactionId}. Mi número registrado es este.`;
+                                window.location.href = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+                            }, 1500);
+                        });
+                    }
+                }).render('#paypal-button-container');
             }
         }
-        window.addEventListener('resize', () => { if(camera) { camera.aspect = window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); }});
     </script>
 </body>
 </html>
