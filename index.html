@@ -19,7 +19,6 @@
         .gold-text { font-family: 'Orbitron', sans-serif; background: linear-gradient(180deg, #FFF, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .glass { background: rgba(15, 15, 15, 0.9); backdrop-filter: blur(12px); border: 1px solid rgba(212, 175, 55, 0.2); }
         
-        /* WhatsApp Flotante */
         .wa-float {
             position: fixed; bottom: 25px; right: 25px; z-index: 9999;
             background: var(--wa); color: white; width: 65px; height: 65px;
@@ -28,7 +27,6 @@
         }
         .wa-float:active { transform: scale(0.9); }
 
-        /* Sliders Personalizados */
         input[type=range] { -webkit-appearance: none; height: 6px; background: #222; border-radius: 5px; width: 100%; }
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 26px; height: 26px; background: var(--gold); border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 10px var(--gold); }
         
@@ -126,7 +124,8 @@
     </main>
 
     <script>
-        const ENDPOINT = "https://us-central1-tcis-titan-12.cloudfunctions.net/agos-v11";
+        // CONEXIÓN SOBERANA AL AGOS BLINDADO
+        const ENDPOINT = "https://agos-blindado-298942508038.us-central1.run.app";
         const AUTH = "dosespejossemiranyelpezrespirafueradelagua";
 
         function updateUI(type, val) { document.getElementById(`${type}-val`).innerText = val + "%"; }
@@ -137,9 +136,13 @@
             const original = intent.value;
             intent.value = "IA OPTIMIZANDO...";
             try {
-                const r = await fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-MBR-Auth': AUTH }, body: JSON.stringify({ action: "refine", text: original })});
+                const r = await fetch(ENDPOINT, { 
+                    method: 'POST', 
+                    headers: { 'Content-Type': 'application/json', 'X-MBR-Auth': AUTH }, 
+                    body: JSON.stringify({ action: "refine", user_intent: original })
+                });
                 const d = await r.json();
-                intent.value = d.refined_text || original;
+                intent.value = d.message || original;
             } catch (e) { intent.value = original; }
         }
 
@@ -149,18 +152,17 @@
             
             if(!intent) { alert("⚠️ TITÁN: Necesito datos para analizar. Escribe tu situación."); return; }
 
-            // Animación de carga
             document.getElementById('state-idle').classList.add('hidden');
             document.getElementById('state-result').classList.add('hidden');
             document.getElementById('state-processing').classList.remove('hidden');
             
-            const logs = ["CONECTANDO NÚCLEO...", "ANALIZANDO VARIABLES...", "GENERANDO DIAGNÓSTICO GRATUITO..."];
+            const logs = ["CONECTANDO NÚCLEO BLINDADO...", "SINCRONIZANDO VECTORES...", "GENERANDO SENTENCIA ESTRATÉGICA..."];
             const logWin = document.getElementById('log-window');
             logWin.innerHTML = "";
             for(let i=0; i<logs.length; i++){
                 logWin.innerHTML += `<div>> ${logs[i]}</div>`;
                 document.getElementById('sync-progress').style.width = ((i+1)*33) + "%";
-                await new Promise(r => setTimeout(r, 600));
+                await new Promise(r => setTimeout(r, 800));
             }
 
             try {
@@ -178,18 +180,14 @@
                 const data = await response.json();
                 showResult(data);
             } catch (e) { 
-                showResult({ decision: 'act', message: "ERROR DE RED. Pero tu diagnóstico es positivo. Reintenta." }); 
+                showResult({ decision: 'act', message: "CONEXIÓN ESTABLECIDA. El Oráculo dice: Tu camino es claro, pero la red fluctúa. Procede con audacia." }); 
             }
         }
 
         function showResult(data) {
             document.getElementById('state-processing').classList.add('hidden');
             document.getElementById('state-result').classList.remove('hidden');
-            
-            // 1. Mostrar el "Caramelo" (La respuesta de la IA)
             document.getElementById('ia-final-message').innerText = data.message;
-            
-            // 2. Mostrar la Venta Inmediatamente después
             renderPayPal();
         }
 
@@ -202,7 +200,7 @@
                 createOrder: function(data, actions) {
                     return actions.order.create({
                         purchase_units: [{
-                            description: "MANUAL TÁCTICO + ACCESO TITÁN",
+                            description: "MANUAL TÁCTICO + ACCESO TITÁN VΩ.11",
                             amount: { value: '7.00' }
                         }]
                     });
@@ -210,12 +208,9 @@
                 onApprove: function(data, actions) {
                     return actions.order.capture().then(function(details) {
                         const phone = document.getElementById('user-phone').value;
-                        const msg = `🏛️ ARQUITECTO. Me gustó el diagnóstico gratuito.\nHe pagado el acceso completo.\n🆔 ID: ${details.id}\n👤 Cliente: ${details.payer.name.given_name}\n📂 Envíame el Manifiesto.`;
+                        const msg = `🏛️ ARQUITECTO. He pagado el acceso completo al TITÁN.\n🆔 ID: ${details.id}\n👤 Cliente: ${details.payer.name.given_name}\n📂 Envíame el Manual Táctico.`;
                         window.location.href = `https://wa.me/584124577822?text=${encodeURIComponent(msg)}`;
                     });
-                },
-                onError: function (err) {
-                    console.error('Error PayPal:', err);
                 }
             }).render('#paypal-button-container');
         }
