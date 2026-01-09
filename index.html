@@ -2,122 +2,202 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TITÁN VΩ.11 | Fénix</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TITÁN B11 | COMMAND CENTER</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://www.paypal.com/sdk/js?client-id=Ad5D0SGYDZUBG6ucm74UN76VRUVpOeFE0KTW2QmV5nZEfXsOD39R_phO6AtFGswwRaJC5o7_gJtfBipX&currency=USD"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #D4AF37; --bg: #050505; }
-        body { background: var(--bg); color: #fff; font-family: 'Rajdhani', sans-serif; background-image: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #050505 100%); min-height: 100vh; margin: 0; }
-        .gold-text { font-family: 'Orbitron', sans-serif; background: linear-gradient(180deg, #FFF, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .glass { background: rgba(15, 15, 15, 0.9); backdrop-filter: blur(12px); border: 1px solid rgba(212, 175, 55, 0.2); }
-        .sync-btn { background: linear-gradient(45deg, var(--gold), #9a8027); color: #000; font-family: 'Orbitron', sans-serif; font-weight: 900; clip-path: polygon(0 0, 92% 0, 100% 25%, 100% 100%, 8% 100%, 0 75%); }
-        input[type=range] { -webkit-appearance: none; height: 6px; background: #222; border-radius: 5px; width: 100%; }
-        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 26px; height: 26px; background: var(--gold); border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 10px var(--gold); }
+        :root {
+            --primary: #fbbf24;
+            --bg-dark: #0a0a0a;
+        }
+        body {
+            background-color: var(--bg-dark);
+            color: #d1d5db;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .glow-border {
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.05);
+        }
+        .scanline {
+            width: 100%;
+            height: 100px;
+            z-index: 10;
+            background: linear-gradient(0deg, rgba(251, 191, 36, 0) 0%, rgba(251, 191, 36, 0.05) 50%, rgba(251, 191, 36, 0) 100%);
+            position: absolute;
+            animation: scan 4s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes scan {
+            from { top: -100px; }
+            to { top: 100%; }
+        }
+        input[type=range] {
+            accent-color: var(--primary);
+        }
     </style>
 </head>
-<body class="p-4 md:p-10 flex flex-col items-center">
+<body class="min-h-screen flex flex-col overflow-hidden">
+    <div class="scanline"></div>
 
-    <header class="w-full max-w-4xl flex justify-between items-center mb-8">
-        <div class="flex flex-col">
-            <h1 class="gold-text text-3xl font-black italic tracking-tighter">TITÁN VΩ.11</h1>
-            <span class="text-[9px] text-gold/60 tracking-[0.5em] uppercase">Protocolo Fénix</span>
+    <!-- BARRA DE ESTADO SUPERIOR -->
+    <nav class="p-4 border-b border-zinc-800 flex justify-between items-center bg-black/50 backdrop-blur-md z-20">
+        <div class="flex items-center gap-4">
+            <div class="w-3 h-3 bg-yellow-500 rounded-full animate-pulse"></div>
+            <h1 class="text-xl font-bold tracking-tighter text-white">TITÁN <span class="text-yellow-500">B11</span></h1>
         </div>
-        <div class="text-right">
-            <span class="text-[8px] text-gray-500 uppercase">Arquitecto</span>
-            <div class="text-[10px] text-white font-bold font-orbitron uppercase">Nixon Ojeda</div>
+        <div class="flex gap-4 items-center">
+            <span class="text-[10px] text-zinc-500 hidden md:block uppercase tracking-widest">Estado: Operacional / Director Nixon</span>
+            <a href="https://wa.me/573000000000" target="_blank" class="bg-green-600/10 border border-green-500/50 text-green-500 px-3 py-1 rounded text-[10px] hover:bg-green-600 hover:text-white transition-all">SOPORTE WHATSAPP</a>
         </div>
-    </header>
+    </nav>
 
-    <main class="w-full max-w-4xl grid grid-cols-1 lg:grid-cols-2 gap-6 pb-24">
-        <section class="glass p-6 rounded-3xl space-y-6">
-            <h2 class="text-gold text-xs font-bold tracking-widest uppercase">❖ Interfaz de Mando</h2>
-            <div class="space-y-6">
-                <div>
-                    <div class="flex justify-between text-[10px] text-gray-400 mb-2 uppercase"><span>Voluntad (GI)</span><span id="gi-val" class="text-gold font-bold">50%</span></div>
-                    <input type="range" id="gi-slider" min="0" max="100" value="50" oninput="document.getElementById('gi-val').innerText=this.value+'%'">
-                </div>
-                <div>
-                    <div class="flex justify-between text-[10px] text-gray-400 mb-2 uppercase"><span>Ejecución (GA)</span><span id="ga-val" class="text-gold font-bold">50%</span></div>
-                    <input type="range" id="ga-slider" min="0" max="100" value="50" oninput="document.getElementById('ga-val').innerText=this.value+'%'">
-                </div>
+    <main class="flex-1 flex flex-col md:flex-row p-4 gap-4 overflow-hidden relative">
+        
+        <!-- PANEL DE CONTROL IZQUIERDO -->
+        <aside class="w-full md:w-80 flex flex-col gap-4 overflow-y-auto pr-2 z-20">
+            <!-- SLIDERS DE POTENCIA -->
+            <div class="glow-border p-4 bg-zinc-900/50 rounded-lg">
+                <label class="text-[10px] text-yellow-500 uppercase font-bold block mb-2">Intensidad del Núcleo</label>
+                <input type="range" min="0" max="100" value="85" class="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer mb-4">
+                
+                <label class="text-[10px] text-yellow-500 uppercase font-bold block mb-2">Filtro de Soberanía</label>
+                <input type="range" min="0" max="100" value="100" class="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer">
             </div>
-            <textarea id="user-intent" class="w-full h-24 bg-black/40 border border-white/10 rounded-2xl p-4 text-sm text-gray-200 outline-none focus:border-gold" placeholder="Escribe tu intención estratégica..."></textarea>
-            <button onclick="executeSync()" class="sync-btn w-full py-5 text-xs tracking-widest shadow-2xl transition-all hover:scale-105">EJECUTAR SENTENCIA</button>
-        </section>
 
-        <section id="display-content" class="glass rounded-3xl p-6 flex flex-col justify-center min-h-[400px]">
-            <div id="state-idle" class="text-center opacity-30">
-                <div class="w-20 h-20 border-2 border-dashed border-gold/30 rounded-full animate-spin mx-auto mb-4"></div>
-                <p class="text-[10px] tracking-[0.4em] text-gold uppercase">Sistemas Online</p>
+            <!-- TERMINAL DE COMANDO -->
+            <div class="glow-border p-4 bg-zinc-900/50 rounded-lg flex-1 min-h-[200px] flex flex-col">
+                <h2 class="text-[10px] text-zinc-500 mb-2 font-bold uppercase tracking-widest">Inyectar Tesis</h2>
+                <textarea id="promptInput" class="flex-1 bg-transparent border-none text-zinc-300 text-sm focus:ring-0 resize-none p-0 mono" placeholder="Esperando parámetros..."></textarea>
+                <button id="runBtn" class="w-full bg-yellow-500 text-black font-black py-3 mt-4 text-xs uppercase tracking-tighter hover:bg-yellow-400 transition-all rounded">EJECUTAR ANÁLISIS</button>
             </div>
-            <div id="state-processing" class="hidden text-center space-y-4">
-                <p class="text-gold animate-pulse font-mono text-xs">> CONECTANDO CON TITÁN FÉNIX...</p>
-                <div class="w-full h-1 bg-white/5 rounded-full overflow-hidden"><div id="sync-progress" class="h-full bg-gold w-0 transition-all duration-700"></div></div>
+
+            <!-- PAGOS PAYPAL -->
+            <div class="glow-border p-4 bg-zinc-900/50 rounded-lg">
+                <p class="text-[9px] text-zinc-500 uppercase mb-3 text-center">Licencia de Uso Profesional</p>
+                <div id="paypal-container"></div>
             </div>
-            <div id="state-result" class="hidden text-center fade-in">
-                <h2 class="gold-text text-2xl font-black mb-4">RESPUESTA SOBERANA</h2>
-                <div class="bg-white/5 border-l-4 border-gold p-4 mb-6 text-left">
-                    <p id="ia-final-message" class="text-gray-200 text-sm italic leading-relaxed"></p>
+        </aside>
+
+        <!-- PANTALLA TÁCTICA CENTRAL -->
+        <section class="flex-1 glow-border rounded-lg bg-black/80 relative flex flex-col overflow-hidden">
+            <div class="bg-zinc-900 px-4 py-2 border-b border-zinc-800 flex justify-between">
+                <span class="text-[9px] text-zinc-500 uppercase">Stream de Datos en Tiempo Real</span>
+                <span id="timestamp" class="text-[9px] text-yellow-500 mono"></span>
+            </div>
+            <div id="displayArea" class="flex-1 p-6 overflow-y-auto text-sm leading-relaxed text-zinc-400">
+                <div class="opacity-30 flex flex-col items-center justify-center h-full">
+                    <p class="text-xs uppercase tracking-[0.8em]">Sistema Listo para el Director</p>
                 </div>
-                <div id="paypal-button-container"></div>
+            </div>
+            
+            <!-- HISTORIAL RÁPIDO (FIRE) -->
+            <div class="p-4 border-t border-zinc-900 bg-zinc-950">
+                <h3 class="text-[9px] text-zinc-600 uppercase mb-2">Archivos en Nube</h3>
+                <div id="historyList" class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+                    <!-- Los datos se inyectarán aquí -->
+                </div>
             </div>
         </section>
     </main>
 
-    <script>
-        // LA NUEVA URL DEL FÉNIX
-        const ENDPOINT = "https://titan-fenix-298942508038.us-central1.run.app";
-        const AUTH = "dosespejossemiranyelpezrespirafueradelagua";
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 
-        async function executeSync() {
-            const intent = document.getElementById('user-intent').value;
-            if(!intent) return alert("Arquitecto, proporcione su intención.");
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'titan-b11-legacy';
+        const apiKey = ""; // Inyectada automáticamente
 
-            document.getElementById('state-idle').classList.add('hidden');
-            document.getElementById('state-processing').classList.remove('hidden');
-            document.getElementById('sync-progress').style.width = "80%";
+        let userSession = null;
+
+        // AUTH & FIRE INIT
+        const init = async () => {
+            try {
+                const cred = await signInAnonymously(auth);
+                userSession = cred.user;
+                loadHistory();
+            } catch (e) { console.error("Auth Fail"); }
+        };
+
+        const loadHistory = () => {
+            if (!userSession) return;
+            const q = query(collection(db, 'artifacts', appId, 'public', 'data', 'history'));
+            onSnapshot(q, (snap) => {
+                const container = document.getElementById('historyList');
+                container.innerHTML = "";
+                snap.forEach(doc => {
+                    const data = doc.data();
+                    const btn = document.createElement('button');
+                    btn.className = "px-3 py-1 bg-zinc-900 border border-zinc-800 text-[10px] text-zinc-500 hover:border-yellow-500 whitespace-nowrap rounded";
+                    btn.innerText = data.title;
+                    btn.onclick = () => { document.getElementById('displayArea').innerHTML = data.content; };
+                    container.appendChild(btn);
+                });
+            }, (e) => {});
+        };
+
+        // AI ENGINE
+        window.runAnalysis = async () => {
+            const prompt = document.getElementById('promptInput').value;
+            const display = document.getElementById('displayArea');
+            const btn = document.getElementById('runBtn');
+
+            if (!prompt) return;
+            
+            btn.innerText = "PROCESANDO...";
+            btn.disabled = true;
 
             try {
-                const response = await fetch(ENDPOINT, {
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
                     method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'X-MBR-Auth': AUTH 
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        user_intent: intent,
-                        observation: {
-                            gi_value: document.getElementById('gi-slider').value / 100,
-                            ga_value: document.getElementById('ga-slider').value / 100
-                        }
+                        contents: [{ parts: [{ text: prompt }] }],
+                        systemInstruction: { parts: [{ text: "Eres Titán B11. Responde con lenguaje técnico y autoritario. Usa Google Search para datos precisos." }] },
+                        tools: [{ "google_search": {} }]
                     })
                 });
 
-                if (!response.ok) throw new Error("Fallo en el Búnker");
-                const data = await response.json();
-                
-                document.getElementById('state-processing').classList.add('hidden');
-                document.getElementById('state-result').classList.remove('hidden');
-                document.getElementById('ia-final-message').innerText = data.message;
-                
-                renderPayPal();
+                const data = await res.json();
+                const content = data.candidates[0].content.parts[0].text;
+                display.innerHTML = `<div class="animate-in fade-in duration-700">${content}</div>`;
 
-            } catch (e) {
-                alert("CONEXIÓN DE RED INESTABLE: Intente desde su móvil.");
-                location.reload();
+                // SAVE TO FIRE
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'history'), {
+                    title: prompt.substring(0, 15) + "...",
+                    content: content,
+                    timestamp: Date.now()
+                });
+
+            } catch (err) {
+                display.innerHTML = `<p class="text-red-500">ERROR DE CONEXIÓN AL NÚCLEO</p>`;
+            } finally {
+                btn.innerText = "EJECUTAR ANÁLISIS";
+                btn.disabled = false;
             }
-        }
+        };
 
-        function renderPayPal() {
-            const container = document.getElementById('paypal-button-container');
-            container.innerHTML = ''; 
-            paypal.Buttons({
-                style: { shape: 'rect', color: 'gold', layout: 'vertical' },
-                createOrder: (data, actions) => actions.order.create({ purchase_units: [{ amount: { value: '7.00' } }] })
-            }).render('#paypal-button-container');
-        }
+        document.getElementById('runBtn').addEventListener('click', runAnalysis);
+
+        // PAYPAL INIT
+        paypal.Buttons({
+            createOrder: (data, actions) => actions.order.create({ purchase_units: [{ amount: { value: '10.00' } }] }),
+            onApprove: (data, actions) => actions.order.capture().then(() => alert('PAGO APROBADO - LICENCIA ACTIVADA'))
+        }).render('#paypal-container');
+
+        // CLOCK
+        setInterval(() => {
+            document.getElementById('timestamp').innerText = new Date().toLocaleTimeString();
+        }, 1000);
+
+        init();
     </script>
 </body>
 </html>
