@@ -6,7 +6,6 @@
     <title>TITÁN VΩ.11 | Arquitecto Nixon Ojeda</title>
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- SDK PAYPAL INTEGRAL -->
     <script src="https://www.paypal.com/sdk/js?client-id=BAA1vZa0wSM2Mz7GjGZTtvTJGjguge3Sbfq3HzEirH-logMDlVWhxdgxSZSo73-wnDVoSBJJLiZAIsv9Ck&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -72,7 +71,6 @@
 </head>
 <body class="p-4 md:p-10 min-h-screen flex flex-col items-center">
 
-    <!-- HEADER DE AUTORÍA -->
     <header class="w-full max-w-6xl flex flex-col md:flex-row justify-between items-end mb-12 border-b border-gold/20 pb-8 gap-6">
         <div>
             <h1 class="font-orbitron text-4xl md:text-6xl font-black tracking-tighter gold-gradient-text">
@@ -83,7 +81,6 @@
             </p>
         </div>
 
-        <!-- FIRMA DEL ARQUITECTO -->
         <div class="relative glass-panel p-4 rounded-lg border-l-4 border-gold overflow-hidden min-w-[220px]">
             <div class="signature-scanner"></div>
             <div class="relative z-10 flex items-center gap-3">
@@ -100,12 +97,10 @@
 
     <main class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-10">
         
-        <!-- BLOQUE DE ENTRADA -->
         <section class="glass-panel p-8 rounded-3xl">
             <h2 class="font-orbitron text-xs text-gold tracking-widest uppercase mb-10 border-b border-gold/10 pb-4">01. Configuración de Inferencia</h2>
             
             <div class="space-y-10">
-                <!-- GI SLIDER -->
                 <div class="relative">
                     <div class="flex justify-between items-center mb-4">
                         <span class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Grado de Intención (GI)</span>
@@ -114,7 +109,6 @@
                     <input type="range" id="gi-slider" min="0" max="100" value="50">
                 </div>
 
-                <!-- GA SLIDER -->
                 <div class="relative">
                     <div class="flex justify-between items-center mb-4">
                         <span class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Grado de Acción (GA)</span>
@@ -123,7 +117,6 @@
                     <input type="range" id="ga-slider" min="0" max="100" value="50">
                 </div>
 
-                <!-- CAMPO DE TEXTO -->
                 <div>
                     <label class="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-4 block italic">Definición de Objetivo Estratégico</label>
                     <textarea id="user-intent" rows="6" class="w-full bg-black/40 border border-gold/20 rounded-2xl p-5 text-sm focus:border-gold focus:ring-1 focus:ring-gold/50 transition-all outline-none text-white placeholder:text-gray-700 shadow-inner" placeholder="Describa el objetivo o la misión para el análisis de TITÁN..."></textarea>
@@ -135,16 +128,13 @@
             </div>
         </section>
 
-        <!-- BLOQUE DE RESULTADOS -->
         <section id="result-panel" class="glass-panel p-8 rounded-3xl flex flex-col items-center justify-center relative min-h-[500px] border-r-4 border-gold/20">
             
-            <!-- Loader (Oculto inicialmente) -->
             <div id="loader" class="hidden flex flex-col items-center">
                 <div class="w-16 h-16 border-4 border-gold/10 border-t-gold rounded-full animate-spin"></div>
                 <p class="font-orbitron text-[9px] text-gold mt-6 tracking-[0.5em] animate-pulse">SINCRONIZANDO NÚCLEO...</p>
             </div>
 
-            <!-- Estado de Reposo -->
             <div id="idle-state" class="text-center opacity-40">
                 <div class="w-24 h-24 mx-auto border-2 border-dashed border-gold/30 rounded-full flex items-center justify-center mb-6">
                     <svg class="w-10 h-10 text-gold/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="1"></path></svg>
@@ -152,7 +142,6 @@
                 <p class="font-orbitron text-[10px] tracking-[0.4em] uppercase">Sistema en Espera</p>
             </div>
 
-            <!-- Contenedor de Respuesta Final -->
             <div id="response-content" class="hidden w-full fade-in">
                 <h3 id="decision-title" class="font-orbitron text-center text-sm tracking-[0.5em] mb-8"></h3>
                 
@@ -160,19 +149,16 @@
                     <p id="ia-message" class="text-gray-300 text-sm italic font-light leading-relaxed text-center"></p>
                 </div>
 
-                <!-- SECCIÓN DE PAGO ACTIVA -->
                 <div id="payment-module" class="hidden fade-in border-t border-gold/20 pt-8">
                     <div class="text-center mb-6">
                         <p class="text-[9px] font-bold text-gold/60 uppercase tracking-widest">Acceso Autorizado - Procesar Tarifa</p>
                     </div>
                     
-                    <!-- Contenedor PayPal -->
                     <div id="paypal-button-container" class="flex justify-center min-h-[150px]"></div>
                     
                     <p class="text-[8px] text-center text-gray-500 mt-4 px-10 italic">Seguridad garantizada mediante cifrado de punto a punto de PayPal.</p>
                 </div>
 
-                <!-- SOPORTE EN CASO DE RECHAZO -->
                 <div id="denied-module" class="hidden fade-in">
                     <a href="https://wa.me/584124577822?text=CONSULTA_TITAN_RECHAZADA" target="_blank" class="block w-full text-center py-4 border border-red-500/40 text-red-500 font-bold text-[10px] tracking-widest rounded-xl hover:bg-red-500/10 transition-all uppercase">
                         Consultar con el Arquitecto
@@ -182,12 +168,10 @@
         </section>
     </main>
 
-    <!-- FOOTER LEGAL -->
     <footer class="mt-20 text-center opacity-30 pb-10">
         <p class="text-[9px] tracking-[0.8em] font-orbitron uppercase">Coded by Nixon Ojeda © 2024</p>
     </footer>
 
-    <!-- BOTÓN FLOTANTE WHATSAPP -->
     <a href="https://wa.me/584124577822" target="_blank" class="fixed bottom-6 right-6 bg-[#25D366] p-4 rounded-full shadow-2xl hover:scale-110 transition-transform z-50">
         <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
     </a>
@@ -195,7 +179,7 @@
     <script>
         // CONFIGURACIÓN DE ENDPOINTS
         const CONFIG = {
-            API_URL: "https://us-central1-tcis-titan-12.cloudfunctions.net/agos-v11",
+            API_URL: "https://us-central1-tcis-titan-12.cloudfunctions.net/titan-reborn-25",
             AUTH_KEY: "dosespejossemiranyelpezrespirafueradelagua",
             PAYPAL_BUTTON_ID: "V7VP3T98HFVK4"
         };
