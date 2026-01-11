@@ -4,180 +4,210 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TITÁN VΩ.11 | Arquitecto Nixon Ojeda</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     
     <script src="https://www.paypal.com/sdk/js?client-id=BAA1vZa0wSM2Mz7GjGZTtvTJGjguge3Sbfq3HzEirH-logMDlVWhxdgxSZSo73-wnDVoSBJJLiZAIsv9Ck&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    
     <style>
+        /* --- ESTÉTICA TITÁN --- */
         :root { 
             --gold: #D4AF37; 
-            --gold-bright: #FFD700;
-            --dark-bg: #050505; 
+            --gold-glow: #FFD700;
+            --dark-base: #050505;
+            --panel-bg: rgba(18, 18, 18, 0.85);
         }
-        
+
         body { 
-            background-color: var(--dark-bg); 
-            color: #ffffff; 
+            background-color: var(--dark-base); 
+            color: #e5e5e5; 
             font-family: 'Inter', sans-serif;
-            background-image: radial-gradient(circle at center, #111 0%, #050505 100%);
+            background-image: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #050505 80%);
+            min-height: 100vh;
         }
 
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
 
+        /* Paneles de Vidrio */
         .glass-panel { 
-            background: rgba(15, 15, 15, 0.8); 
-            border: 1px solid rgba(212, 175, 55, 0.2); 
-            backdrop-filter: blur(15px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            background: var(--panel-bg); 
+            border: 1px solid rgba(212, 175, 55, 0.15); 
+            backdrop-filter: blur(10px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
         }
 
-        .gold-gradient-text {
-            background: linear-gradient(180deg, #FFFFFF 0%, #D4AF37 50%, #8A6D3B 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        /* Texto Dorado Metálico */
+        .gold-text {
+            color: var(--gold);
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
         }
 
-        /* Animación de escaneo de firma */
-        .signature-scanner {
-            position: absolute;
+        /* Sliders Personalizados */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: #2a2a2a;
+            height: 4px;
+            border-radius: 2px;
+            outline: none;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: var(--gold);
+            cursor: pointer;
+            border: 2px solid #fff;
+            box-shadow: 0 0 10px var(--gold);
+            transition: transform 0.2s;
+        }
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        /* Animaciones */
+        .scan-line {
             width: 100%;
             height: 2px;
-            background: var(--gold);
-            top: 0;
-            left: 0;
-            animation: scanLine 3s linear infinite;
-            box-shadow: 0 0 15px var(--gold);
-            opacity: 0.5;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            position: absolute;
+            animation: scan 3s ease-in-out infinite;
+            opacity: 0.7;
         }
-
-        @keyframes scanLine {
+        @keyframes scan {
             0% { top: 0%; }
-            100% { top: 100%; }
+            50% { top: 100%; opacity: 0; }
+            100% { top: 0%; }
         }
 
-        /* Personalización de Sliders */
-        input[type=range] { -webkit-appearance: none; width: 100%; background: #222; height: 6px; border-radius: 3px; outline: none; }
-        input[type=range]::-webkit-slider-thumb { 
-            -webkit-appearance: none; height: 18px; width: 18px; border-radius: 50%; 
-            background: var(--gold); cursor: pointer; border: 2px solid white;
-            box-shadow: 0 0 10px var(--gold);
-        }
-
-        .fade-in { animation: fadeIn 0.8s ease forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.8s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="p-4 md:p-10 min-h-screen flex flex-col items-center">
+<body class="flex flex-col items-center justify-center p-4 md:p-8">
 
-    <header class="w-full max-w-6xl flex flex-col md:flex-row justify-between items-end mb-12 border-b border-gold/20 pb-8 gap-6">
+    <header class="w-full max-w-6xl flex flex-col md:flex-row justify-between items-end mb-10 border-b border-white/10 pb-6 gap-6">
         <div>
-            <h1 class="font-orbitron text-4xl md:text-6xl font-black tracking-tighter gold-gradient-text">
-                TITÁN VΩ.11
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_#22c55e]"></div>
+                <span class="text-[10px] tracking-[0.3em] uppercase text-gray-400">Sistema Online</span>
+            </div>
+            <h1 class="font-orbitron text-4xl md:text-5xl font-black tracking-tighter text-white">
+                TITÁN <span class="gold-text">VΩ.11</span>
             </h1>
-            <p class="text-[10px] tracking-[0.5em] text-gold/60 uppercase mt-2 font-bold">
-                Estrategia e Inferencia Soberana
-            </p>
+            <p class="text-xs tracking-[0.4em] text-gray-500 uppercase mt-2">Protocolo de Inferencia Soberana</p>
         </div>
 
-        <div class="relative glass-panel p-4 rounded-lg border-l-4 border-gold overflow-hidden min-w-[220px]">
-            <div class="signature-scanner"></div>
-            <div class="relative z-10 flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full border border-gold/30 flex items-center justify-center text-gold">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-width="1.5"></path></svg>
-                </div>
-                <div>
-                    <p class="text-[8px] text-gray-500 uppercase tracking-widest">Autor del Sistema</p>
-                    <p class="font-orbitron text-xs text-white tracking-tighter uppercase">Arq. Nixon Ojeda</p>
-                </div>
+        <div class="relative glass-panel px-6 py-3 rounded border-l-2 border-gold overflow-hidden">
+            <div class="scan-line"></div>
+            <div class="text-right">
+                <p class="text-[9px] text-gray-400 uppercase tracking-widest mb-1">Arquitectura por</p>
+                <p class="font-orbitron text-sm text-white font-bold tracking-wider">NIXON OJEDA</p>
             </div>
         </div>
     </header>
 
-    <main class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-10">
+    <main class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
         
-        <section class="glass-panel p-8 rounded-3xl">
-            <h2 class="font-orbitron text-xs text-gold tracking-widest uppercase mb-10 border-b border-gold/10 pb-4">01. Configuración de Inferencia</h2>
-            
-            <div class="space-y-10">
-                <div class="relative">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Grado de Intención (GI)</span>
-                        <span id="gi-display" class="font-orbitron text-gold text-lg">50%</span>
+        <section class="glass-panel p-8 rounded-2xl flex flex-col justify-between h-full">
+            <div>
+                <h2 class="font-orbitron text-xs text-gold tracking-[0.2em] uppercase mb-8 border-b border-white/5 pb-4">
+                    01. Panel de Control
+                </h2>
+                
+                <div class="space-y-8 mb-10">
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Grado de Intención (GI)</label>
+                            <span id="gi-display" class="font-orbitron text-gold text-xl">50%</span>
+                        </div>
+                        <input type="range" id="gi-slider" min="0" max="100" value="50">
                     </div>
-                    <input type="range" id="gi-slider" min="0" max="100" value="50">
-                </div>
 
-                <div class="relative">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Grado de Acción (GA)</span>
-                        <span id="ga-display" class="font-orbitron text-gold text-lg">50%</span>
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Grado de Acción (GA)</label>
+                            <span id="ga-display" class="font-orbitron text-gold text-xl">50%</span>
+                        </div>
+                        <input type="range" id="ga-slider" min="0" max="100" value="50">
                     </div>
-                    <input type="range" id="ga-slider" min="0" max="100" value="50">
                 </div>
 
-                <div>
-                    <label class="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-4 block italic">Definición de Objetivo Estratégico</label>
-                    <textarea id="user-intent" rows="6" class="w-full bg-black/40 border border-gold/20 rounded-2xl p-5 text-sm focus:border-gold focus:ring-1 focus:ring-gold/50 transition-all outline-none text-white placeholder:text-gray-700 shadow-inner" placeholder="Describa el objetivo o la misión para el análisis de TITÁN..."></textarea>
+                <div class="mb-8">
+                    <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3 block">Misión Estratégica</label>
+                    <textarea id="user-intent" rows="5" 
+                        class="w-full bg-black/50 border border-white/10 rounded-lg p-4 text-sm text-white focus:border-gold focus:ring-1 focus:ring-gold/50 outline-none transition-all placeholder-gray-700"
+                        placeholder="Ingrese los parámetros de la misión o análisis requerido..."></textarea>
                 </div>
-
-                <button id="btn-execute" onclick="procesarAuditoria()" class="w-full py-5 bg-gradient-to-r from-gold to-gold-bright text-black font-orbitron font-extrabold text-xs tracking-[0.4em] rounded-2xl hover:scale-[1.02] active:scale-95 transition-all shadow-[0_0_30px_rgba(212,175,55,0.3)] uppercase">
-                    Ejecutar Algoritmo
-                </button>
             </div>
+
+            <button onclick="procesarAuditoria()" class="group w-full py-4 bg-gradient-to-r from-[#D4AF37] to-[#B8860B] text-black font-orbitron font-extrabold text-sm tracking-[0.3em] rounded-lg hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] transition-all uppercase relative overflow-hidden">
+                <span class="relative z-10">Ejecutar Algoritmo</span>
+                <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+            </button>
         </section>
 
-        <section id="result-panel" class="glass-panel p-8 rounded-3xl flex flex-col items-center justify-center relative min-h-[500px] border-r-4 border-gold/20">
+        <section id="result-panel" class="glass-panel p-8 rounded-2xl min-h-[500px] flex flex-col items-center justify-center text-center relative border-t-4 border-gold/0 transition-all duration-500">
             
-            <div id="loader" class="hidden flex flex-col items-center">
-                <div class="w-16 h-16 border-4 border-gold/10 border-t-gold rounded-full animate-spin"></div>
-                <p class="font-orbitron text-[9px] text-gold mt-6 tracking-[0.5em] animate-pulse">SINCRONIZANDO NÚCLEO...</p>
+            <div id="idle-state" class="opacity-30">
+                <div class="w-20 h-20 mx-auto border-2 border-dashed border-white/20 rounded-full flex items-center justify-center mb-6 animate-[spin_10s_linear_infinite]">
+                    <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" stroke-width="1.5"/></svg>
+                </div>
+                <p class="font-orbitron text-xs tracking-[0.4em] uppercase">Esperando Datos...</p>
             </div>
 
-            <div id="idle-state" class="text-center opacity-40">
-                <div class="w-24 h-24 mx-auto border-2 border-dashed border-gold/30 rounded-full flex items-center justify-center mb-6">
-                    <svg class="w-10 h-10 text-gold/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="1"></path></svg>
-                </div>
-                <p class="font-orbitron text-[10px] tracking-[0.4em] uppercase">Sistema en Espera</p>
+            <div id="loader" class="hidden">
+                <div class="w-16 h-16 border-4 border-white/10 border-t-gold rounded-full animate-spin mx-auto"></div>
+                <p class="font-orbitron text-[10px] text-gold mt-6 tracking-[0.4em] animate-pulse">ANALIZANDO...</p>
             </div>
 
-            <div id="response-content" class="hidden w-full fade-in">
-                <h3 id="decision-title" class="font-orbitron text-center text-sm tracking-[0.5em] mb-8"></h3>
-                
-                <div class="bg-black/60 p-6 rounded-2xl border border-gold/10 mb-8 shadow-inner">
-                    <p id="ia-message" class="text-gray-300 text-sm italic font-light leading-relaxed text-center"></p>
+            <div id="response-content" class="hidden w-full text-left fade-in">
+                <div class="text-center mb-8">
+                    <h3 id="decision-title" class="font-orbitron text-xl md:text-2xl tracking-[0.3em] font-bold"></h3>
+                    <div class="h-1 w-20 bg-gradient-to-r from-transparent via-gray-500 to-transparent mx-auto mt-2"></div>
                 </div>
 
-                <div id="payment-module" class="hidden fade-in border-t border-gold/20 pt-8">
+                <div class="bg-black/40 border border-white/5 p-6 rounded-lg mb-8 shadow-inner">
+                    <p class="text-[10px] text-gray-500 uppercase tracking-widest mb-2">Informe Táctico:</p>
+                    <p id="ia-message" class="text-gray-200 text-sm leading-relaxed whitespace-pre-line"></p>
+                </div>
+
+                <div id="payment-module" class="hidden border-t border-white/10 pt-6 animate-pulse-slow">
                     <div class="text-center mb-6">
-                        <p class="text-[9px] font-bold text-gold/60 uppercase tracking-widest">Acceso Autorizado - Procesar Tarifa</p>
+                        <span class="bg-gold/10 text-gold border border-gold/20 px-4 py-1 rounded text-[9px] font-bold tracking-widest uppercase">
+                            Transacción Autorizada
+                        </span>
                     </div>
-                    
-                    <div id="paypal-button-container" class="flex justify-center min-h-[150px]"></div>
-                    
-                    <p class="text-[8px] text-center text-gray-500 mt-4 px-10 italic">Seguridad garantizada mediante cifrado de punto a punto de PayPal.</p>
+                    <div id="paypal-button-container" class="flex justify-center"></div>
                 </div>
 
-                <div id="denied-module" class="hidden fade-in">
-                    <a href="https://wa.me/584124577822?text=CONSULTA_TITAN_RECHAZADA" target="_blank" class="block w-full text-center py-4 border border-red-500/40 text-red-500 font-bold text-[10px] tracking-widest rounded-xl hover:bg-red-500/10 transition-all uppercase">
-                        Consultar con el Arquitecto
+                <div id="denied-module" class="hidden text-center border-t border-red-500/20 pt-6">
+                    <p class="text-red-400 text-xs mb-4">Criterios insuficientes para proceder.</p>
+                    <a href="https://wa.me/584124577822?text=SISTEMA_TITAN_RECHAZO_AUDITORIA" target="_blank" 
+                       class="inline-block border border-red-500/50 text-red-500 px-6 py-3 rounded text-[10px] tracking-widest hover:bg-red-500/10 transition-colors uppercase">
+                        Contactar Soporte Humano
                     </a>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="mt-20 text-center opacity-30 pb-10">
-        <p class="text-[9px] tracking-[0.8em] font-orbitron uppercase">Coded by Nixon Ojeda © 2024</p>
+    <footer class="mt-12 text-center opacity-30">
+        <p class="font-orbitron text-[9px] tracking-[0.5em] uppercase">Titan Systems © 2026</p>
     </footer>
 
-    <a href="https://wa.me/584124577822" target="_blank" class="fixed bottom-6 right-6 bg-[#25D366] p-4 rounded-full shadow-2xl hover:scale-110 transition-transform z-50">
-        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    <a href="https://wa.me/584124577822" target="_blank" class="fixed bottom-6 right-6 z-50 group">
+        <div class="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-20 group-hover:opacity-40"></div>
+        <div class="bg-[#25D366] p-4 rounded-full shadow-[0_0_20px_rgba(37,211,102,0.4)] hover:scale-110 transition-transform relative">
+            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        </div>
     </a>
 
     <script>
-        // CONFIGURACIÓN DE ENDPOINTS
+        // --- CONFIGURACIÓN DE CONEXIÓN (YA INTEGRADA) ---
         const CONFIG = {
             API_URL: "https://us-central1-tcis-titan-12.cloudfunctions.net/titan-reborn-25",
             AUTH_KEY: "dosespejossemiranyelpezrespirafueradelagua",
@@ -189,20 +219,26 @@
         const giDisplay = document.getElementById('gi-display');
         const gaDisplay = document.getElementById('ga-display');
 
-        // Actualización en tiempo real de Sliders
+        // Actualizar números al mover sliders
         giSlider.oninput = () => giDisplay.innerText = giSlider.value + "%";
         gaSlider.oninput = () => gaDisplay.innerText = gaSlider.value + "%";
 
+        // --- FUNCIÓN PRINCIPAL ---
         async function procesarAuditoria() {
             const intent = document.getElementById('user-intent').value.trim();
-            if(!intent) return;
+            if(!intent) {
+                alert("Por favor defina la misión estratégica.");
+                return;
+            }
 
-            // UI State: Cargando
+            // CAMBIO DE ESTADO VISUAL -> CARGANDO
             document.getElementById('idle-state').classList.add('hidden');
             document.getElementById('response-content').classList.add('hidden');
             document.getElementById('loader').classList.remove('hidden');
+            document.getElementById('result-panel').classList.remove('border-gold', 'border-red-500');
 
             try {
+                // LLAMADA AL CEREBRO (CLOUD FUNCTION)
                 const response = await fetch(CONFIG.API_URL, {
                     method: 'POST',
                     headers: { 
@@ -220,11 +256,12 @@
 
                 const data = await response.json();
                 
-                // Mostrar resultados
+                // MOSTRAR RESULTADOS
                 document.getElementById('loader').classList.add('hidden');
                 document.getElementById('response-content').classList.remove('hidden');
-                document.getElementById('ia-message').innerText = data.message;
+                document.getElementById('ia-message').innerText = data.message || "Sin respuesta del Oráculo.";
 
+                // DECISIÓN VISUAL
                 if(data.decision === "act") {
                     mostrarAceptacion();
                 } else {
@@ -232,35 +269,44 @@
                 }
 
             } catch (error) {
-                console.error("Error en Auditoría:", error);
+                console.error("Falla de conexión:", error);
                 document.getElementById('loader').classList.add('hidden');
                 document.getElementById('idle-state').classList.remove('hidden');
+                alert("Error de conexión con TITÁN. Verifique red.");
             }
         }
 
         function mostrarAceptacion() {
             const title = document.getElementById('decision-title');
+            const panel = document.getElementById('result-panel');
+            
             title.innerText = "ACCESO CONCEDIDO";
-            title.className = "font-orbitron text-center text-sm tracking-[0.5em] mb-8 text-gold";
+            title.className = "font-orbitron text-xl md:text-2xl tracking-[0.3em] font-bold text-gold drop-shadow-[0_0_10px_rgba(212,175,55,0.5)]";
+            panel.classList.add('border-gold');
             
             document.getElementById('payment-module').classList.remove('hidden');
             document.getElementById('denied-module').classList.add('hidden');
 
-            // Renderizar el botón de PayPal si no está renderizado
+            // Renderizar PayPal (Limpia primero para no duplicar)
             const container = document.getElementById('paypal-button-container');
-            container.innerHTML = ''; // Limpiar previo
+            container.innerHTML = ''; 
             
             if (window.paypal && window.paypal.HostedButtons) {
-                paypal.HostedButtons({
-                    hostedButtonId: CONFIG.PAYPAL_BUTTON_ID,
-                }).render("#paypal-button-container");
+                try {
+                    paypal.HostedButtons({
+                        hostedButtonId: CONFIG.PAYPAL_BUTTON_ID,
+                    }).render("#paypal-button-container");
+                } catch(e) { console.error("Error PayPal:", e); }
             }
         }
 
         function mostrarRechazo() {
             const title = document.getElementById('decision-title');
+            const panel = document.getElementById('result-panel');
+
             title.innerText = "ACCESO DENEGADO";
-            title.className = "font-orbitron text-center text-sm tracking-[0.5em] mb-8 text-red-500";
+            title.className = "font-orbitron text-xl md:text-2xl tracking-[0.3em] font-bold text-red-500 drop-shadow-[0_0_10px_rgba(239,68,68,0.5)]";
+            panel.classList.add('border-red-500');
             
             document.getElementById('payment-module').classList.add('hidden');
             document.getElementById('denied-module').classList.remove('hidden');
